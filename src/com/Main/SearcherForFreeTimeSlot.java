@@ -13,7 +13,7 @@ import java.util.Date;
  * The 1st element of the string array contain the start time 
  * The 2st element of the string array contain the end time 
  * E.g.: [1000][1400] (looking for a free time slot from 10am to 2pm)
- * The return value is a string, indicating the date of earliest day that can take in the desired time slot.
+ * The return value is a string, indicating the dates within 7 days that can take in the desired time slot.
  * for V0.3, this function will only return the earliest day, NOT considering later available day.
  */
 public class SearcherForFreeTimeSlot implements Commander {
@@ -27,6 +27,9 @@ public class SearcherForFreeTimeSlot implements Commander {
 		Date current;
 		
 	public SearcherForFreeTimeSlot(String[] parsedUserInput, ArrayList<Task> TaskList) { 
+		String userInputToSplit;
+		userInputToSplit = parsedUserInput[0];
+		parsedUserInput = userInputToSplit.split(" ");
 		startTime = Integer.parseInt(parsedUserInput[0]);
 		endTime = Integer.parseInt(parsedUserInput[1]);
 		
@@ -37,33 +40,44 @@ public class SearcherForFreeTimeSlot implements Commander {
 	public String execute() {
 		current = new Date();
 		String dateToCompare;
+		String datesFound = new String();
 		int startTimeToCompare;
 		int endTimeToCompare;
 		boolean foundTimeSlot = false;
 		boolean foundConflict = false;
+		int daysCompared = 0;
 		
-		while(!foundTimeSlot){
+		currentDate = formatCurrentDate.format(current); //nearest free day 
+		currentTime = Integer.parseInt(formatCurrentTime.format(new Date())); //real life time in integer format
+		System.out.println("Current Time is : " + currentTime);
+		
+		for(int j=0; j<7; j++){
 			foundConflict = false;
-			currentDate = formatCurrentDate.format(current); //nearest free day 
-			currentTime = Integer.parseInt(formatCurrentTime.format(new Date())); //real life time in integer format
+			
 			
 		for(int i=0; i<TaskList.size(); i++){
 			dateToCompare = TaskList.get(i).getDate();
-			startTimeToCompare = Integer.parseInt(TaskList.get(i).getStart());
-			endTimeToCompare = Integer.parseInt(TaskList.get(i).getEnd());
+			
+			if(!TaskList.get(i).getStart().trim().equals("")||!TaskList.get(i).getEnd().trim().equals("")){
+				
+			startTimeToCompare = Integer.parseInt(TaskList.get(i).getStart().trim());
+			endTimeToCompare = Integer.parseInt(TaskList.get(i).getEnd().trim());
+			
+			System.out.println("Current Time is : " + currentTime);
+			System.out.println("Start Time to compare with : " + startTimeToCompare);
 			
 			if(dateToCompare.equals(currentDate)){
-				if(startTime>startTimeToCompare && startTime<endTimeToCompare || endTime>startTimeToCompare && endTime<endTimeToCompare){
+				if(startTime>=startTimeToCompare && startTime<endTimeToCompare || endTime>startTimeToCompare && endTime<=endTimeToCompare){
 					foundConflict = true;
 					break;
 				}
-				else if(currentTime > startTimeToCompare){ //To handle first case where there is no task for today but it may already be too late to schedule the task in
+				else if(currentTime > startTime){ //To handle first case where there is no task for today but it may already be too late to schedule the task in
 					foundConflict = true;
 					break;
 				}
 			}
 		}
-	
+		}
 		if(foundConflict){
 			//Increase date, set time as zero
 			SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy");
@@ -72,6 +86,7 @@ public class SearcherForFreeTimeSlot implements Commander {
 				c.setTime(sdf.parse(currentDate));
 				c.add(Calendar.DATE, 1);
 				currentDate = sdf.format(c.getTime());
+				System.out.println("Current Date is : " + currentDate);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -80,10 +95,32 @@ public class SearcherForFreeTimeSlot implements Commander {
 		
 		else{
 			foundTimeSlot = true;
+		
+			datesFound = datesFound + currentDate + "\n";
+			
+			
+			//Increase date, set time as zero
+			SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy");
+			Calendar c = Calendar.getInstance();
+			try {
+				c.setTime(sdf.parse(currentDate));
+				c.add(Calendar.DATE, 1);
+				currentDate = sdf.format(c.getTime());
+				System.out.println("Current Date is : " + currentDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			currentTime = 0;
 		}
+
+		}
+		if(foundTimeSlot){
+		return startTime + " to " + endTime + " is available on : \n" + datesFound;
 		}
 		
-		return startTime + " to " + endTime + " is available on " + currentDate;
+		else{
+			return "Timeslot not available in the upcoming week";
+		}
 	}
 
 }

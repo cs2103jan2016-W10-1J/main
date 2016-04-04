@@ -92,11 +92,13 @@ public class Parser {
 				input = removeFirstWord(input);
 				searchDateParameters[0] = input;
 				return new SearcherByDate(searchDateParameters, TaskList);
-			/*
-			 * case "f": //by free slot String searchFreeParameters[] = new
-			 * String[1]; return new
-			 * SearcherForFreeTimeSlot(searchFreeParameters, TaskList);
-			 */
+			
+			  case "f": //by free slot 
+				  String searchFreeParameters[] = new String[1]; 
+				  input = removeFirstWord(input);
+				  searchFreeParameters[0] = input;
+				  return new SearcherForFreeTimeSlot(searchFreeParameters, TaskList);
+
 			default: // by keyword
 				String[] searchParameters = input.split(" ");
 				// String searchParameters[] = new String[1];
