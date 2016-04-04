@@ -1,2 +1,6 @@
 church~~ ~~~~ ~~ ~~ ~~ 
 meeting~~ ~~~~ ~~ ~~ ~~ 
+church meeting~~ ~~~~ ~~ ~~ ~~ 
+meeting church~~ ~~~~ ~~ ~~ ~~ 
+meeting~~ ~~~~ ~~ ~~ ~~ 
+church~~ ~~~~ ~~ ~~ ~~ 

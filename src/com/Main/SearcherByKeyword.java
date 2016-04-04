@@ -38,8 +38,8 @@ public class SearcherByKeyword implements Commander {
 		
 		for (int i = 0; i < keywords.length; i++){ 
 			keyword = keywords[i];
-			boolean containsKeyword = false;
 			for (Task checkTask : searchResultList){
+				boolean containsKeyword = false;
 				if (checkTask.getTaskName().contains(keyword) || checkTask.getLocation().contains(keyword) 
 						|| checkTask.getNotification().contains(keyword) || checkTask.getTag().contains(keyword)){
 					containsKeyword = true;
