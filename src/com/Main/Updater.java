@@ -69,6 +69,31 @@ public class Updater implements Commander{
 			taskToUpdate.setNotification(detailToUpdate);
 			TaskList.set(indexToUpdate, taskToUpdate);
 			break;
+			
+		case "done":
+			if(TaskList.get(indexToUpdate).getTaskDone()){
+				detailChanged = "'Done'";
+			}
+			else{
+				detailChanged = "'Undone'";
+			}
+			taskToUpdate = TaskList.get(indexToUpdate);
+			taskToUpdate.setTaskAsDone();
+			TaskList.set(indexToUpdate, taskToUpdate);
+			break;
+			
+		case "undone":
+			if(TaskList.get(indexToUpdate).getTaskDone()){
+				detailChanged = "'Done'";
+			}
+			else{
+				detailChanged = "'Undone'";
+			}
+			taskToUpdate = TaskList.get(indexToUpdate);
+			taskToUpdate.setTaskAsUndone();;
+			TaskList.set(indexToUpdate, taskToUpdate);
+			break;
+			
 		default:
 			return "Keyword for the type of detail is invalid.";
 		}

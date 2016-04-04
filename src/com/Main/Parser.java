@@ -105,6 +105,22 @@ public class Parser {
 				// searchParameters[0] = input;
 				return new SearcherByKeyword(searchParameters, TaskList);
 			}
+		
+		// done <task number>
+		case "done":
+			String done[] = new String[3];
+			done[0] = removeFirstWord(input);
+			done[1] = "Done";
+			done[2] = "'Done'";
+			return new Updater(done, TaskList);
+		
+		// undone <task number>
+		case "undone":
+			String undone[] = new String[3];
+			undone[0] = removeFirstWord(input);
+			undone[1] = "Undone";
+			undone[2] = "'Undone'";
+			return new Updater(undone, TaskList);
 
 			// display today/tomorrow/week/all/done/undone
 			/*
