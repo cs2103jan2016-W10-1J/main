@@ -3,9 +3,13 @@ package com.Main;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /*
  * This class takes in the original TaskList and a desired time slot as input parameter for its constructor
@@ -39,21 +43,24 @@ public class SearcherForFreeTimeSlot implements Commander {
 	@Override
 	public String execute() {
 		current = new Date();
+		LocalDate today = LocalDate.now();
+		DayOfWeek dow = today.getDayOfWeek();
 		String dateToCompare;
+		String dayName;
 		String datesFound = new String();
 		int startTimeToCompare;
 		int endTimeToCompare;
 		boolean foundTimeSlot = false;
 		boolean foundConflict = false;
-		int daysCompared = 0;
+		boolean isDateToday = true;
 		
 		currentDate = formatCurrentDate.format(current); //nearest free day 
 		currentTime = Integer.parseInt(formatCurrentTime.format(new Date())); //real life time in integer format
 		System.out.println("Current Time is : " + currentTime);
+		System.out.println("Current Day is : ");
 		
 		for(int j=0; j<7; j++){
 			foundConflict = false;
-			
 			
 		for(int i=0; i<TaskList.size(); i++){
 			dateToCompare = TaskList.get(i).getDate();
@@ -71,13 +78,18 @@ public class SearcherForFreeTimeSlot implements Commander {
 					foundConflict = true;
 					break;
 				}
-				else if(currentTime > startTime){ //To handle first case where there is no task for today but it may already be too late to schedule the task in
-					foundConflict = true;
-					break;
-				}
 			}
 		}
 		}
+		
+		if(isDateToday){
+			if(currentTime > startTime){ //To handle first case where there is no task for today but it may already be too late to schedule the task in
+				foundConflict = true;
+				System.out.println("Conflict found");
+			}
+			isDateToday = false;
+		}
+		
 		if(foundConflict){
 			//Increase date, set time as zero
 			SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy");
@@ -95,8 +107,10 @@ public class SearcherForFreeTimeSlot implements Commander {
 		
 		else{
 			foundTimeSlot = true;
-		
-			datesFound = datesFound + currentDate + "\n";
+			
+			
+			dayName = dow.plus(j).getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+			datesFound = datesFound + currentDate + " (" + dayName + ")" + "\n";
 			
 			
 			//Increase date, set time as zero
@@ -112,7 +126,6 @@ public class SearcherForFreeTimeSlot implements Commander {
 			}
 			currentTime = 0;
 		}
-
 		}
 		if(foundTimeSlot){
 		return startTime + " to " + endTime + " is available on : \n" + datesFound;
