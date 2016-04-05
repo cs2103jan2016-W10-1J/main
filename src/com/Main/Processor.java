@@ -43,7 +43,13 @@ public class Processor {
 	
 	public List<String> executeCommand(String userInput){
 		List<String> output = null;
-		if (userInput == "undo"){
+		
+		if(userInput.startsWith("cd", 0)){
+			storage = new TextFileSaver(userInput.substring(3));
+			feedbackMessage = "Opened " + userInput.substring(3);
+		}
+		
+		else if (userInput == "undo"){
 			if(lastCommanderInst == null){
 				feedbackMessage = "Sorry, the last action cannot be undo further.";				
 			}
@@ -53,8 +59,7 @@ public class Processor {
 		}
 		else{
 			Commander commanderInst = parserInst.parse(userInput, storage.getTaskData());
-			feedbackMessage = commanderInst.execute();
-			
+			feedbackMessage = commanderInst.execute();	
 		}
 		storage.saveFile();
 		String[] array = feedbackMessage.split(System.lineSeparator());

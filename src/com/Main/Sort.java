@@ -1,5 +1,9 @@
 package com.Main;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+//@@author A0097119X
 public class Sort {
 /*
  * This class is for internal use only, not open for user.
@@ -15,8 +19,16 @@ public class Sort {
  * In the later case, the Adder class needs to return a message 
  * telling user where the overlapping occurs.
  */
-	public Sort() {
-		// TODO Auto-generated constructor stub
+	ArrayList<Task> toBeSorted;
+	
+	public Sort(ArrayList<Task> toBeSorted) {
+		this.toBeSorted = toBeSorted;
 	}
-
+	
+	public ArrayList<Task> sortThis(){
+		Collections.sort(toBeSorted, Task.COMPARE_BY_TIME);
+		Collections.sort(toBeSorted, Task.COMPARE_BY_DATE);
+		
+		return toBeSorted;
+	}	
 }

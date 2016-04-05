@@ -3,6 +3,7 @@ package com.Main;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -158,6 +159,7 @@ public class Task {
 		this.notification = notification;
 	}
 	
+	//@@author A0097119X
 	public void setTaskAsDone(){
 		this.isTaskDone = true;
 	}
@@ -165,6 +167,18 @@ public class Task {
 	public void setTaskAsUndone(){
 		this.isTaskDone = false;
 	}
+	
+	public static Comparator<Task> COMPARE_BY_DATE = new Comparator<Task>() {
+        public int compare(Task one, Task other) {
+            return one.getDate().compareTo(other.getDate());
+        }
+    };
+
+    public static Comparator<Task> COMPARE_BY_TIME = new Comparator<Task>() {
+        public int compare(Task one, Task other) {
+            return one.getStart().compareTo(other.getStart());
+        }
+    };
 	
 	
 }
