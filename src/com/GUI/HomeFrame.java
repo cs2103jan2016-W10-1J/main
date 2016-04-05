@@ -126,7 +126,7 @@ public class HomeFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String userCommand = userInputBox.getText();
 				passingCommand(userCommand);
-				
+				updateTaskLists();
 			}			
     	});  
         
