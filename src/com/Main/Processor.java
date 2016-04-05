@@ -11,8 +11,13 @@ public class Processor {
 	//private TaskforUpdateFunction UpdatedTask;
 	//private static Logger ProcessorLogger = Logger.getLogger("Log of Processor");
 	private Parser parserInst;
-	private String message = "";
+	private String feedbackMessage = "";
 	public ArrayList<String> messageThread = new ArrayList<String>();
+	private static Commander lastCommanderInst = null; // for Undo function.
+
+	public static void setLastCommanderInst(Commander lastCommanderInst) {
+		Processor.lastCommanderInst = lastCommanderInst;
+	}
 
 	public ArrayList<String> getMessageThread() {
 		return messageThread;
@@ -22,20 +27,39 @@ public class Processor {
 		parserInst = new Parser();
 		storage = new TextFileSaver();
 		//Dispatcher.setTaskList(storage.getTaskData());
+		setUp();
+	}
+
+	/**
+	 * Set up the date attribute for every task in the list.
+	 * Set up the Task ID for every task in the list.
+	 */
+	private void setUp() {
 		for (int i = 0; i < storage.getTaskData().size(); i++ ){
-			storage.getTaskData().get(i).setCalendar();
+			ArrayList<Task> tasksArray = storage.getTaskData();
+			tasksArray.get(i).setCalendar();
+			tasksArray.get(i).setTaskID(i+1);//generation of TaskID, 1-based.
 		}
 	}
 	
 	public List<String> executeCommand(String userInput){
-		Commander commanderInst = parserInst.parse(userInput, storage.getTaskData());
-		message = commanderInst.execute();
+		List<String> output = null;
+		if (userInput == "undo"){
+			if(lastCommanderInst == null){
+				feedbackMessage = "Sorry, the last action cannot be undo further.";				
+			}
+			else{
+				feedbackMessage = lastCommanderInst.undo();
+			}
+		}
+		else{
+			Commander commanderInst = parserInst.parse(userInput, storage.getTaskData());
+			feedbackMessage = commanderInst.execute();
+			
+		}
 		storage.saveFile();
-		String[] array = message.split(System.lineSeparator());
-		//messageThread.add(message);
-		//messageThread
-		List<String> output = Arrays.asList(array);
-		//return message;
+		String[] array = feedbackMessage.split(System.lineSeparator());
+		output = Arrays.asList(array);
 		return output;
 	}
 	

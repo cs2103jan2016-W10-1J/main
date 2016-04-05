@@ -54,6 +54,12 @@ public class SearcherByDate implements Commander {
 		return output.convert();
 	}
 
+	@Override
+	public String undo() {
+		String feedback = "Your last action is searching, which cannot be undone.";
+		return feedback;
+	}
+
 }
 /*
  * Calendar cal1 = Calendar.getInstance();

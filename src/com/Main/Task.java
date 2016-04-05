@@ -18,7 +18,12 @@ public class Task {
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
 	boolean isTaskDone = false;
-/*
+	private int taskID;
+	
+	public void setTaskID(int taskID) {
+		this.taskID = taskID;
+	}
+	/*
  * http://stackoverflow.com/questions/4216745/java-string-to-date-conversion
  */
 	public void setCalendar(){
