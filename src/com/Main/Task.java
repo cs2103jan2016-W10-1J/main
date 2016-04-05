@@ -56,6 +56,10 @@ public class Task {
 	public String getTaskName() {
 		return taskName;
 	}
+	
+	public int getTaskID(){
+		return taskID;
+	}
 
 	public String getLocation() {
 		return location;
@@ -119,6 +123,8 @@ public class Task {
 	public void setTaskAsUndone(){
 		this.isTaskDone = false;
 	}
+	
+	
 }
 
 /*

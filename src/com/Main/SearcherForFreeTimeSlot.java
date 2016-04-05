@@ -59,27 +59,30 @@ public class SearcherForFreeTimeSlot implements Commander {
 		System.out.println("Current Time is : " + currentTime);
 		System.out.println("Current Day is : ");
 		
-		for(int j=0; j<7; j++){
+		for(int j=0; j<8; j++){
 			foundConflict = false;
 			
 		for(int i=0; i<TaskList.size(); i++){
 			dateToCompare = TaskList.get(i).getDate();
 			
-			if(!TaskList.get(i).getStart().trim().equals("")||!TaskList.get(i).getEnd().trim().equals("")){
+			try {
+				if(!TaskList.get(i).getStart().trim().equals("")||!TaskList.get(i).getEnd().trim().equals("")){
 				
-			startTimeToCompare = Integer.parseInt(TaskList.get(i).getStart().trim());
-			endTimeToCompare = Integer.parseInt(TaskList.get(i).getEnd().trim());
-			
-			System.out.println("Current Time is : " + currentTime);
-			System.out.println("Start Time to compare with : " + startTimeToCompare);
-			
-			if(dateToCompare.equals(currentDate)){
-				if(startTime>=startTimeToCompare && startTime<endTimeToCompare || endTime>startTimeToCompare && endTime<=endTimeToCompare){
-					foundConflict = true;
-					break;
+				startTimeToCompare = Integer.parseInt(TaskList.get(i).getStart().trim());
+				endTimeToCompare = Integer.parseInt(TaskList.get(i).getEnd().trim());
+				
+				System.out.println("Current Time is : " + currentTime);
+				System.out.println("Start Time to compare with : " + startTimeToCompare);
+				
+				if(dateToCompare.equals(currentDate)){
+					if(startTime>=startTimeToCompare && startTime<endTimeToCompare || endTime>startTimeToCompare && endTime<=endTimeToCompare){
+						foundConflict = true;
+						break;
+					}
 				}
+}
+			} catch (NumberFormatException e) {
 			}
-		}
 		}
 		
 		if(isDateToday){
@@ -134,6 +137,12 @@ public class SearcherForFreeTimeSlot implements Commander {
 		else{
 			return "Timeslot not available in the upcoming week";
 		}
+	}
+
+	@Override
+	public String undo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -175,7 +175,7 @@ public class TextFileSaver {
 	 * segment to tempTask for create a proper Task and add it to the Task ArrayList (taskData)*/
 	public String addToTaskList(String temp, Task tempTask, int lineReading) {
 		try {
-			String[] _temp = new String[8];
+			String[] _temp = new String[9];
 			_temp = temp.split("~~", -1);
 			tempTask.setTask(_temp[0]);
 			tempTask.setLocation(_temp[1]);
@@ -190,6 +190,7 @@ public class TextFileSaver {
 			else{
 				tempTask.setTaskAsDone();
 			}
+			tempTask.setTaskID(Integer.parseInt(_temp[8]));
 			taskData.add(tempTask);
 			_temp = null;
 			return "success";
@@ -209,7 +210,7 @@ public class TextFileSaver {
 			String tempSave = "";
 			String completedTempSave = "";
 			Task tempTaskForSaving = new Task();
-			String[] taskToString = new String[8];
+			String[] taskToString = new String[9];
 			savefile = new FileWriter(fileName);
 			completedSaveFile = new FileWriter(completedFileName);
 			
@@ -240,7 +241,7 @@ public class TextFileSaver {
 	/*Convert the string arrays into a single string with proper formatting before saving*/
 	public String processIntoSingleStringForSaving(String tempSave,
 			String[] taskToString) {
-		tempSave = tempSave + taskToString[0] + "~~" + taskToString[1] + "~~" + taskToString[2] + "~~"+ taskToString[3] + "~~"+ taskToString[4] + "~~"+ taskToString[5]+ "~~" + taskToString[6] + "~~" +taskToString[7] +"\n";
+		tempSave = tempSave + taskToString[0] + "~~" + taskToString[1] + "~~" + taskToString[2] + "~~"+ taskToString[3] + "~~"+ taskToString[4] + "~~"+ taskToString[5]+ "~~" + taskToString[6] + "~~" +taskToString[7] + "~~" + taskToString[8]+"\n";
 		return tempSave;
 	}
 	
@@ -255,5 +256,6 @@ public class TextFileSaver {
 		taskToString[5] = tempTaskForSaving.getTag();
 		taskToString[6] = tempTaskForSaving.getNotification();
 		taskToString[7] = String.valueOf(tempTaskForSaving.getTaskDone());
+		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID());
 	}
 }
