@@ -6,7 +6,7 @@ import java.util.Date;
 
 import com.Main.Task.TASK_TYPE;
 
-public class Displayer{
+public class Displayer implements Commander{
 	private String displayParameter;
 	ArrayList<Task> TaskList;
 	
@@ -23,7 +23,7 @@ public class Displayer{
 	}
 
 
-	public void execute() {
+	public String execute() {
 		//display today/tomorrow/week/all/done/undone
 		switch (displayParameter){
 		case "done":
@@ -49,6 +49,7 @@ public class Displayer{
 			throw new Error("Unrecognized displayParameter type");
 		}
 		updateThreeLists();	
+		return "Please refer to the right-hand side panel for display";
 	}
 
 	private void getTmrTasks(){
@@ -152,6 +153,15 @@ public class Displayer{
 				deadlineList.add(taskInst);
 			}
 		} 
+	}
+
+
+	
+
+	@Override
+	public String undo() {
+		String feedback = "Your last action is searching, which cannot be undone.";
+		return feedback;
 	}
 	
 
