@@ -61,7 +61,11 @@ public class Task {
 	public String getTaskName() {
 		return taskName;
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> origin/master
 	public String getLocation() {
 		return location;
 	}

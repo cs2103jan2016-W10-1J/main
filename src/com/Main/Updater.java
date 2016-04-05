@@ -2,6 +2,7 @@ package com.Main;
 
 import java.util.ArrayList;
 
+//@@author A0097119X
 public class Updater implements Commander{
 	
 	private int indexToUpdate;
@@ -73,7 +74,7 @@ public class Updater implements Commander{
 		case "taskid":
 			return "TaskID should not be edited, please update other details.";
 		case "done":
-			if(TaskList.get(indexToUpdate).getTaskDone()){
+			if(TaskList.get(indexToUpdate).isTaskDone()){
 				detailChanged = "'Done'";
 			}
 			else{
@@ -85,7 +86,7 @@ public class Updater implements Commander{
 			break;
 			
 		case "undone":
-			if(TaskList.get(indexToUpdate).getTaskDone()){
+			if(TaskList.get(indexToUpdate).isTaskDone()){
 				detailChanged = "'Done'";
 			}
 			else{

@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+//@@author A0097119X
 public class TextFileSaver {
 
 	private File file;
@@ -255,7 +256,7 @@ public class TextFileSaver {
 		taskToString[4] = tempTaskForSaving.getEnd();
 		taskToString[5] = tempTaskForSaving.getTag();
 		taskToString[6] = tempTaskForSaving.getNotification();
-		taskToString[7] = String.valueOf(tempTaskForSaving.getTaskDone());
+		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone);
 		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID());
 	}
 }

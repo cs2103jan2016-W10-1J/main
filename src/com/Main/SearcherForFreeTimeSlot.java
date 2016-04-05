@@ -20,6 +20,8 @@ import java.util.Locale;
  * The return value is a string, indicating the dates within 7 days that can take in the desired time slot.
  * for V0.3, this function will only return the earliest day, NOT considering later available day.
  */
+
+//@@author A0097119X
 public class SearcherForFreeTimeSlot implements Commander {
 		private String currentDate;
 		private int currentTime;
