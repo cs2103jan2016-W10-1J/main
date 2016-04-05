@@ -54,6 +54,12 @@ public class SearcherByKeyword implements Commander {
 		return output.convert();
 
 	}
+
+	@Override
+	public String undo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 // old SearcherByKeyword code by zhiyun

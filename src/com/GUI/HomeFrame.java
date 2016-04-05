@@ -68,13 +68,11 @@ public class HomeFrame extends JFrame{
 		mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		mainPanel.setDividerSize(2);
 		getContentPane().add(mainPanel);
-		logPanel = new LogPanel();
-		
+		logPanel = new LogPanel();		
 
 		//scrollPaneForLog = new JScrollPane(logPanel);
 		//scrollPanel.setViewportView(logPanel);
-		mainPanel.setLeftComponent(logPanel);
-		
+		mainPanel.setLeftComponent(logPanel);	
 
 		taskPanel= new JTabbedPane();
 		
@@ -102,11 +100,6 @@ public class HomeFrame extends JFrame{
 		HomeFrame home = new HomeFrame();
 		home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		home.setVisible(true);
-	}
-	
-	private void updateTaskLists(){
-
-		eventTaskList.upDateTaskList(processor.getStorage().getTaskData());
 	}
 	
 	// The Input bar initialization 
@@ -171,6 +164,12 @@ public class HomeFrame extends JFrame{
 			logPanel.recordToLog(HTML_HEAD+strToDisplay.get(i)+HTML_TAIL);
 		} 	
 	}
+
+	
+	private void updateTaskLists(){
+		eventTaskList.upDateTaskList(processor.getStorage().getTaskData());
+	}
+	
 	
 	public String setStringInGreen(String outputStr){
 		outputStr = "<font color=\"green\">" + outputStr + "</font>";

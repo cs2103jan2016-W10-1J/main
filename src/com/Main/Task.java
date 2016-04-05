@@ -23,6 +23,11 @@ public class Task {
 	public void setTaskID(int taskID) {
 		this.taskID = taskID;
 	}
+	
+	public int getTaskID() {
+		return taskID;
+	}
+	
 	/*
  * http://stackoverflow.com/questions/4216745/java-string-to-date-conversion
  */
@@ -84,7 +89,7 @@ public class Task {
 		return notification;
 	}
 	
-	public boolean getTaskDone(){
+	public boolean isTaskDone(){
 		return isTaskDone;
 	}
 
