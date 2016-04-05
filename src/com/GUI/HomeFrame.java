@@ -87,7 +87,7 @@ public class HomeFrame extends JFrame{
 		deadlineTaskList = new TaskPanel();
 		taskPanel.add("Deadline Task", deadlineTaskList);
 		
-		mainPanel.setRightComponent(taskPanel );	
+		mainPanel.setRightComponent(taskPanel);	
 		
         JPanel panel = userInputBar();
         add(panel, BorderLayout.SOUTH);
@@ -102,6 +102,11 @@ public class HomeFrame extends JFrame{
 		HomeFrame home = new HomeFrame();
 		home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		home.setVisible(true);
+	}
+	
+	private void updateTaskLists(){
+
+		eventTaskList.upDateTaskList(processor.getStorage().getTaskData());
 	}
 	
 	// The Input bar initialization 
@@ -121,6 +126,7 @@ public class HomeFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String userCommand = userInputBox.getText();
 				passingCommand(userCommand);
+				
 			}			
     	});  
         
@@ -128,32 +134,42 @@ public class HomeFrame extends JFrame{
         
     }   	
 	
-	public List<String> passingCommand(String userCommand){
-		if (!userCommand.equals("")) {
-			List<String> strToDisplay = processor.executeCommand(userCommand);
+	public void passingCommand(String userCommand){
+		String commandType = userCommand.substring(0, userCommand.indexOf(" "));
+		List<String> strToDisplay = new ArrayList<String>();
+		if (!userCommand.equals("") && !commandType.equals("sw")) {
+			strToDisplay = processor.executeCommand(userCommand);
 			//String commandType = processor.processCommand(userCommand); 
-			eventTaskList.upDateTaskList(processor.getStorage().getTaskData());
 			
 			logPanel.clearLog();
-			logPanel.recordToLog(HTML_HEAD+setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);
-			for (int i=0; i<strToDisplay.size(); i++) {
-				
-				logPanel.recordToLog(HTML_HEAD+strToDisplay.get(i)+HTML_TAIL);
-			}
-			/*if (commandType == "update" || commandType == "delete" ||commandType == "add") {
-
-				if (commandType == "update"){
-					TaskforUpdateFunction UpdatedTask = processor.getUpdatedTask();
-					logPanel.displayUpdatedTask(UpdatedTask);				
-					
-				}
-			} else {
-				logPanel.recordToLog(MESSAGE_INVALID_COMMAND);
-			}*/
+			logPanel.recordToLog(HTML_HEAD+setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);		
 			userInputBox.setText("");
-			return strToDisplay;
+		} else if (commandType.equals("sw") && userCommand.contains(" ")){
+			String panelName = userCommand.substring(userCommand.indexOf(" ")+1);
+
+			logPanel.clearLog();
+			logPanel.recordToLog(HTML_HEAD+setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);
+			switch (panelName.toLowerCase()) {
+				case "et":
+					taskPanel.setSelectedIndex(0);
+					strToDisplay.add("Task tab switched to display Event Task");
+					break;
+				case "ft":
+					taskPanel.setSelectedIndex(1);
+					strToDisplay.add("Task tab switched to display Floating Task");
+					break;
+				case "dt":
+					taskPanel.setSelectedIndex(2);
+					strToDisplay.add("Task tab switched to display Deadline Task");
+					break;
+				default:
+										
+			}
+			userInputBox.setText("");
 		}
-		return null;
+		for (int i=0; i<strToDisplay.size(); i++) {				
+			logPanel.recordToLog(HTML_HEAD+strToDisplay.get(i)+HTML_TAIL);
+		} 	
 	}
 	
 	public String setStringInGreen(String outputStr){
