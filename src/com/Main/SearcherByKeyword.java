@@ -57,8 +57,8 @@ public class SearcherByKeyword implements Commander {
 
 	@Override
 	public String undo() {
-		// TODO Auto-generated method stub
-		return null;
+		String feedback = "Your last action is searching, which cannot be undone.";
+		return feedback;
 	}
 }
 

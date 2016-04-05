@@ -14,15 +14,11 @@ public class Processor {
 	private String feedbackMessage = "";
 	public ArrayList<String> messageThread = new ArrayList<String>();
 	private static Commander lastCommanderInst = null; // for Undo function.
-
-	public static void setLastCommanderInst(Commander lastCommanderInst) {
-		Processor.lastCommanderInst = lastCommanderInst;
-	}
-
-	public ArrayList<String> getMessageThread() {
-		return messageThread;
-	}
-
+	
+	private static ArrayList<Task> eventList;
+	private static ArrayList<Task> floatList;
+	private static ArrayList<Task> deadlineList;
+	
 	public Processor(){
 		parserInst = new Parser();
 		storage = new TextFileSaver();
@@ -35,22 +31,18 @@ public class Processor {
 	 * Set up the Task ID for every task in the list.
 	 */
 	private void setUp() {
+		ArrayList<Task> tasksArray = storage.getTaskData();
 		for (int i = 0; i < storage.getTaskData().size(); i++ ){
-			ArrayList<Task> tasksArray = storage.getTaskData();
 			tasksArray.get(i).setCalendar();
+			tasksArray.get(i).determineTaskType();
 			tasksArray.get(i).setTaskID(i+1);//generation of TaskID, 1-based.
 		}
+		Displayer defaultDisplay = new Displayer("today", tasksArray);
+		defaultDisplay.execute();
 	}
 	
 	public List<String> executeCommand(String userInput){
 		List<String> output = null;
-		
-		if(userInput.startsWith("cd", 0)){
-			storage = new TextFileSaver(userInput.substring(3));
-			feedbackMessage = "Opened " + userInput.substring(3);
-		}
-		
-		/*
 		if (userInput == "undo"){
 			if(lastCommanderInst == null){
 				feedbackMessage = "Sorry, the last action cannot be undo further.";				
@@ -59,12 +51,10 @@ public class Processor {
 				feedbackMessage = lastCommanderInst.undo();
 			}
 		}
-		*/
-		
 		else{
-		
 			Commander commanderInst = parserInst.parse(userInput, storage.getTaskData());
-			feedbackMessage = commanderInst.execute();	
+			feedbackMessage = commanderInst.execute();
+			
 		}
 		storage.saveFile();
 		String[] array = feedbackMessage.split(System.lineSeparator());
@@ -100,6 +90,38 @@ public class Processor {
 	public String setStringWithRGB(String outputStr, String r, String g, String b){
 		outputStr = "<font color=\"rgb("+r+", "+g+", "+b+")\">" + outputStr + "</font>";
 		return outputStr;
+	}
+	public static ArrayList<Task> getEventList() {
+		return eventList;
+	}
+
+	public static void setEventList(ArrayList<Task> eventList) {
+		Processor.eventList = eventList;
+	}
+
+	public static ArrayList<Task> getFloatList() {
+		return floatList;
+	}
+
+	public static void setFloatList(ArrayList<Task> floatList) {
+		Processor.floatList = floatList;
+	}
+
+	public static ArrayList<Task> getDeadlineList() {
+		return deadlineList;
+	}
+
+	public static void setDeadlineList(ArrayList<Task> deadlineList) {
+		Processor.deadlineList = deadlineList;
+	}
+
+
+	public static void setLastCommanderInst(Commander lastCommanderInst) {
+		Processor.lastCommanderInst = lastCommanderInst;
+	}
+
+	public ArrayList<String> getMessageThread() {
+		return messageThread;
 	}
 	
 }

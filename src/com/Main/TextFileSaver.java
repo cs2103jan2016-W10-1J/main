@@ -12,11 +12,9 @@ import java.util.List;
 
 //@@author A0097119X
 public class TextFileSaver {
-	
-	private File fileDirectory;
+
 	private File file;
 	private File completedFile;
-	private String lastOpenedDirectory = "Last_Accessed.txt";
 	private String fileName;
 	private String completedFileName;
 	private ArrayList<Task> taskData;
@@ -65,24 +63,12 @@ public class TextFileSaver {
 	
 	public TextFileSaver(){
 		taskData = new ArrayList<Task>();
-		
-		fileDirectory = new File(lastOpenedDirectory);
-		
-		if(!fileDirectory.exists()){
-			
 		//Attempt to locate file. Create new file if file does not exist
 		fileName = "Record.txt";
 		completedFileName = "Record_Archive.txt";
 		try {
-			
-			//create file, read and write to record.txt
-			FileWriter createDirectory = new FileWriter(lastOpenedDirectory);
-			createDirectory.write(fileName);
-			createDirectory.flush();
-			createDirectory.close();
-			
 			file = new File(fileName);	
-			
+		
 			if(!file.exists()) { 
 			    // if file not exist, create a new .txt file with same file name
 				FileWriter fileWriter = new FileWriter(file);
@@ -107,29 +93,6 @@ public class TextFileSaver {
 		} catch (IOException e) {
 			e.printStackTrace();
 			}
-		}
-		
-		else{
-			//open lastOpenDirectory and read it
-				try {
-					String temp;
-					BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
-					while((temp = br.readLine()) != null){
-						fileName = temp;
-					}
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}	
-			
-				
-			//change filename and archive filename to that
-			completedFileName = fileName.substring(0, fileName.indexOf(".")) + "_Archive.txt";
-			System.out.println(completedFileName);
-			completedFile = new File(completedFileName);
-			//read from that
-			readFile();
-		}
 	}
 	
 	public TextFileSaver(String fileName){
@@ -137,40 +100,42 @@ public class TextFileSaver {
 		//Attempt to locate file. Create new file if file does not exist
 		if(fileName.length()>0){
 		this.fileName = fileName;
-		completedFileName = fileName.substring(0, fileName.indexOf(".")) + "_Archive.txt";
-		
 		try {
-			file = new File(fileName);	
-		
+			file = new File(fileName);			
 			if(!file.exists()) { 
 			    // if file not exist, create a new .txt file with same file name
 				FileWriter fileWriter = new FileWriter(file);
 				fileWriter.flush();
 				fileWriter.close();
-				System.out.println(fileName + " does not exists. New Record.txt file has been created");
-			}
-			
-			completedFile = new File(completedFileName);	
-			if(!completedFile.exists()){
-				// if archive file does not exit, create a new .txt file with FILENAME_Archive.txt
-				FileWriter completedFileWriter = new FileWriter(completedFile);
-				completedFileWriter.flush();
-				completedFileWriter.close();
-				System.out.println(completedFileName + " does not exists. New Record.txt file has been created");
-			}
-				
-						
+				System.out.println(fileName + " does not exists. New " + fileName + " file has been created");
+			}			
+			else{
 				//if file exists, read it into the arraylist fileData
 				readFile();
-		
-				//Write fileName to fileDirectory. Refer to saveFile()
-				FileWriter updateLastAccessed = new FileWriter(lastOpenedDirectory);
-				updateLastAccessed.write(fileName);                            //Write the processed string into the file
-				updateLastAccessed.close();
-				
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			}
+		}
+		
+		else{
+			this.fileName = "Record.txt";
+			try {
+				file = new File(fileName);			
+				if(!file.exists()) { 
+				    // if file not exist, create a new .txt file with same file name
+					FileWriter fileWriter = new FileWriter(file);
+					fileWriter.flush();
+					fileWriter.close();
+					System.out.println(fileName + " does not exists. New Record.txt file has been created");
+				}			
+				else{
+					//if file exists, read it into the arraylist fileData
+					readFile();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				}
 			
 		}
 	}

@@ -23,7 +23,7 @@ public class Adder implements Commander{
 			newTask.setNotification(parsedUserInput[6]);
 			newTask.setCalendar();
 			newTask.setTaskID(taskListSize+1);
-			
+			newTask.determineTaskType();
 		} catch (NullPointerException e) {
 			
 			//e.printStackTrace();

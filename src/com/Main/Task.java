@@ -8,6 +8,10 @@ import java.util.GregorianCalendar;
 
 
 public class Task {
+	
+	enum TASK_TYPE{
+		EVENT, FLOAT, DEADLINE;
+	}
 	private String taskName = "";
 	private String date = ""; //"MM dd yyyy"
 	private String location = "";
@@ -17,8 +21,26 @@ public class Task {
 	private String notification = "";
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
+	
+	public GregorianCalendar getEndCal() {
+		return endCal;
+	}
+
+	public void setEndCal(GregorianCalendar endCal) {
+		this.endCal = endCal;
+	}
+
 	boolean isTaskDone = false;
 	private int taskID;
+	private TASK_TYPE taskType;
+			
+	public TASK_TYPE getTaskType() {
+		return taskType;
+	}
+
+	public void setTaskType(TASK_TYPE taskType) {
+		this.taskType = taskType;
+	}
 	
 	public void setTaskID(int taskID) {
 		this.taskID = taskID;
@@ -26,6 +48,21 @@ public class Task {
 	
 	public int getTaskID() {
 		return taskID;
+	}
+	public void determineTaskType(){
+		//Need to make it complete by guarding against other possibilities 
+		if ( date == null){
+			this.setTaskType(TASK_TYPE.FLOAT);
+		}else 
+			if ( date != null && start != null && end != null){
+				this.setTaskType(TASK_TYPE.EVENT);
+			}else
+				if ( date != null && start == null && end != null){
+					this.setTaskType(TASK_TYPE.DEADLINE);
+				}else{
+					this.setTaskType(null);
+				} 
+
 	}
 	
 	/*
@@ -35,21 +72,25 @@ public class Task {
 				
 		DateFormat formatter = new SimpleDateFormat("MM dd yyyy HHmm");
 		Date date = new Date();
-		try {
-			date = formatter.parse(getDate() + " " + getStart()); // String to Date object
-		} catch (ParseException e) {
-			//e.printStackTrace();
-			//System.out.println("date object is not successfully parsed from its string counterpart" + e.getMessage());
+		if (this.getStart() != null){
+			try {
+				date = formatter.parse(this.getDate() + " " + this.getStart()); // String to Date object
+			} catch (ParseException e) {
+				//e.printStackTrace();
+				//System.out.println("date object is not successfully parsed from its string counterpart" + e.getMessage());
+			}
+			startCal.setTime(date);
 		}
-		startCal.setTime(date);
 		
-		try {
-			date = formatter.parse(getDate() + " " + getEnd()); // String to Date object
-		} catch (ParseException e) {
-			//e.printStackTrace();
-			//System.out.println("date object is not successfully parsed from its string counterpart" + e.getMessage());
+		if (this.getEnd() != null){
+			try {
+				date = formatter.parse(getDate() + " " + getEnd()); // String to Date object
+			} catch (ParseException e) {
+				//e.printStackTrace();
+				//System.out.println("date object is not successfully parsed from its string counterpart" + e.getMessage());
+			}
+			endCal.setTime(date);
 		}
-		endCal.setTime(date);
 	}
 	public GregorianCalendar getStartCal() {
 		return startCal;
@@ -61,11 +102,7 @@ public class Task {
 	public String getTaskName() {
 		return taskName;
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> origin/master
 	public String getLocation() {
 		return location;
 	}

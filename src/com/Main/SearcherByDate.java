@@ -34,6 +34,13 @@ public class SearcherByDate implements Commander {
 		this.TaskList = TaskList;
 	}
 	
+	public SearcherByDate(Date date, ArrayList<Task> TaskList) {
+		
+		desiredDay.setTime(date);
+		
+		this.TaskList = TaskList;
+	}
+	
 	@Override
 	public String execute() {
 		GregorianCalendar dayToCompare;
@@ -52,6 +59,40 @@ public class SearcherByDate implements Commander {
 		}
 		ConverterToString output = new ConverterToString(TaskListWanted);
 		return output.convert();
+	}
+	public ArrayList<Task> executeforDisplayOnStartTime() {
+		GregorianCalendar dayToCompare;
+		for (int i = 0; i < TaskList.size(); i++){
+			dayToCompare = TaskList.get(i).getStartCal();
+			
+			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
+			int TaskYear = dayToCompare.get(GregorianCalendar.YEAR);
+			int DesiredDay = desiredDay.get(GregorianCalendar.DAY_OF_YEAR);
+			int TaskDay = dayToCompare.get(GregorianCalendar.DAY_OF_YEAR);
+			
+			boolean sameDay = ((DesiredYear==TaskYear)&&(DesiredDay==TaskDay));
+			if (sameDay){
+				TaskListWanted.add(TaskList.get(i));
+			}
+		}
+		return TaskListWanted;
+	}
+	public ArrayList<Task> executeforDisplayOnEndTime() {
+		GregorianCalendar dayToCompare;
+		for (int i = 0; i < TaskList.size(); i++){
+			dayToCompare = TaskList.get(i).getEndCal();
+			
+			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
+			int TaskYear = dayToCompare.get(GregorianCalendar.YEAR);
+			int DesiredDay = desiredDay.get(GregorianCalendar.DAY_OF_YEAR);
+			int TaskDay = dayToCompare.get(GregorianCalendar.DAY_OF_YEAR);
+			
+			boolean sameDay = ((DesiredYear==TaskYear)&&(DesiredDay==TaskDay));
+			if (sameDay){
+				TaskListWanted.add(TaskList.get(i));
+			}
+		}
+		return TaskListWanted;
 	}
 
 	@Override
