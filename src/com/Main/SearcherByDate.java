@@ -58,6 +58,7 @@ public class SearcherByDate implements Commander {
 			}
 		}
 		ConverterToString output = new ConverterToString(TaskListWanted);
+		Processor.setLastCommanderInst(this);
 		return output.convert();
 	}
 	public ArrayList<Task> executeforDisplayOnStartTime() {

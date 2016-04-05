@@ -50,7 +50,9 @@ public class SearcherByKeyword implements Commander {
 			}
 		}
 		searchResultList.removeAll(toRemove);
+		Processor.setLastCommanderInst(this);
 		ConverterToString output = new ConverterToString(searchResultList);
+		
 		return output.convert();
 
 	}

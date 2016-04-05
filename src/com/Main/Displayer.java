@@ -49,6 +49,7 @@ public class Displayer implements Commander{
 			throw new Error("Unrecognized displayParameter type");
 		}
 		updateThreeLists();	
+		Processor.setLastCommanderInst(this);
 		return "Please refer to the right-hand side panel for display";
 	}
 
@@ -78,6 +79,8 @@ public class Displayer implements Commander{
 
 
 	private void updateThreeLists() {
+		Sort sortInst = new Sort(eventList);
+		eventList = sortInst.sortThis(); 
 		Processor.setEventList(eventList);
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);

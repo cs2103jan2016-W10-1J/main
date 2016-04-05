@@ -61,6 +61,8 @@ public class SearcherForFreeTimeSlot implements Commander {
 		System.out.println("Current Time is : " + currentTime);
 		System.out.println("Current Day is : ");
 		
+		Processor.setLastCommanderInst(this);
+		
 		for(int j=0; j<8; j++){
 			foundConflict = false;
 			
