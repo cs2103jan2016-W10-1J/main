@@ -1,2 +1,3 @@
 cs2103 tutorial ~~com1 ~~06 04 2016~~1000 ~~1100~~ ~~ ~~false~~1
 cs2103 meeting ~~computing ~~06 04 2016~~1100 ~~1200~~ ~~ ~~false~~2
+CS2103 ~~computing~~~~ ~~ ~~ ~~ ~~false~~3

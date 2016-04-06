@@ -25,24 +25,33 @@ public class SearcherByKeyword implements Commander {
 	//@@author A0116764B
 	@Override
 	public String execute() {
-		String keyword = keywords[0].trim();
+		String keyword = keywords[0].trim().toLowerCase();
 		if (TaskList.size() == 0) {
 			return "TodoList is empty";
 		}
 		
 		for (Task currentTask : TaskList){
-			if (currentTask.getTaskName().contains(keyword) || currentTask.getLocation().contains(keyword)
-					|| currentTask.getNotification().contains(keyword) || currentTask.getTag().contains(keyword)){
+			String taskName = currentTask.getTaskName();
+			String location = currentTask.getLocation();
+			String tag = currentTask.getTag();
+			String notification = currentTask.getNotification();
+			if (taskName.toLowerCase().contains(keyword) || location.toLowerCase().contains(keyword) 
+					|| tag.toLowerCase().contains(keyword) || notification.toLowerCase().contains(keyword)){
 				searchResultList.add(currentTask);
 			}			
 		}
 		
 		for (int i = 0; i < keywords.length; i++){ 
 			keyword = keywords[i];
+			keyword = keyword.toLowerCase();
 			for (Task checkTask : searchResultList){
 				boolean containsKeyword = false;
-				if (checkTask.getTaskName().contains(keyword) || checkTask.getLocation().contains(keyword) 
-						|| checkTask.getNotification().contains(keyword) || checkTask.getTag().contains(keyword)){
+				String taskName = checkTask.getTaskName();
+				String location = checkTask.getLocation();
+				String tag = checkTask.getTag();
+				String notification = checkTask.getNotification();
+				if (taskName.toLowerCase().contains(keyword) || location.toLowerCase().contains(keyword) 
+						|| tag.toLowerCase().contains(keyword) || notification.toLowerCase().contains(keyword)){
 					containsKeyword = true;
 				} 
 				if (!containsKeyword){
@@ -58,6 +67,11 @@ public class SearcherByKeyword implements Commander {
 
 	}
 
+	public String toLowerCase(String str){
+		str = str.toLowerCase();
+		return str;
+	}
+	
 	@Override
 	public String undo() {
 		String feedback = "Your last action is searching, which cannot be undone.";
