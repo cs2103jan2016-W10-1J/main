@@ -182,7 +182,7 @@ public class Parser {
 		return doRow;
 	}
 
-	// @@author a0116764b-unused
+	// @@author A0116764B-unused
 	public String getTaskName(String parameters) {
 		String taskName = "";
 		taskName = parameters.substring(0, parameters.indexOf("@") - 1);
@@ -225,7 +225,7 @@ public class Parser {
 		return notification;
 	}
 }	
-//@@author a0116764b-unused
+//@@author A0116764B-unused
 // Old parser code, before overhaul in architecture
 /*
 	private Command command;
