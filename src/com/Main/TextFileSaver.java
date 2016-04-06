@@ -7,7 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 //@@author A0097119X
@@ -216,6 +222,7 @@ public class TextFileSaver {
 	public String addToTaskList(String temp, Task tempTask, int lineReading) {
 		try {
 			String[] _temp = new String[9];
+			GregorianCalendar tempCal = new GregorianCalendar();
 			_temp = temp.split("~~", -1);
 			tempTask.setTask(_temp[0]);
 			tempTask.setLocation(_temp[1]);
@@ -231,6 +238,27 @@ public class TextFileSaver {
 				tempTask.setTaskAsDone();
 			}
 			tempTask.setTaskID(Integer.parseInt(_temp[8]));
+			
+			/*
+			if(_temp[9].length()>0){
+				tempCal = convertStringToCalendar(_temp[9]);
+				tempTask.setStartCal(tempCal);
+			}
+			else{
+				tempCal = new GregorianCalendar();
+				tempTask.setStartCal(tempCal);
+			}
+			
+			if(_temp[10].length()>0){
+				tempCal = convertStringToCalendar(_temp[10]);
+				tempTask.setEndCal(tempCal);
+			}
+			else{
+				tempCal = new GregorianCalendar();
+				tempTask.setEndCal(tempCal);
+			}
+			*/
+			
 			taskData.add(tempTask);
 			_temp = null;
 			return "success";
@@ -281,7 +309,7 @@ public class TextFileSaver {
 	/*Convert the string arrays into a single string with proper formatting before saving*/
 	public String processIntoSingleStringForSaving(String tempSave,
 			String[] taskToString) {
-		tempSave = tempSave + taskToString[0] + "~~" + taskToString[1] + "~~" + taskToString[2] + "~~"+ taskToString[3] + "~~"+ taskToString[4] + "~~"+ taskToString[5]+ "~~" + taskToString[6] + "~~" +taskToString[7] + "~~" + taskToString[8]+"\n";
+		tempSave = tempSave + taskToString[0] + "~~" + taskToString[1] + "~~" + taskToString[2] + "~~"+ taskToString[3] + "~~"+ taskToString[4] + "~~"+ taskToString[5]+ "~~" + taskToString[6] + "~~" +taskToString[7] + "~~" + taskToString[8]+/*"~~" + taskToString[9]+"~~" + taskToString[10]+*/"\n";
 		return tempSave;
 	}
 	
@@ -297,5 +325,38 @@ public class TextFileSaver {
 		taskToString[6] = tempTaskForSaving.getNotification();
 		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone);
 		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID());
+		
+		/*
+		if(!tempTaskForSaving.getStartCal().){
+			taskToString[9] = convertCalendarToString(tempTaskForSaving.getStartCal());
+		}
+		else{
+			taskToString[9] = "";
+		}
+		
+		if(taskToString[10].length()>0){
+			taskToString[10] = convertCalendarToString(tempTaskForSaving.getEndCal());
+		}
+		else{
+			taskToString[10] = "";
+		}
+		*/
+	}
+	
+	public String convertCalendarToString(GregorianCalendar toBeConverted){
+		String result = new String();
+		DateFormat df = new SimpleDateFormat("MM dd yyyy");
+		result = df.format(toBeConverted);
+		
+		return result;
+	}
+	
+	public GregorianCalendar convertStringToCalendar(String toBeConverted) throws ParseException{
+		DateFormat df = new SimpleDateFormat("MM dd yyyy");
+		Date date = df.parse(toBeConverted);
+		GregorianCalendar result = new GregorianCalendar();
+		result.setTime(date);
+		
+		return result;
 	}
 }

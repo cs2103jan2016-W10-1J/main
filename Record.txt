@@ -1,6 +1,2 @@
-church~~ ~~~~ ~~ ~~ ~~ 
-meeting~~ ~~~~ ~~ ~~ ~~ 
-church meeting~~ ~~~~ ~~ ~~ ~~ 
-meeting church~~ ~~~~ ~~ ~~ ~~ 
-meeting~~ ~~~~ ~~ ~~ ~~ 
-church~~ ~~~~ ~~ ~~ ~~ 
+task ~~ ~~6 5 2016~~ ~~ ~~ ~~ ~~false~~3
+task ~~ ~~2 3 1203~~ ~~ ~~ ~~ ~~false~~4

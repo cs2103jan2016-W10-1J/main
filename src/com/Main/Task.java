@@ -22,6 +22,10 @@ public class Task {
 	private String notification = "";
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
+	boolean isTaskDone = false;
+	private int taskID;
+	private TASK_TYPE taskType;
+	
 	
 	public GregorianCalendar getEndCal() {
 		return endCal;
@@ -31,9 +35,9 @@ public class Task {
 		this.endCal = endCal;
 	}
 
-	boolean isTaskDone = false;
-	private int taskID;
-	private TASK_TYPE taskType;
+	public void setStartCal(GregorianCalendar startCal) {
+		this.startCal = startCal;
+	}
 			
 	public TASK_TYPE getTaskType() {
 		return taskType;

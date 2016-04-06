@@ -167,7 +167,8 @@ public class HomeFrame extends JFrame{
 
 	
 	private void updateTaskLists(){
-		eventTaskList.upDateTaskList(Processor.getEventList());
+		eventTaskList.upDateTaskList(processor.getStorage().getTaskData());
+		//eventTaskList.upDateTaskList(Processor.getEventList());
 		floatingTaskList.upDateTaskList(Processor.getFloatList());
 		deadlineTaskList.upDateTaskList(Processor.getDeadlineList());
 	}

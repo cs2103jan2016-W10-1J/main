@@ -123,11 +123,11 @@ public class Parser {
 			return new Updater(undone, TaskList);
 
 			// display today/tomorrow/week/all/done/undone
-			/*
-			 * case "display": String[] displayParameters = new String[1];
-			 * displayParameters[0] = input; return new
-			 * Displayer(displayParameters, TaskList);
-			 */
+			
+		case "display": String displayParameter;
+		displayParameter = input; 
+		return new Displayer(displayParameter, TaskList);
+			 
 			// switch deadline/event/float
 			/*
 			 * case "switch": String[] switchParameters = new String[1];
