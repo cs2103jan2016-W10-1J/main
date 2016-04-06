@@ -1,3 +1,4 @@
+//@@author A0116764B
 package com.Main;
 
 import java.text.DateFormat;
@@ -20,6 +21,8 @@ public class Task {
 	private String end = "";//"HHmm" format
 	private String tag = "";
 	private String notification = "";
+//@@author A0100111R
+	
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
 	boolean isTaskDone = false;
@@ -103,7 +106,7 @@ public class Task {
 	
 	public Task(){
 	}
-
+//@@author A0149484R
 	public String getTaskName() {
 		return taskName;
 	}
