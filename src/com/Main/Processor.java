@@ -18,6 +18,8 @@ public class Processor {
 	private static ArrayList<Task> eventList;
 	private static ArrayList<Task> floatList;
 	private static ArrayList<Task> deadlineList;
+	private static ArrayList<Task> doneTaskList;
+	private static ArrayList<Task> undefinedList;
 	
 	public Processor(){
 		parserInst = new Parser();
@@ -96,6 +98,7 @@ public class Processor {
 		outputStr = "<font color=\"rgb("+r+", "+g+", "+b+")\">" + outputStr + "</font>";
 		return outputStr;
 	}
+	//@@author A0100111R
 	public static ArrayList<Task> getEventList() {
 		return eventList;
 	}
@@ -119,8 +122,21 @@ public class Processor {
 	public static void setDeadlineList(ArrayList<Task> deadlineList) {
 		Processor.deadlineList = deadlineList;
 	}
+	public static ArrayList<Task> getDoneTaskList() {
+		return doneTaskList;
+	}
 
+	public static void setDoneTaskList(ArrayList<Task> doneTaskList) {
+		doneTaskList = doneTaskList;
+	}
 
+	public static ArrayList<Task> getUndefinedList() {
+		return undefinedList;
+	}
+
+	public static void setUndefinedList(ArrayList<Task> undefinedList) {
+		Processor.undefinedList = undefinedList;
+	}
 	public static void setLastCommanderInst(Commander lastCommanderInst) {
 		Processor.lastCommanderInst = lastCommanderInst;
 	}

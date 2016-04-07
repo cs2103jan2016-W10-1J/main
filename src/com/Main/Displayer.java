@@ -1,5 +1,5 @@
 package com.Main;
-
+//@@author A0100111R
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,16 +7,40 @@ import java.util.Date;
 import com.Main.Task.TASK_TYPE;
 
 public class Displayer implements Commander{
-	private String displayParameter;
-	ArrayList<Task> TaskList;
 	
-	ArrayList<Task> eventList = new ArrayList<Task>();
-	ArrayList<Task> floatList = new ArrayList<Task>();
-	ArrayList<Task> deadlineList = new ArrayList<Task>();
+	private ArrayList<Task> TaskList;
+	private static String displayParameter = "today";
 	
+	private static ArrayList<Task> eventList;
+	private static ArrayList<Task> floatList;
+	private static ArrayList<Task> deadlineList;
+	private static ArrayList<Task> doneTaskList;
+	private static ArrayList<Task> undefinedList;
+
+	/*
+	 * First constructor is for situations when displayRequirement requires changes
+	 * This constructor is also tailored for user command "Display displayParameter"
+	 */
 	public Displayer(String displayRequirement, ArrayList<Task> TaskList) {
+		ArrayList<Task> eventList = new ArrayList<Task>();
+		ArrayList<Task> floatList = new ArrayList<Task>();
+		ArrayList<Task> deadlineList = new ArrayList<Task>();
+		ArrayList<Task> doneTaskList  = new ArrayList<Task>();
+		ArrayList<Task> undefinedList  = new ArrayList<Task>();
+				
 		displayParameter = displayRequirement;	
-		this.TaskList = TaskList;
+		this.TaskList = new ArrayList<Task>(TaskList);//Copy the orignal TaskList.
+		this.getEventList(TaskList);
+		this.getFloatList(TaskList);
+		this.getDeadlineList(TaskList);
+	}
+	
+	/*
+	 * Second constructor is purely for the purpose of updating the GUI display.
+	 * It is only used internally by other classes.
+	 */
+	public Displayer(ArrayList<Task> TaskList) {
+		this.TaskList = new ArrayList<Task>(TaskList);
 		this.getEventList(TaskList);
 		this.getFloatList(TaskList);
 		this.getDeadlineList(TaskList);
@@ -46,7 +70,7 @@ public class Displayer implements Commander{
 			break;
 			
 		default:
-			throw new Error("Unrecognized displayParameter type");
+			return "Unrecognized display parameter";
 		}
 		updateThreeLists();	
 		Processor.setLastCommanderInst(this);
@@ -77,13 +101,17 @@ public class Displayer implements Commander{
 		deadlineList = findTodayDeadline.executeforDisplayOnStartTime();
 	}
 
-
+/*
+ * Complete the sort.
+ */
 	private void updateThreeLists() {
 		Sort sortInst = new Sort(eventList);
 		eventList = sortInst.sortThis(); 
 		Processor.setEventList(eventList);
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);
+		Processor.setDoneTaskList(doneTaskList);
+		Processor.setUndefinedList(undefinedList);
 	}
 
 

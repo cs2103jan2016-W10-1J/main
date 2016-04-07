@@ -45,8 +45,6 @@ public class HomeFrame extends JFrame{
 	private TaskPanel eventTaskList;
 	private TaskPanel floatingTaskList;
 	private TaskPanel deadlineTaskList;
-	private TaskPanel undefinedTaskList;
-	private TaskPanel doneTaskList;
 	private JTextField userInputBox;
 	private JSplitPane mainPanel;
 	private Processor processor;
@@ -81,15 +79,11 @@ public class HomeFrame extends JFrame{
 		eventTaskList = new TaskPanel();
 		ArrayList<Task> fileData = processor.getStorage().getTaskData();
 		eventTaskList.upDateTaskList(fileData);
-		taskPanel.add("Event", eventTaskList);
+		taskPanel.add("Event Task", eventTaskList);
 		floatingTaskList = new TaskPanel();
 		taskPanel.add("Floating Task", floatingTaskList);
 		deadlineTaskList = new TaskPanel();
-		taskPanel.add("Deadline", deadlineTaskList);
-		undefinedTaskList = new TaskPanel();
-		taskPanel.add("undefined Task", undefinedTaskList);
-		doneTaskList = new TaskPanel();
-		taskPanel.add("Done Task", doneTaskList);
+		taskPanel.add("Deadline Task", deadlineTaskList);
 		
 		mainPanel.setRightComponent(taskPanel);	
 		
@@ -177,7 +171,6 @@ public class HomeFrame extends JFrame{
 		//eventTaskList.upDateTaskList(Processor.getEventList());
 		floatingTaskList.upDateTaskList(Processor.getFloatList());
 		deadlineTaskList.upDateTaskList(Processor.getDeadlineList());
-		//undefinedTaskList.upDateTaskList(Processor);
 	}
 	
 	
