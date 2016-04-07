@@ -20,9 +20,11 @@ public class Task {
 	private String end = "";//"HHmm" format
 	private String tag = "";
 	private String notification = "";
+	boolean isTaskDone = false;
+	
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
-	boolean isTaskDone = false;
+	
 	private int taskID;
 	private TASK_TYPE taskType = TASK_TYPE.UNDEFINED;
 	

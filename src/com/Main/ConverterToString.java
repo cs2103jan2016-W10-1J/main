@@ -61,11 +61,11 @@ public class ConverterToString {
 	}
 	
 	
-	private static final String DISPLAY_TASK_TITLE_MESSAGE = "Title:%1$s";
-	private static final String DISPLAY_TASK_DATE_MESSAGE = "Date:%1$s";
-	private static final String DISPLAY_TASK_LOCATION_MESSAGE = "Location:%1$s";
-	private static final String DISPLAY_TASK_START_MESSAGE = "Start:%1$s";
-	private static final String DISPLAY_TASK_END_MESSAGE = "End:%1$s";
-	private static final String DISPLAY_TASK_TAG_MESSAGE = "Tag:%1$s";
-	private static final String DISPLAY_TASK_NOTIFICATION_MESSAGE = "Notification:%1$s";
+	private static final String DISPLAY_TASK_TITLE_MESSAGE = "Title: %1$s";
+	private static final String DISPLAY_TASK_DATE_MESSAGE = "Date: %1$s";
+	private static final String DISPLAY_TASK_LOCATION_MESSAGE = "Location: %1$s";
+	private static final String DISPLAY_TASK_START_MESSAGE = "Start: %1$s";
+	private static final String DISPLAY_TASK_END_MESSAGE = "End: %1$s";
+	private static final String DISPLAY_TASK_TAG_MESSAGE = "Tag: %1$s";
+	private static final String DISPLAY_TASK_NOTIFICATION_MESSAGE = "Notification: %1$s";
 }
