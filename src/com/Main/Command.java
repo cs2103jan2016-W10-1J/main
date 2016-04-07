@@ -1,5 +1,4 @@
-//@@author A0116764B-unused
-// used in old architecture
+//@@author a0116764b-unused
 package com.Main;
 
 public class Command {

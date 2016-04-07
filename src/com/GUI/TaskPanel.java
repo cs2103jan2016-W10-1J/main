@@ -1,4 +1,3 @@
-//@@author A0149484R
 package com.GUI;
 
 import java.awt.BorderLayout;
@@ -53,17 +52,17 @@ public class TaskPanel extends JPanel {
 	Object rowData[][] = {};
 	private JTable table;
 	private DefaultTableModel model;
-	private String imgLink = "";
+	private String imgLink = "background.png";
 	
 	//The constructor for task table
     public TaskPanel() {
         setLayout(new BorderLayout());
         setSize(new Dimension(600, 300));
-        this.setBackground(new Color(255, 255, 255, 125));
     	//table = new JTable(rowData, titleBarStr);
         model = new DefaultTableModel(titleBarStr,0);
         table = new JTable(model){
         	private static final long serialVersionUID = 1L;
+
             @Override
                 public boolean isCellEditable(int row, int column) {
                    return false;
@@ -71,16 +70,15 @@ public class TaskPanel extends JPanel {
         };
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
     	//table.setShowGrid(false);
-        //table.setGridColor(new Color(255, 255, 255, 125));
-        table.setGridColor(Color.WHITE);
+        table.setGridColor(new Color(255, 255, 255, 125));
         table.setFillsViewportHeight( true );
     	table.setOpaque(false);
-    	//table.setBackground(new Color(255, 255, 255, 125));
+    	table.setBackground(new Color(255, 255, 255, 125));
     	table.setFont(new Font("Calibri", Font.BOLD, 15));
     	
     	JScrollPane scrollPane = new JScrollPane(table);
     	scrollPane.setOpaque(false);
-    	scrollPane.getViewport().setBackground(Color.WHITE);
+    	scrollPane.getViewport().setOpaque(false);
     	
     	
         add(scrollPane);

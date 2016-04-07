@@ -1,6 +1,5 @@
-//author A0100111R
 package com.Main;
-
+//@@author A0100111R
 import java.util.ArrayList;
 import java.util.logging.Level;
 

@@ -1,4 +1,3 @@
-//@@author A0115449A
 package com.Main;
 
 import java.util.ArrayList;
@@ -22,36 +21,27 @@ public class SearcherByKeyword implements Commander {
 		this.TaskList = TaskList;
 	}
 	
-	//@@author A0116764B
+	//@@author a0116764b
 	@Override
 	public String execute() {
-		String keyword = keywords[0].trim().toLowerCase();
+		String keyword = keywords[0].trim();
 		if (TaskList.size() == 0) {
 			return "TodoList is empty";
 		}
 		
 		for (Task currentTask : TaskList){
-			String taskName = currentTask.getTaskName();
-			String location = currentTask.getLocation();
-			String tag = currentTask.getTag();
-			String notification = currentTask.getNotification();
-			if (taskName.toLowerCase().contains(keyword) || location.toLowerCase().contains(keyword) 
-					|| tag.toLowerCase().contains(keyword) || notification.toLowerCase().contains(keyword)){
+			if (currentTask.getTaskName().contains(keyword) || currentTask.getLocation().contains(keyword)
+					|| currentTask.getNotification().contains(keyword) || currentTask.getTag().contains(keyword)){
 				searchResultList.add(currentTask);
 			}			
 		}
 		
 		for (int i = 0; i < keywords.length; i++){ 
 			keyword = keywords[i];
-			keyword = keyword.toLowerCase();
 			for (Task checkTask : searchResultList){
 				boolean containsKeyword = false;
-				String taskName = checkTask.getTaskName();
-				String location = checkTask.getLocation();
-				String tag = checkTask.getTag();
-				String notification = checkTask.getNotification();
-				if (taskName.toLowerCase().contains(keyword) || location.toLowerCase().contains(keyword) 
-						|| tag.toLowerCase().contains(keyword) || notification.toLowerCase().contains(keyword)){
+				if (checkTask.getTaskName().contains(keyword) || checkTask.getLocation().contains(keyword) 
+						|| checkTask.getNotification().contains(keyword) || checkTask.getTag().contains(keyword)){
 					containsKeyword = true;
 				} 
 				if (!containsKeyword){
@@ -67,11 +57,6 @@ public class SearcherByKeyword implements Commander {
 
 	}
 
-	public String toLowerCase(String str){
-		str = str.toLowerCase();
-		return str;
-	}
-	
 	@Override
 	public String undo() {
 		String feedback = "Your last action is searching, which cannot be undone.";
@@ -79,3 +64,50 @@ public class SearcherByKeyword implements Commander {
 	}
 }
 
+// old SearcherByKeyword code by zhiyun
+/*
+public class SearcherByKeyword implements Commander {
+private String keyWord;
+private ArrayList<Task> TaskList;
+private ArrayList<Task> searchResultList= new ArrayList<Task>();
+
+public SearcherByKeyword(String[] parsedUserInput, ArrayList<Task> TaskList){
+	//The 1st element in the string array is the keyword for search
+	keyWord = parsedUserInput[0];
+	this.TaskList = TaskList;
+}
+
+@Override
+public String execute() {
+	keyWord = keyWord.trim();
+	if (TaskList.size() == 0) {
+		return "TodoList is empty";
+	} else {
+		for (Task currentTask : TaskList){
+			if (currentTask.getTaskName().contains(keyWord)){
+				searchResultList.add(currentTask);
+			}
+			else {
+				if (currentTask.getLocation().contains(keyWord)){
+					searchResultList.add(currentTask);
+				}
+				else {
+					if (currentTask.getNotification().contains(keyWord)){
+						searchResultList.add(currentTask);
+					}
+					else {
+						if (currentTask.getTag().contains(keyWord)){
+							searchResultList.add(currentTask);
+						}
+					}
+				}
+			}
+
+		}
+		ConverterToString output = new ConverterToString(searchResultList);
+		return output.convert();
+	}
+
+}
+}
+*/

@@ -1,4 +1,3 @@
-//@@author A0100111R
 package com.Test;
 
 import static org.junit.Assert.*;

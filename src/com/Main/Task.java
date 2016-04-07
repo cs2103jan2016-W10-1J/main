@@ -1,4 +1,3 @@
-//@@author A0116764B
 package com.Main;
 
 import java.text.DateFormat;
@@ -12,7 +11,7 @@ import java.util.GregorianCalendar;
 public class Task {
 	
 	enum TASK_TYPE{
-		EVENT, FLOAT, DEADLINE;
+		EVENT, FLOAT, DEADLINE, UNDEFINED;
 	}
 	private String taskName = "";
 	private String date = ""; //"MM dd yyyy"
@@ -21,13 +20,11 @@ public class Task {
 	private String end = "";//"HHmm" format
 	private String tag = "";
 	private String notification = "";
-//@@author A0100111R
-	
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
 	boolean isTaskDone = false;
 	private int taskID;
-	private TASK_TYPE taskType;
+	private TASK_TYPE taskType = TASK_TYPE.UNDEFINED;
 	
 	
 	public GregorianCalendar getEndCal() {
@@ -106,7 +103,7 @@ public class Task {
 	
 	public Task(){
 	}
-//@@author A0149484R
+
 	public String getTaskName() {
 		return taskName;
 	}

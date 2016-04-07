@@ -1,4 +1,4 @@
-//@@author A0116764B
+//@@author a0116764b
 package com.Main;
 
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ public class Parser {
 		return doRow;
 	}
 
-	// @@author A0116764B-unused
+	// @@author a0116764b-unused
 	public String getTaskName(String parameters) {
 		String taskName = "";
 		taskName = parameters.substring(0, parameters.indexOf("@") - 1);
@@ -225,7 +225,7 @@ public class Parser {
 		return notification;
 	}
 }	
-//@@author A0116764B-unused
+//@@author a0116764b-unused
 // Old parser code, before overhaul in architecture
 /*
 	private Command command;

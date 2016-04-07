@@ -1,5 +1,3 @@
-//author A0100111R
-
 package com.Main;
 
 import java.util.ArrayList;

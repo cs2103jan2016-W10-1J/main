@@ -1,4 +1,3 @@
-//@@author A0100111R-unused
 package com.Main;
 
 public class TaskforUpdateFunction {

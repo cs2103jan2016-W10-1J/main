@@ -1,4 +1,3 @@
-//@@author A0149484R
 package com.GUI;
 
 import static org.junit.Assert.*;
@@ -46,7 +45,6 @@ public class HomeFrame extends JFrame{
 	private TaskPanel eventTaskList;
 	private TaskPanel floatingTaskList;
 	private TaskPanel deadlineTaskList;
-	private TaskPanel doneTaskList;
 	private JTextField userInputBox;
 	private JSplitPane mainPanel;
 	private Processor processor;
@@ -81,13 +79,11 @@ public class HomeFrame extends JFrame{
 		eventTaskList = new TaskPanel();
 		ArrayList<Task> fileData = processor.getStorage().getTaskData();
 		eventTaskList.upDateTaskList(fileData);
-		taskPanel.add("Event", eventTaskList);
+		taskPanel.add("Event Task", eventTaskList);
 		floatingTaskList = new TaskPanel();
 		taskPanel.add("Floating Task", floatingTaskList);
 		deadlineTaskList = new TaskPanel();
-		taskPanel.add("Deadline", deadlineTaskList);
-		doneTaskList = new TaskPanel();
-		taskPanel.add("Deadline Task", doneTaskList);
+		taskPanel.add("Deadline Task", deadlineTaskList);
 		
 		mainPanel.setRightComponent(taskPanel);	
 		

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;  
 
-//@@author A0100111R
 public class Processor {
 		     
 	private TextFileSaver storage;
@@ -77,7 +76,7 @@ public class Processor {
 		storage.readFile();
 	}
 	
-	//@@author A0149484R
+	// Done by Matthew
 	public String setStringInGreen(String outputStr){
 		outputStr = "<font color=\"green\">" + outputStr + "</font>";
 		return outputStr;
