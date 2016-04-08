@@ -86,8 +86,6 @@ public class HomeFrame extends JFrame{
 		taskPanel.add("Floating Task", floatingTaskList);
 		deadlineTaskList = new TaskPanel();
 		taskPanel.add("Deadline", deadlineTaskList);
-		undefinedTaskList = new TaskPanel();
-		taskPanel.add("undefined Task", undefinedTaskList);
 		doneTaskList = new TaskPanel();
 		taskPanel.add("Done Task", doneTaskList);
 		
@@ -177,7 +175,6 @@ public class HomeFrame extends JFrame{
 		//eventTaskList.upDateTaskList(Processor.getEventList());
 		floatingTaskList.upDateTaskList(Processor.getFloatList());
 		deadlineTaskList.upDateTaskList(Processor.getDeadlineList());
-		undefinedTaskList.upDateTaskList(Processor.getUndefinedList());
 		doneTaskList.upDateTaskList(Processor.getDoneTaskList());
 	}
 	
