@@ -58,13 +58,13 @@ public class Task {
 	}
 	public void determineTaskType(){
 		//Need to make it complete by guarding against other possibilities 
-		if ( date == null){
+		if ( date == " "){
 			this.setTaskType(TASK_TYPE.FLOAT);
 		}else 
-			if ( date != null && start != null && end != null){
+			if ( (date != " ") && (start != " ") && (end != " ")){
 				this.setTaskType(TASK_TYPE.EVENT);
 			}else
-				if ( date != null && start == null && end != null){
+				if ( date != " " && start == " " && end != " "){
 					this.setTaskType(TASK_TYPE.DEADLINE);
 				}else{
 					this.setTaskType(TASK_TYPE.FLOAT);

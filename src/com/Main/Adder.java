@@ -5,7 +5,7 @@ import java.util.logging.Level;
 
 public class Adder implements Commander{
 	private Task newTask = new Task();
-	ArrayList<Task> TaskList;
+	ArrayList<Task> TaskList = new ArrayList<Task>();
 	
 
 	public Adder(String[] parsedUserInput, ArrayList<Task> TaskList) {
@@ -40,7 +40,9 @@ public class Adder implements Commander{
 			Displayer updateGUI = new Displayer(TaskList);
 			updateGUI.execute();
 			Processor.setLastCommanderInst(this);
-			return "Task added successfully" ;
+			
+			String taskType = newTask.getTaskType().toString();
+			return "Task added successfully"+ "with type being: "+ taskType;
 	//	} catch (Exception e) {
 		//	e.printStackTrace();
 		//	return "Task not added successfully" ;

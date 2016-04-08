@@ -21,7 +21,7 @@ public class Displayer implements Commander{
 	 * First constructor is for situations when displayRequirement requires changes
 	 * This constructor is also tailored for user command "Display displayParameter"
 	 */
-	public Displayer(String displayRequirement, ArrayList<Task> TaskList) {
+	public Displayer(String displayRequirement, ArrayList<Task> originalTaskList) {
 		eventList = new ArrayList<Task>();
 		floatList = new ArrayList<Task>();
 		deadlineList = new ArrayList<Task>();
@@ -29,31 +29,37 @@ public class Displayer implements Commander{
 		unDoneTaskList  = new ArrayList<Task>();
 				
 		displayParameter = displayRequirement;	
-		this.TaskList = new ArrayList<Task>(TaskList);//Copy the original TaskList.
+		this.TaskList = new ArrayList<Task>(originalTaskList);//Copy the original TaskList.
 		
-		this.getDoneTasks(TaskList);
+		this.getDoneTasks(originalTaskList);
 		this.getEventList(unDoneTaskList);
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
+		
+		int x = Processor.getFloatList().size();
+		System.out.println(Integer.toString(x));
 	}
 	
 	/*
 	 * Second constructor is purely for the purpose of updating the GUI display.
 	 * It is only used internally by other classes.
 	 */
-	public Displayer(ArrayList<Task> TaskList) {
+	public Displayer(ArrayList<Task> originalTaskList) {
 		eventList = new ArrayList<Task>();
 		floatList = new ArrayList<Task>();
 		deadlineList = new ArrayList<Task>();
 		doneTaskList  = new ArrayList<Task>();
 		unDoneTaskList  = new ArrayList<Task>();
 		
-		this.TaskList = new ArrayList<Task>(TaskList);
+		this.TaskList = new ArrayList<Task>(originalTaskList);
 		
 		this.getDoneTasks(TaskList);
 		this.getEventList(unDoneTaskList);
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
+		
+		int x = Processor.getFloatList().size();
+		System.out.println(Integer.toString(x));
 	}
 
 
@@ -112,6 +118,8 @@ public class Displayer implements Commander{
 	private void updateThreeLists() {
 		//Sort sortInst = new Sort(eventList);
 		//eventList = sortInst.sortThis(); 
+		int x = Processor.getFloatList().size();
+		System.out.println(Integer.toString(x));
 		Processor.setEventList(eventList);
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);
