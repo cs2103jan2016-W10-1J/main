@@ -17,8 +17,6 @@ public class Displayer implements Commander{
 	private static ArrayList<Task> doneTaskList;
 	private static ArrayList<Task> unDoneTaskList;
 	
-	private static ArrayList<Task> undefinedList;
-
 	/*
 	 * First constructor is for situations when displayRequirement requires changes
 	 * This constructor is also tailored for user command "Display displayParameter"
@@ -29,8 +27,6 @@ public class Displayer implements Commander{
 		deadlineList = new ArrayList<Task>();
 		doneTaskList  = new ArrayList<Task>();
 		unDoneTaskList  = new ArrayList<Task>();
-		
-		undefinedList  = new ArrayList<Task>();//To be deleted
 				
 		displayParameter = displayRequirement;	
 		this.TaskList = new ArrayList<Task>(TaskList);//Copy the original TaskList.
@@ -120,7 +116,6 @@ public class Displayer implements Commander{
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);
 		Processor.setDoneTaskList(doneTaskList);
-		Processor.setUndefinedList(undefinedList);
 	}
 
 	

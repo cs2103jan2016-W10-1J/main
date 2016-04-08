@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 public class Task {
 	
 	enum TASK_TYPE{
-		EVENT, FLOAT, DEADLINE, UNDEFINED;
+		EVENT, FLOAT, DEADLINE;
 	}
 	private String taskName = "";
 	private String date = ""; //"MM dd yyyy"
@@ -26,7 +26,7 @@ public class Task {
 	private GregorianCalendar endCal = new GregorianCalendar();
 	
 	private int taskID;
-	private TASK_TYPE taskType = TASK_TYPE.UNDEFINED;
+	private TASK_TYPE taskType;
 	
 	
 	public GregorianCalendar getEndCal() {
@@ -67,7 +67,7 @@ public class Task {
 				if ( date != null && start == null && end != null){
 					this.setTaskType(TASK_TYPE.DEADLINE);
 				}else{
-					this.setTaskType(null);
+					this.setTaskType(TASK_TYPE.FLOAT);
 				} 
 
 	}
