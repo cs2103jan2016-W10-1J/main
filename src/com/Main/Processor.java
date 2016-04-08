@@ -15,10 +15,11 @@ public class Processor {
 	public ArrayList<String> messageThread = new ArrayList<String>();
 	private static Commander lastCommanderInst = null; // for Undo function.
 	
-	private static ArrayList<Task> eventList;
-	private static ArrayList<Task> floatList;
-	private static ArrayList<Task> deadlineList;
-	private static ArrayList<Task> doneTaskList;
+	private static ArrayList<Task> eventList = null;
+	private static ArrayList<Task> floatList = null;
+	private static ArrayList<Task> deadlineList = null;
+	private static ArrayList<Task> doneTaskList = null;
+	
 	private static ArrayList<Task> undefinedList;
 	
 	public Processor(){
@@ -39,8 +40,8 @@ public class Processor {
 			tasksArray.get(i).determineTaskType();
 			tasksArray.get(i).setTaskID(i+1);//generation of TaskID, 1-based.
 		}
-		Displayer defaultDisplay = new Displayer("today", tasksArray);
-		defaultDisplay.execute();
+		//Displayer defaultDisplay = new Displayer(tasksArray);
+		//defaultDisplay.execute();
 	}
 	
 	public List<String> executeCommand(String userInput){
@@ -127,7 +128,7 @@ public class Processor {
 	}
 
 	public static void setDoneTaskList(ArrayList<Task> doneTaskList) {
-		doneTaskList = doneTaskList;
+		Processor.doneTaskList = doneTaskList;
 	}
 
 	public static ArrayList<Task> getUndefinedList() {

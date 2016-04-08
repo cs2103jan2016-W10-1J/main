@@ -34,16 +34,18 @@ public class Adder implements Commander{
 	@Override
 	public String execute() {
 		if (newTask.getTaskName() == "" || newTask.getTaskName() == null || newTask.getTaskName() == " ")
-			return "Task not added successfully";
-		try {
+			return "Task not added successfully due to empty Task title";
+		//try {
 			TaskList.add(newTask);
+			Displayer updateGUI = new Displayer(TaskList);
+			updateGUI.execute();
 			Processor.setLastCommanderInst(this);
 			return "Task added successfully" ;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Task not added successfully" ;
+	//	} catch (Exception e) {
+		//	e.printStackTrace();
+		//	return "Task not added successfully" ;
 			//ProcessorLogger.log(Level.WARNING, "task not added successfully", e);
-		}	
+		//}	
 		
 	}
 

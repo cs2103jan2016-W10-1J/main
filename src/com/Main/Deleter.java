@@ -21,7 +21,12 @@ public class Deleter implements Commander{
 			return "The taskID entered is invalid, please re-enter.";
 		}else{
 			taskDeleted = TaskList.remove(taskIndex);
+			
+			Displayer updateGUI = new Displayer(TaskList);
+			updateGUI.execute();
+			
 			Processor.setLastCommanderInst(this);
+			
 			ConverterToString taskDeletedConversion = new ConverterToString(taskDeleted);
 			String taskDeletedString = taskDeletedConversion.convert();
 			String feedback = "Task deleted successfully:"+System.lineSeparator()+taskDeletedString;

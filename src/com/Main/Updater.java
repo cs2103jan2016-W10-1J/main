@@ -113,6 +113,10 @@ public class Updater implements Commander{
 				return "Keyword for the type of detail is invalid.";
 			}
 			//@@author A0100111R			
+			
+			Displayer updateGUI = new Displayer(TaskList);
+			updateGUI.execute();
+			
 			Processor.setLastCommanderInst(this);
 			ConverterToString taskUpdatedConversion = new ConverterToString(updatedTask);
 			String feedBackBody = taskUpdatedConversion.convert();
