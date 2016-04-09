@@ -114,15 +114,18 @@ public class Updater implements Commander{
 			}
 			//@@author A0100111R			
 			
+			updatedTask.determineTaskType();
+			Processor.setLastCommanderInst(this);
+			
+			ConverterToString taskUpdatedConversion = new ConverterToString(updatedTask);
+			String feedBackBody = taskUpdatedConversion.convert();
+			String feedBackTitle = "Task "+Integer.toString(taskIDinput)+"'s "+sectionToUpdate+" was updated successfully FROM "+oldDetail+" to "+":"+detailToUpdate+":"+System.lineSeparator();
+
 			Displayer updateGUI = new Displayer(TaskList);
 			updateGUI.execute();
 			
-			Processor.setLastCommanderInst(this);
-			ConverterToString taskUpdatedConversion = new ConverterToString(updatedTask);
-			String feedBackBody = taskUpdatedConversion.convert();
-			String feedBackTitle = "Task "+Integer.toString(taskIDinput)+"'s "+sectionToUpdate+" was updated successfully from "+oldDetail+" to "+detailToUpdate+System.lineSeparator();
-
-			return feedBackTitle+System.lineSeparator()+"The updated task now:"+System.lineSeparator()+feedBackBody;
+			String taskType = updatedTask.getTaskType().toString();
+			return feedBackTitle+System.lineSeparator()+"The updated task now:"+System.lineSeparator()+feedBackBody+System.lineSeparator()+taskType;
 			
 		}
 	}
@@ -137,6 +140,10 @@ public class Updater implements Commander{
 		inputForUndo[1] = this.sectionToUpdate;
 		inputForUndo[2] = this.oldDetail;
 		Updater undoUpdate = new Updater(inputForUndo, this.TaskList);
+		
+		Displayer updateGUI = new Displayer(TaskList);
+		updateGUI.execute();
+		
 		return "The following is re-updated as undo: "+ System.lineSeparator()+undoUpdate.execute();
 	}
 

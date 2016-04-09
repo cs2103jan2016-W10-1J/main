@@ -88,7 +88,7 @@ public class Displayer implements Commander{
 			return "Unrecognized display parameter";
 		}
 		updateThreeLists();	
-		Processor.setLastCommanderInst(this);
+		
 		return "Please refer to the right-hand side panel for display";
 	}
 
@@ -179,8 +179,9 @@ public class Displayer implements Commander{
 
 	@Override
 	public String undo() {
-		String feedback = "Your last action is searching, which cannot be undone.";
-		return feedback;
+		//String feedback = "Your last action is searching, which cannot be undone.";
+		//return feedback;
+		return "";
 	}
 	
 

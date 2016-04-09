@@ -58,7 +58,7 @@ public class SearcherByDate implements Commander {
 			}
 		}
 		ConverterToString output = new ConverterToString(TaskListWanted);
-		Processor.setLastCommanderInst(this);
+		//Processor.setLastCommanderInst(this);
 		return output.convert();
 	}
 	public ArrayList<Task> executeforDisplayOnStartTime() {
@@ -100,8 +100,9 @@ public class SearcherByDate implements Commander {
 
 	@Override
 	public String undo() {
-		String feedback = "Your last action is searching, which cannot be undone.";
-		return feedback;
+		//String feedback = "Your last action is searching, which cannot be undone.";
+		//return feedback;
+		return "";
 	}
 
 }

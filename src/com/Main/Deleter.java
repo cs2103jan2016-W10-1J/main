@@ -58,6 +58,10 @@ public class Deleter implements Commander{
 		ConverterToString taskConverter = new ConverterToString(taskDeleted);
 		String feedback = taskConverter.convert();
 		TaskList.add(taskDeleted);
+		
+		Displayer updateGUI = new Displayer(TaskList);
+		updateGUI.execute();
+		
 		Processor.setLastCommanderInst(null);//Undoing delete is designed for no chance of redoing.
 		return "The following task you deleted is added in again: "+System.lineSeparator()+feedback;
 	}

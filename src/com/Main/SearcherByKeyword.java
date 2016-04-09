@@ -50,7 +50,7 @@ public class SearcherByKeyword implements Commander {
 			}
 		}
 		searchResultList.removeAll(toRemove);
-		Processor.setLastCommanderInst(this);
+		
 		ConverterToString output = new ConverterToString(searchResultList);
 		
 		return output.convert();
@@ -59,8 +59,8 @@ public class SearcherByKeyword implements Commander {
 
 	@Override
 	public String undo() {
-		String feedback = "Your last action is searching, which cannot be undone.";
-		return feedback;
+		//String feedback = "Your last action is searching, which cannot be undone.";
+		return "";
 	}
 }
 

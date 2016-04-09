@@ -16,7 +16,7 @@ public class Processor {
 	private String feedbackMessage = "";
 	public ArrayList<String> messageThread = new ArrayList<String>();
 	
-	private static Commander lastCommanderInst; // for Undo function.
+	private static Commander lastCommanderInst = null; // for Undo function.
 	
 	private static ArrayList<Task> eventList = new ArrayList<Task>();
 	private static ArrayList<Task> floatList = new ArrayList<Task>();
@@ -77,8 +77,8 @@ public class Processor {
 			feedbackMessage = "Opened " + userInput.substring(3);
 		}
 
-		else if (userInput == "undo"){
-			if(lastCommanderInst.equals(null)){
+		else if (userInput.equals("undo")){
+			if( lastCommanderInst == null || lastCommanderInst.equals(null) ){
 				feedbackMessage = "Sorry, the last action cannot be undo further.";				
 			}
 			else{

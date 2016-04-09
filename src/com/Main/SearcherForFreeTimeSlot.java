@@ -61,7 +61,7 @@ public class SearcherForFreeTimeSlot implements Commander {
 		System.out.println("Current Time is : " + currentTime);
 		System.out.println("Current Day is : ");
 		
-		Processor.setLastCommanderInst(this);
+		//Processor.setLastCommanderInst(this);
 		
 		for(int j=0; j<8; j++){
 			foundConflict = false;
@@ -142,11 +142,13 @@ public class SearcherForFreeTimeSlot implements Commander {
 			return "Timeslot not available in the upcoming week";
 		}
 	}
-
+	
+	//@@author A0100111R
 	@Override
 	public String undo() {
-		String feedback = "Your last action is searching, which cannot be undone.";
-		return feedback;
+		//String feedback = "Your last action is searching, which cannot be undone.";
+		//return feedback;
+		return "";
 	}
 
 }

@@ -56,7 +56,9 @@ public class Adder implements Commander{
 		
 		if(TaskList.remove(newTask)){
 			Processor.setLastCommanderInst(null);//Undoing add is designed for no chance of redoing.
-			return "The following task is removed:"+System.lineSeparator() + feedback;		
+			Displayer updateGUI = new Displayer(TaskList);
+			updateGUI.execute();
+			return "The following task is removed:"+System.lineSeparator()+feedback;		
 		}
 		else
 			return "The undo to remove last task added is unsuccessful.";
