@@ -1,4 +1,4 @@
-//@@author a0116764b
+//@@author A0116764B
 package com.Main;
 
 import java.util.ArrayList;
@@ -54,7 +54,37 @@ public class Parser {
 			if (addParameters[2] != null && addParameters[2] != " ") {
 				addParameters[2] = addParameters[2].trim();
 			}
-
+			
+			// check for valid date format
+			
+			String[] checkDate = addParameters[2].split(" ");
+			
+			boolean valid = true;
+			int numberOfParameters = 0;
+			for (String dateParameter : checkDate){
+				try{
+					Integer.parseInt(dateParameter);
+				}catch(Exception e){
+					valid = false;
+				}
+				numberOfParameters ++;
+			}
+			if (valid && numberOfParameters == 3){
+				int month = Integer.parseInt(checkDate[0]);
+				int day = Integer.parseInt(checkDate[1]);
+				if (month < 1 || month > 12){
+					valid = false;
+				}
+				else if (day < 1 || day > 31){
+					valid = false;
+				}
+			}
+			else{
+				addParameters[2] = "invalid date";
+			}
+			if (!valid){
+				addParameters[2] = "invalid date";
+			}
 			return new Adder(addParameters, TaskList);
 
 		/*
@@ -182,7 +212,7 @@ public class Parser {
 		return doRow;
 	}
 
-	// @@author a0116764b-unused
+	// @@author A0116764B-unused
 	public String getTaskName(String parameters) {
 		String taskName = "";
 		taskName = parameters.substring(0, parameters.indexOf("@") - 1);
@@ -225,7 +255,7 @@ public class Parser {
 		return notification;
 	}
 }	
-//@@author a0116764b-unused
+//@@author A0116764B-unused
 // Old parser code, before overhaul in architecture
 /*
 	private Command command;
