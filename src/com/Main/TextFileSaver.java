@@ -221,7 +221,7 @@ public class TextFileSaver {
 	 * segment to tempTask for create a proper Task and add it to the Task ArrayList (taskData)*/
 	public String addToTaskList(String temp, Task tempTask, int lineReading) {
 		try {
-			String[] _temp = new String[9];
+			String[] _temp = new String[11];
 			GregorianCalendar tempCal = new GregorianCalendar();
 			_temp = temp.split("~~", -1);
 			tempTask.setTask(_temp[0]);
@@ -239,14 +239,16 @@ public class TextFileSaver {
 			}
 			tempTask.setTaskID(Integer.parseInt(_temp[8]));
 			
-			/*
+			
 			if(_temp[9].length()>0){
 				tempCal = convertStringToCalendar(_temp[9]);
 				tempTask.setStartCal(tempCal);
 			}
 			else{
+				/*
 				tempCal = new GregorianCalendar();
 				tempTask.setStartCal(tempCal);
+				*/
 			}
 			
 			if(_temp[10].length()>0){
@@ -254,10 +256,12 @@ public class TextFileSaver {
 				tempTask.setEndCal(tempCal);
 			}
 			else{
+				/*
 				tempCal = new GregorianCalendar();
 				tempTask.setEndCal(tempCal);
+				*/
 			}
-			*/
+			
 			
 			taskData.add(tempTask);
 			_temp = null;
@@ -278,9 +282,13 @@ public class TextFileSaver {
 			String tempSave = "";
 			String completedTempSave = "";
 			Task tempTaskForSaving = new Task();
-			String[] taskToString = new String[9];
+			String[] taskToString = new String[11];
 			savefile = new FileWriter(fileName);
 			completedSaveFile = new FileWriter(completedFileName);
+			
+			//To save it from nearest time to time furthest away
+			Sort sort = new Sort(taskData);
+			taskData = sort.sortThis();
 			
 			for(int i=0; i<taskData.size(); i++){             //Process the task list into a single string
 				tempTaskForSaving = taskData.get(i);
@@ -309,7 +317,7 @@ public class TextFileSaver {
 	/*Convert the string arrays into a single string with proper formatting before saving*/
 	public String processIntoSingleStringForSaving(String tempSave,
 			String[] taskToString) {
-		tempSave = tempSave + taskToString[0] + "~~" + taskToString[1] + "~~" + taskToString[2] + "~~"+ taskToString[3] + "~~"+ taskToString[4] + "~~"+ taskToString[5]+ "~~" + taskToString[6] + "~~" +taskToString[7] + "~~" + taskToString[8]+/*"~~" + taskToString[9]+"~~" + taskToString[10]+*/"\n";
+		tempSave = tempSave + taskToString[0] + "~~" + taskToString[1] + "~~" + taskToString[2] + "~~"+ taskToString[3] + "~~"+ taskToString[4] + "~~"+ taskToString[5]+ "~~" + taskToString[6] + "~~" +taskToString[7] + "~~" + taskToString[8]+ "~~" + taskToString[9]+"~~" + taskToString[10]+ "\n";
 		return tempSave;
 	}
 	
@@ -318,7 +326,12 @@ public class TextFileSaver {
 			String[] taskToString) {
 		taskToString[0] = tempTaskForSaving.getTaskName().trim();
 		taskToString[1] = tempTaskForSaving.getLocation().trim();
+		if(tempTaskForSaving.getDate().trim().length()>0){
 		taskToString[2] = tempTaskForSaving.getDate().trim();
+		}
+		else{
+			taskToString[2] = " ";
+		}
 		taskToString[3] = tempTaskForSaving.getStart().trim();
 		taskToString[4] = tempTaskForSaving.getEnd().trim();
 		taskToString[5] = tempTaskForSaving.getTag().trim();
@@ -326,36 +339,42 @@ public class TextFileSaver {
 		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone).trim();
 		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID()).trim();
 		
-		/*
-		if(!tempTaskForSaving.getStartCal().){
+	
+		if(tempTaskForSaving.getStartCal().toString().trim().length() < 17){
 			taskToString[9] = convertCalendarToString(tempTaskForSaving.getStartCal());
 		}
 		else{
 			taskToString[9] = "";
 		}
 		
-		if(taskToString[10].length()>0){
+		if(tempTaskForSaving.getEndCal().toString().trim().length() < 17){
 			taskToString[10] = convertCalendarToString(tempTaskForSaving.getEndCal());
 		}
 		else{
 			taskToString[10] = "";
 		}
-		*/
+		
 	}
 	
 	public String convertCalendarToString(GregorianCalendar toBeConverted){
 		String result = new String();
-		DateFormat df = new SimpleDateFormat("MM dd yyyy");
+		DateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
 		result = df.format(toBeConverted);
+		
+		//debugging
+		System.out.println(toBeConverted + " was converted to " + result);
 		
 		return result;
 	}
 	
 	public GregorianCalendar convertStringToCalendar(String toBeConverted) throws ParseException{
-		DateFormat df = new SimpleDateFormat("MM dd yyyy");
+		DateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
 		Date date = df.parse(toBeConverted);
 		GregorianCalendar result = new GregorianCalendar();
 		result.setTime(date);
+		
+		//debugging
+		System.out.println(toBeConverted + " was converted to " + result);
 		
 		return result;
 	}

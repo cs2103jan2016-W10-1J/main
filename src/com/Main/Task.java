@@ -100,6 +100,7 @@ public class Task {
 			if (this.getStart() != " "){
 				try {
 					date = formatter.parse(this.getDate() + " " + this.getStart()); // String to Date object
+					System.out.println("Successfully parsed: " + date);
 				} catch (ParseException e) {
 					System.out.println("Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
 				}
@@ -205,7 +206,18 @@ public class Task {
 
     public static Comparator<Task> COMPARE_BY_TIME = new Comparator<Task>() {
         public int compare(Task one, Task other) {
-            return one.getStart().compareTo(other.getStart());
+            if(other.getStart().trim().length()>0 && one.getStart().trim().length()>0){
+            	return one.getStart().compareTo(other.getStart());
+            }
+            else if(other.getStart().trim().length()<1 && one.getStart().trim().length()>0){
+            	return one.getEnd().compareTo(other.getStart());
+            }
+            else if(other.getStart().trim().length()>0 && one.getStart().trim().length()<1){
+            	return one.getStart().compareTo(other.getEnd());
+            }
+            else{
+            	return one.getEnd().compareTo(other.getEnd());
+            }
         }
     };
 	
