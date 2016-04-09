@@ -326,14 +326,28 @@ public class TextFileSaver {
 			String[] taskToString) {
 		taskToString[0] = tempTaskForSaving.getTaskName().trim();
 		taskToString[1] = tempTaskForSaving.getLocation().trim();
+		
 		if(tempTaskForSaving.getDate().trim().length()>0){
 		taskToString[2] = tempTaskForSaving.getDate().trim();
 		}
 		else{
 			taskToString[2] = " ";
 		}
+		
+		if(tempTaskForSaving.getStart().trim().length()>0){
 		taskToString[3] = tempTaskForSaving.getStart().trim();
+		}
+		else{
+			taskToString[3] = " ";
+		}
+		
+		if(tempTaskForSaving.getEnd().trim().length()>0){
 		taskToString[4] = tempTaskForSaving.getEnd().trim();
+		}
+		else{
+			taskToString[4] = " ";
+		}
+		
 		taskToString[5] = tempTaskForSaving.getTag().trim();
 		taskToString[6] = tempTaskForSaving.getNotification().trim();
 		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone).trim();
