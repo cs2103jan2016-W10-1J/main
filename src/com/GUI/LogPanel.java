@@ -28,7 +28,9 @@ public class LogPanel extends JPanel{
 	private GridBagConstraints tasksGBC;
     private GridBagConstraints mainGBC;
     private int counter = 0;
-    private String MESSAGE_WELCOME = "Welcome to TODO List!!";
+    private static final String MESSAGE_WELCOME = "Welcome to TODO List!!";
+    private static final String MESSAGE_NOTE = "Please take note that the acceptable format of date is MM dd YYYY";
+    
     private JPanel logPanel;
     private JScrollPane scrollPanel; 
     
@@ -48,10 +50,8 @@ public class LogPanel extends JPanel{
         dummyPanel.setBackground(new Color(0, 0, 0, 0));
         logPanel.add(dummyPanel, mainGBC);					//The dummy panel is for a trick
 		 
-		JLabel logItem = new JLabel("Welcome to TODO List!!");  
-		logItem.setBorder(new EmptyBorder(1, 10, 1, 10));                               
-		logPanel.add(logItem, tasksGBC, 0);
-		logList.add(logItem);
+		recordToLog(MESSAGE_WELCOME);
+		recordToLog(MESSAGE_NOTE);
 		
 		scrollPanel = new JScrollPane(logPanel);
 		counter++;
