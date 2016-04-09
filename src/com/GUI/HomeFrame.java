@@ -79,8 +79,6 @@ public class HomeFrame extends JFrame{
 		taskPanel= new JTabbedPane();
 		
 		eventTaskList = new TaskPanel();
-		ArrayList<Task> fileData = processor.getStorage().getTaskData();
-		eventTaskList.upDateTaskList(fileData);
 		taskPanel.add("Event", eventTaskList);
 		floatingTaskList = new TaskPanel();
 		taskPanel.add("Floating Task", floatingTaskList);
@@ -88,6 +86,8 @@ public class HomeFrame extends JFrame{
 		taskPanel.add("Deadline", deadlineTaskList);
 		doneTaskList = new TaskPanel();
 		taskPanel.add("Done Task", doneTaskList);
+		
+		updateTaskLists();
 		
 		mainPanel.setRightComponent(taskPanel);	
 		
