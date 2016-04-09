@@ -342,15 +342,15 @@ public class TextFileSaver {
 		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone).trim();
 		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID()).trim();
 		
-	
-		if(tempTaskForSaving.getStartCal().toString().trim().length() < 17){
+		
+		if(tempTaskForSaving.getStartCal() != null){
 			taskToString[9] = convertCalendarToString(tempTaskForSaving.getStartCal());
 		}
 		else{
 			taskToString[9] = "";
 		}
 		
-		if(tempTaskForSaving.getEndCal().toString().trim().length() < 17){
+		if(tempTaskForSaving.getEndCal() != null){
 			taskToString[10] = convertCalendarToString(tempTaskForSaving.getEndCal());
 		}
 		else{
