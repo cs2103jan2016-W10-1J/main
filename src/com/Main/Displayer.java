@@ -35,9 +35,10 @@ public class Displayer implements Commander{
 		this.getEventList(unDoneTaskList);
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
-		
-		int x = Processor.getFloatList().size();
-		System.out.println(Integer.toString(x));
+	
+		//debug
+		//int x = Processor.getFloatList().size();
+		//System.out.println(Integer.toString(x));
 	}
 	
 	/*
@@ -57,9 +58,10 @@ public class Displayer implements Commander{
 		this.getEventList(unDoneTaskList);
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
-		
-		int x = Processor.getFloatList().size();
-		System.out.println(Integer.toString(x));
+	
+		//debug
+		//int x = Processor.getFloatList().size();
+		//System.out.println(Integer.toString(x));
 	}
 
 
@@ -118,8 +120,8 @@ public class Displayer implements Commander{
 	private void updateThreeLists() {
 		//Sort sortInst = new Sort(eventList);
 		//eventList = sortInst.sortThis(); 
-		int x = Processor.getFloatList().size();
-		System.out.println(Integer.toString(x));
+		//int x = Processor.getFloatList().size();
+		//System.out.println(Integer.toString(x));
 		Processor.setEventList(eventList);
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);
