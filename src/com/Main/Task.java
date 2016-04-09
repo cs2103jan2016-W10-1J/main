@@ -214,6 +214,13 @@ public class Task {
 		this.isTaskDone = false;
 	}
 
+	public static Comparator<Task> COMPARE_BY_NAME = new Comparator<Task>() {
+		public int compare(Task one, Task other) {
+			return one.getTaskName().compareTo(other.getTaskName());
+		}
+	};
+	
+	
 	public static Comparator<Task> COMPARE_BY_DATE = new Comparator<Task>() {
 		public int compare(Task one, Task other) {
 			return one.getDate().compareTo(other.getDate());
@@ -236,6 +243,7 @@ public class Task {
 			}
 		}
 	};
-
+	
+	
 
 }

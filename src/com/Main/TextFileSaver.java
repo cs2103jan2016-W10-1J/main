@@ -244,22 +244,10 @@ public class TextFileSaver {
 				tempCal = convertStringToCalendar(_temp[9]);
 				tempTask.setStartCal(tempCal);
 			}
-			else{
-				/*
-				tempCal = new GregorianCalendar();
-				tempTask.setStartCal(tempCal);
-				*/
-			}
 			
 			if(_temp[10].length()>0){
 				tempCal = convertStringToCalendar(_temp[10]);
 				tempTask.setEndCal(tempCal);
-			}
-			else{
-				/*
-				tempCal = new GregorianCalendar();
-				tempTask.setEndCal(tempCal);
-				*/
 			}
 			
 			
@@ -287,6 +275,7 @@ public class TextFileSaver {
 			completedSaveFile = new FileWriter(completedFileName);
 			
 			//To save it from nearest time to time furthest away
+			
 			Sort sort = new Sort(taskData);
 			taskData = sort.sortThis();
 			

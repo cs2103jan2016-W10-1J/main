@@ -26,6 +26,7 @@ public class Sort {
 	}
 	
 	public ArrayList<Task> sortThis(){
+		Collections.sort(toBeSorted, Task.COMPARE_BY_NAME);
 		Collections.sort(toBeSorted, Task.COMPARE_BY_TIME);
 		Collections.sort(toBeSorted, Task.COMPARE_BY_DATE);
 		
