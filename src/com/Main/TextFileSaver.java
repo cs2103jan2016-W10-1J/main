@@ -316,15 +316,15 @@ public class TextFileSaver {
 	/*Convert the task into a string array*/
 	public void convertTaskToString(Task tempTaskForSaving,
 			String[] taskToString) {
-		taskToString[0] = tempTaskForSaving.getTaskName();
-		taskToString[1] = tempTaskForSaving.getLocation();
-		taskToString[2] = tempTaskForSaving.getDate();
-		taskToString[3] = tempTaskForSaving.getStart();
-		taskToString[4] = tempTaskForSaving.getEnd();
-		taskToString[5] = tempTaskForSaving.getTag();
-		taskToString[6] = tempTaskForSaving.getNotification();
-		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone);
-		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID());
+		taskToString[0] = tempTaskForSaving.getTaskName().trim();
+		taskToString[1] = tempTaskForSaving.getLocation().trim();
+		taskToString[2] = tempTaskForSaving.getDate().trim();
+		taskToString[3] = tempTaskForSaving.getStart().trim();
+		taskToString[4] = tempTaskForSaving.getEnd().trim();
+		taskToString[5] = tempTaskForSaving.getTag().trim();
+		taskToString[6] = tempTaskForSaving.getNotification().trim();
+		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone).trim();
+		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID()).trim();
 		
 		/*
 		if(!tempTaskForSaving.getStartCal().){
