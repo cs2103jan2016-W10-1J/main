@@ -6,21 +6,22 @@ import java.util.Arrays;
 import java.util.List;  
 
 public class Processor {
-		     
+	
+	private boolean debug = false;
+	
 	private TextFileSaver storage;
 	//private TaskforUpdateFunction UpdatedTask;
 	//private static Logger ProcessorLogger = Logger.getLogger("Log of Processor");
 	private Parser parserInst;
 	private String feedbackMessage = "";
 	public ArrayList<String> messageThread = new ArrayList<String>();
-	private static Commander lastCommanderInst = null; // for Undo function.
+	
+	private static Commander lastCommanderInst; // for Undo function.
 	
 	private static ArrayList<Task> eventList = new ArrayList<Task>();
 	private static ArrayList<Task> floatList = new ArrayList<Task>();
 	private static ArrayList<Task> deadlineList = new ArrayList<Task>();
 	private static ArrayList<Task> doneTaskList = new ArrayList<Task>();
-	
-	private static ArrayList<Task> undefinedList;
 	
 	public Processor(){
 		parserInst = new Parser();
@@ -41,24 +42,26 @@ public class Processor {
 			taskInst.determineTaskType();
 			taskInst.setCalendar();
 			
-			
-			String TaskID = Integer.toString(taskInst.getTaskID());
-			System.out.println(TaskID);
-			
-			String titleDetail = taskInst.getTaskName();
-			System.out.println("The detail of titleDetailString is"+"<"+titleDetail+">");			
-			
-			String dateDetail = taskInst.getDate();
-			System.out.println("The detail of dateString is"+"<"+dateDetail+">"+" should at least have a single space < >");
-			
-			String startDetail = taskInst.getStart();
-			System.out.println("The detail of startDetailString is"+"<"+startDetail+">");
-			String endDetail = taskInst.getEnd();
-			System.out.println("The detail of endDetailString is"+"<"+endDetail+">");
-			
-			String taskType = taskInst.getTaskType().toString();
-			System.out.println(taskType);
-			System.lineSeparator();
+			if(debug){
+
+				String TaskID = Integer.toString(taskInst.getTaskID());
+				System.out.println(TaskID);
+				
+				String titleDetail = taskInst.getTaskName();
+				System.out.println("The detail of titleDetailString is"+"<"+titleDetail+">");			
+				
+				String dateDetail = taskInst.getDate();
+				System.out.println("The detail of dateString is"+"<"+dateDetail+">"+" should at least have a single space < >");
+				
+				String startDetail = taskInst.getStart();
+				System.out.println("The detail of startDetailString is"+"<"+startDetail+">");
+				String endDetail = taskInst.getEnd();
+				System.out.println("The detail of endDetailString is"+"<"+endDetail+">");
+				
+				String taskType = taskInst.getTaskType().toString();
+				System.out.println(taskType);
+				System.lineSeparator();
+			}
 			
 		}
 		
@@ -73,9 +76,9 @@ public class Processor {
 			storage = new TextFileSaver(userInput.substring(3));
 			feedbackMessage = "Opened " + userInput.substring(3);
 		}
-		
+
 		else if (userInput == "undo"){
-			if(lastCommanderInst == null){
+			if(lastCommanderInst.equals(null)){
 				feedbackMessage = "Sorry, the last action cannot be undo further.";				
 			}
 			else{
@@ -153,13 +156,6 @@ public class Processor {
 		Processor.doneTaskList = doneTaskList;
 	}
 
-	public static ArrayList<Task> getUndefinedList() {
-		return undefinedList;
-	}
-
-	public static void setUndefinedList(ArrayList<Task> undefinedList) {
-		Processor.undefinedList = undefinedList;
-	}
 	public static void setLastCommanderInst(Commander lastCommanderInst) {
 		Processor.lastCommanderInst = lastCommanderInst;
 	}

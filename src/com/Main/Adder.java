@@ -33,8 +33,8 @@ public class Adder implements Commander{
 
 	@Override
 	public String execute() {
-		if (newTask.getTaskName() == "" || newTask.getTaskName() == null || newTask.getTaskName() == " ")
-			return "Task not added successfully due to empty Task title";
+		if (newTask.getTaskName().equals(" ") || newTask.getTaskName().equals(""))
+			return "Task NOT added successfully due to empty Task title!";
 		
 			TaskList.add(newTask);
 			Displayer updateGUI = new Displayer(TaskList);

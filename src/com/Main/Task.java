@@ -7,11 +7,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-
+//@@author A0100111R
 public class Task {
-	
-	  private boolean debug = true;
-	
+
+	private boolean debug = false;
+
 	enum TASK_TYPE{
 		EVENT, FLOAT, DEADLINE;
 	}
@@ -23,14 +23,14 @@ public class Task {
 	private String tag = "";
 	private String notification = "";
 	boolean isTaskDone = false;
-	
+
 	private GregorianCalendar startCal = new GregorianCalendar();
 	private GregorianCalendar endCal = new GregorianCalendar();
-	
+
 	private int taskID;
 	private TASK_TYPE taskType;
-	
-	
+
+
 	public GregorianCalendar getEndCal() {
 		return endCal;
 	}
@@ -42,7 +42,7 @@ public class Task {
 	public void setStartCal(GregorianCalendar startCal) {
 		this.startCal = startCal;
 	}
-			
+
 	public TASK_TYPE getTaskType() {
 		return taskType;
 	}
@@ -50,11 +50,11 @@ public class Task {
 	public void setTaskType(TASK_TYPE taskType) {
 		this.taskType = taskType;
 	}
-	
+
 	public void setTaskID(int taskID) {
 		this.taskID = taskID;
 	}
-	
+
 	public int getTaskID() {
 		return taskID;
 	}
@@ -75,26 +75,46 @@ public class Task {
 					this.setTaskType(TASK_TYPE.FLOAT); // rest of the cases
 					return;
 				} 
-			}
+		}
 
 	}
-	
+
 	/*
- * http://stackoverflow.com/questions/4216745/java-string-to-date-conversion
- */
-    public void setCalendar(){
-        if( debug)
-            System. out.println( "see what inside the dateString: "+"<"+this.getDate()+ ">");
-       
-        if ( date.equals(" ") || date.equals("") || date == null){
-             if( debug){
-            System.out.println( "No date, is the rest of Code executed? ");
-            }
-             return;
-       }
-        
-/*
- *        //re-format the date string according to actual Gregorian Date
+	 * http://stackoverflow.com/questions/4216745/java-string-to-date-conversion
+	 */
+	public void setCalendar(){
+		if( debug)
+			System. out.println( "see what inside the dateString: "+"<"+this.getDate()+ ">");
+
+		if ( date.equals(" ") || date.equals("") || date == null){
+			if( debug){
+				System.out.println( "No date, is the rest of Code executed? ");
+			}
+			return;
+		}
+
+		DateFormat formatter = new SimpleDateFormat( "MM dd yyyy HHmm");
+		Date date = new Date();
+		if ( !this.getStart().equals(" ")){
+			try {
+				date = formatter.parse( this.getDate() + " " + this.getStart()); // String to Date object
+			} catch (ParseException e) {
+				System. out.println( "Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
+			}
+			startCal.setTime( date);
+		}
+
+		if ( !this.getEnd().equals(" ")){
+			try {
+				date = formatter.parse( this.getDate() + " " + this.getEnd()); // String to Date object
+			} catch (ParseException e) {
+				System. out.println( "End date object is not successfully parsed from its string counterpart" + e.getMessage());
+			}
+			endCal.setTime( date);
+		}
+
+		/*
+		 *        //re-format the date string according to actual Gregorian Date
        DateFormat dateFormatter = new SimpleDateFormat("MM dd yyyy ");
        Date dateInst = new Date();
        try {
@@ -109,42 +129,20 @@ public class Task {
        String dayStr = Integer.toString(day);
        String yearStr = Integer.toString(year);
        date = monthStr +" "+ dayStr + " "+ yearStr;
- */
-
-       
-       DateFormat formatter = new SimpleDateFormat( "MM dd yyyy HHmm");
-       Date date = new Date();
-        if ( !this.getStart().equals(" ")){
-             try {
-                  date = formatter.parse( this.getDate() + " " + this.getStart()); // String to Date object
-            } catch (ParseException e) {
-                 System. out.println( "Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
-            }
-             startCal.setTime( date);
-       }
-
-        if ( !this.getEnd().equals(" ")){
-             try {
-                  date = formatter.parse( this.getDate() + " " + this.getEnd()); // String to Date object
-            } catch (ParseException e) {
-                 System. out.println( "End date object is not successfully parsed from its string counterpart" + e.getMessage());
-            }
-             endCal.setTime( date);
-       }
-       
- }
+		 */      
+	}
 
 
-	
+
 	public void updateNonStringField(){
 		this.setCalendar();
 		this.determineTaskType();
 	}
-	
+
 	public GregorianCalendar getStartCal() {
 		return startCal;
 	}
-	
+
 	public Task(){
 	}
 
@@ -174,7 +172,7 @@ public class Task {
 	public String getNotification() {
 		return notification;
 	}
-	
+
 	public boolean isTaskDone(){
 		return isTaskDone;
 	}
@@ -186,7 +184,7 @@ public class Task {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
+
 	public void setDate(String date) {
 		this.date = date;
 	}
@@ -206,79 +204,38 @@ public class Task {
 	public void setNotification(String notification) {
 		this.notification = notification;
 	}
-	
+
 	//@@author A0097119X
 	public void setTaskAsDone(){
 		this.isTaskDone = true;
 	}
-	
+
 	public void setTaskAsUndone(){
 		this.isTaskDone = false;
 	}
-	
+
 	public static Comparator<Task> COMPARE_BY_DATE = new Comparator<Task>() {
-        public int compare(Task one, Task other) {
-            return one.getDate().compareTo(other.getDate());
-        }
-    };
-
-    public static Comparator<Task> COMPARE_BY_TIME = new Comparator<Task>() {
-        public int compare(Task one, Task other) {
-            if(other.getStart().trim().length()>0 && one.getStart().trim().length()>0){
-            	return one.getStart().compareTo(other.getStart());
-            }
-            else if(other.getStart().trim().length()<1 && one.getStart().trim().length()>0){
-            	return one.getEnd().compareTo(other.getStart());
-            }
-            else if(other.getStart().trim().length()>0 && one.getStart().trim().length()<1){
-            	return one.getStart().compareTo(other.getEnd());
-            }
-            else{
-            	return one.getEnd().compareTo(other.getEnd());
-            }
-        }
-    };
-	
-	
-}
-
-/*
- * The following is the information on Date and Calendar Class.
- * The last 2 line contain references on StackOverFlow.
- * The code can be copied and pasted for your own exercise to get a hand on it.
- * import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
-
-public class HelloWorld {
-	public static void main(String[] args){
-		System.out.println("Hello world!");
-		//Scanner scan = new Scanner (System.in);
-		//System.out.println("Enter some value:");
-		
-		GregorianCalendar startCal = new GregorianCalendar();
-		DateFormat formatter = new SimpleDateFormat("MM dd yyyy HHmm");
-		Date dateIns = new Date();
-		String dateStr = "12 25 2016";
-		String startTime = "1900";
-		
-		try {
-			dateIns = formatter.parse(dateStr + " " + startTime);
-		} catch (ParseException e) {
-			
-			System.out.println("catch ParseException: "+e.getMessage());
+		public int compare(Task one, Task other) {
+			return one.getDate().compareTo(other.getDate());
 		}
-		startCal.setTime(dateIns);
-		System.out.println("set time success");
-		
-		System.out.println(startCal.getTime());
-		//http://stackoverflow.com/questions/43802/how-to-convert-a-date-string-to-a-date-or-calendar-object
-		//http://stackoverflow.com/questions/4216745/java-string-to-date-conversion		
-		
-	}
-}
+	};
 
- */
+	public static Comparator<Task> COMPARE_BY_TIME = new Comparator<Task>() {
+		public int compare(Task one, Task other) {
+			if(other.getStart().trim().length()>0 && one.getStart().trim().length()>0){
+				return one.getStart().compareTo(other.getStart());
+			}
+			else if(other.getStart().trim().length()<1 && one.getStart().trim().length()>0){
+				return one.getEnd().compareTo(other.getStart());
+			}
+			else if(other.getStart().trim().length()>0 && one.getStart().trim().length()<1){
+				return one.getStart().compareTo(other.getEnd());
+			}
+			else{
+				return one.getEnd().compareTo(other.getEnd());
+			}
+		}
+	};
+
+
+}
