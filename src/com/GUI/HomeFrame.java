@@ -132,9 +132,13 @@ public class HomeFrame extends JFrame{
     }   	
 	
 	public void passingCommand(String userCommand){
-		String commandType = userCommand.substring(0, userCommand.indexOf(" "));
+		String commandType = "";
+		if (userCommand.contains(" "))
+			commandType = userCommand.substring(0, userCommand.indexOf(" "));
+		else 
+			commandType = userCommand;
 		List<String> strToDisplay = new ArrayList<String>();
-		if (!userCommand.equals("") && !commandType.equals("sw")) {
+		if (!userCommand.equals("") && !commandType.equals("sw") && !commandType.equals("exit")) {
 			strToDisplay = processor.executeCommand(userCommand);
 			//String commandType = processor.processCommand(userCommand); 
 			
@@ -147,22 +151,28 @@ public class HomeFrame extends JFrame{
 			logPanel.clearLog();
 			logPanel.recordToLog(HTML_HEAD+setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);
 			switch (panelName.toLowerCase()) {
-				case "et":
+				case "ev":
 					taskPanel.setSelectedIndex(0);
-					strToDisplay.add("Task tab switched to display Event Task");
+					strToDisplay.add("Task tab switched to display Event");
 					break;
 				case "ft":
 					taskPanel.setSelectedIndex(1);
 					strToDisplay.add("Task tab switched to display Floating Task");
 					break;
-				case "dt":
+				case "dl":
 					taskPanel.setSelectedIndex(2);
-					strToDisplay.add("Task tab switched to display Deadline Task");
+					strToDisplay.add("Task tab switched to display Deadline");
+					break;
+				case "dt":
+					taskPanel.setSelectedIndex(3);
+					strToDisplay.add("Task tab switched to display Done Task");
 					break;
 				default:
 										
 			}
 			userInputBox.setText("");
+		} else if (commandType.equals("exit")){
+			dispose();
 		}
 		for (int i=0; i<strToDisplay.size(); i++) {				
 			logPanel.recordToLog(HTML_HEAD+strToDisplay.get(i)+HTML_TAIL);
