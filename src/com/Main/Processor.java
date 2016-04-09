@@ -38,10 +38,9 @@ public class Processor {
 		for (int i = 0; i < storage.getTaskData().size(); i++ ){
 			Task taskInst = tasksArray.get(i);
 			taskInst.setTaskID(i+1);//generation of TaskID, 1-based.
-			taskInst.updateNonStringField(); //setCalendar and determine type
+			taskInst.determineTaskType();
+			taskInst.setCalendar();
 			
-			//debug
-			System.out.println("ignore the above 2 lines"+System.lineSeparator());
 			
 			String TaskID = Integer.toString(taskInst.getTaskID());
 			System.out.println(TaskID);
@@ -62,6 +61,7 @@ public class Processor {
 			System.lineSeparator();
 			
 		}
+		
 		Displayer defaultDisplay = new Displayer(tasksArray);
 		defaultDisplay.execute();
 	}

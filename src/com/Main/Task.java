@@ -10,6 +10,8 @@ import java.util.GregorianCalendar;
 
 public class Task {
 	
+	  private boolean debug = true;
+	
 	enum TASK_TYPE{
 		EVENT, FLOAT, DEADLINE;
 	}
@@ -57,66 +59,82 @@ public class Task {
 		return taskID;
 	}
 	public void determineTaskType(){
-		
-		if ( date == " " || date =="" || date == null){
+
+		if ( date.equals(" ") || date.equals("") || date == null){
 			this.setTaskType(TASK_TYPE.FLOAT);
-		}else 
-			if ( (start != " ") && (end != " ")){ // have date start-time end-time
+			return;
+		}else {
+			if ( !start.equals(" ") && !end.equals(" ") ){ // have date start-time end-time
 				this.setTaskType(TASK_TYPE.EVENT);
+				return;
 			}else
-				if ( start == " " && end != " "){ //only no start time
+				if ( start.equals(" ") && !end.equals(" ")){ //only no start time
 					this.setTaskType(TASK_TYPE.DEADLINE);
+					return;
 				}else{
 					this.setTaskType(TASK_TYPE.FLOAT); // rest of the cases
+					return;
 				} 
+			}
 
 	}
 	
 	/*
  * http://stackoverflow.com/questions/4216745/java-string-to-date-conversion
  */
-	public void setCalendar(){
-		if (date == " ")
-			return ;
-		
-			DateFormat dateFormatter = new SimpleDateFormat("MM dd yyyy");
-			Date dateInst = new Date();
-			try {
-				dateInst = dateFormatter.parse(date);
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-			int month = dateInst.getMonth()+1;
-			int day = dateInst.getDate();
-			int year = dateInst.getYear()+1900;
-			String monthStr = Integer.toString(month);
-			String dayStr = Integer.toString(day);
-			String yearStr = Integer.toString(year);
-			date = monthStr +" "+ dayStr + " "+ yearStr;
-		
-			
-			DateFormat formatter = new SimpleDateFormat("MM dd yyyy HHmm");
-			Date date = new Date();
-			if (this.getStart() != " "){
-				try {
-					date = formatter.parse(this.getDate() + " " + this.getStart()); // String to Date object
-					System.out.println("Successfully parsed: " + date);
-				} catch (ParseException e) {
-					System.out.println("Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
-				}
-				startCal.setTime(date);
-			}
-			
-			if (this.getEnd() != " "){
-				try {
-					date = formatter.parse(this.getDate() + " " + this.getEnd()); // String to Date object
-				} catch (ParseException e) {
-					System.out.println("End date object is not successfully parsed from its string counterpart" + e.getMessage());
-				}
-				endCal.setTime(date);
-			}
-		
-	}
+    public void setCalendar(){
+        if( debug)
+            System. out.println( "see what inside the dateString: "+"<"+this.getDate()+ ">");
+       
+        if ( date.equals(" ") || date.equals("") || date == null){
+             if( debug){
+            System.out.println( "No date, is the rest of Code executed? ");
+            }
+             return;
+       }
+        
+/*
+ *        //re-format the date string according to actual Gregorian Date
+       DateFormat dateFormatter = new SimpleDateFormat("MM dd yyyy ");
+       Date dateInst = new Date();
+       try {
+            dateInst = dateFormatter.parse(this.getDate());
+       } catch (ParseException e1) {
+            System.out.println("in Task.java, fail to re-format the date string according to actual Gregorian Date");
+       }
+        int month = dateInst.getMonth()+1;
+        int day = dateInst.getDate();
+        int year = dateInst.getYear()+1900;
+       String monthStr = Integer.toString(month);
+       String dayStr = Integer.toString(day);
+       String yearStr = Integer.toString(year);
+       date = monthStr +" "+ dayStr + " "+ yearStr;
+ */
+
+       
+       DateFormat formatter = new SimpleDateFormat( "MM dd yyyy HHmm");
+       Date date = new Date();
+        if ( !this.getStart().equals(" ")){
+             try {
+                  date = formatter.parse( this.getDate() + " " + this.getStart()); // String to Date object
+            } catch (ParseException e) {
+                 System. out.println( "Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
+            }
+             startCal.setTime( date);
+       }
+
+        if ( !this.getEnd().equals(" ")){
+             try {
+                  date = formatter.parse( this.getDate() + " " + this.getEnd()); // String to Date object
+            } catch (ParseException e) {
+                 System. out.println( "End date object is not successfully parsed from its string counterpart" + e.getMessage());
+            }
+             endCal.setTime( date);
+       }
+       
+ }
+
+
 	
 	public void updateNonStringField(){
 		this.setCalendar();

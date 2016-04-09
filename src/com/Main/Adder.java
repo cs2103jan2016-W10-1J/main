@@ -39,6 +39,7 @@ public class Adder implements Commander{
 			TaskList.add(newTask);
 			Displayer updateGUI = new Displayer(TaskList);
 			updateGUI.execute();
+			
 			Processor.setLastCommanderInst(this);
 			
 			String taskType = newTask.getTaskType().toString();

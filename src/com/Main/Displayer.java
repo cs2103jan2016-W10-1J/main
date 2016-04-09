@@ -8,6 +8,8 @@ import com.Main.Task.TASK_TYPE;
 
 public class Displayer implements Commander{
 	
+	private boolean debug = false;
+	
 	private ArrayList<Task> TaskList;
 	private static String displayParameter = "today";
 	
@@ -59,9 +61,10 @@ public class Displayer implements Commander{
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
 	
-		//debug
-		//int x = Processor.getFloatList().size();
-		//System.out.println(Integer.toString(x));
+		if(debug){
+			int x = Processor.getFloatList().size();
+			System.out.println(Integer.toString(x));
+		}
 	}
 
 
@@ -120,8 +123,10 @@ public class Displayer implements Commander{
 	private void updateThreeLists() {
 		//Sort sortInst = new Sort(eventList);
 		//eventList = sortInst.sortThis(); 
-		//int x = Processor.getFloatList().size();
-		//System.out.println(Integer.toString(x));
+		if(debug){
+		int x = Processor.getFloatList().size();
+		System.out.println(Integer.toString(x));
+		}
 		Processor.setEventList(eventList);
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);
