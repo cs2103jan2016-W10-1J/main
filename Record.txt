@@ -1,3 +1,7 @@
-cs2103 tutorial ~~com1 ~~06 04 2016~~1000 ~~1100~~ ~~ ~~false~~1
 cs2103 meeting ~~computing ~~06 04 2016~~1100 ~~1200~~ ~~ ~~false~~2
 CS2103 ~~computing~~~~ ~~ ~~ ~~ ~~false~~3
+task~~ ~~~~ ~~ ~~ ~~ ~~false~~4
+task ~~ ~~2 2 2016~~ ~~1200~~ ~~ ~~false~~5
+task~~ ~~~~ ~~ ~~ ~~ ~~false~~6
+task ~~ ~~~~ ~~ ~~ ~~notif~~false~~7
+task~~ ~~~~ ~~ ~~ ~~ ~~false~~8
