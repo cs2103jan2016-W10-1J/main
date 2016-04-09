@@ -52,7 +52,7 @@ public class TaskPanel extends JPanel {
 	Object rowData[][] = {};
 	private JTable table;
 	private DefaultTableModel model;
-	private String imgLink = "background.png";
+	private String imgLink = "";
 	
 	//The constructor for task table
     public TaskPanel() {
@@ -70,15 +70,15 @@ public class TaskPanel extends JPanel {
         };
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
     	//table.setShowGrid(false);
-        table.setGridColor(new Color(255, 255, 255, 125));
+        table.setGridColor(Color.WHITE);
         table.setFillsViewportHeight( true );
     	table.setOpaque(false);
-    	table.setBackground(new Color(255, 255, 255, 125));
+    	table.setBackground(Color.WHITE);
     	table.setFont(new Font("Calibri", Font.BOLD, 15));
     	
     	JScrollPane scrollPane = new JScrollPane(table);
     	scrollPane.setOpaque(false);
-    	scrollPane.getViewport().setOpaque(false);
+    	scrollPane.getViewport().setBackground(Color.WHITE);
     	
     	
         add(scrollPane);
