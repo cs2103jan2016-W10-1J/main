@@ -35,7 +35,7 @@ public class Adder implements Commander{
 	public String execute() {
 		if (newTask.getTaskName() == "" || newTask.getTaskName() == null || newTask.getTaskName() == " ")
 			return "Task not added successfully due to empty Task title";
-		//try {
+		
 			TaskList.add(newTask);
 			Displayer updateGUI = new Displayer(TaskList);
 			updateGUI.execute();
@@ -43,11 +43,8 @@ public class Adder implements Commander{
 			
 			String taskType = newTask.getTaskType().toString();
 			return "Task added successfully"+ "with type being: "+ taskType;
-	//	} catch (Exception e) {
-		//	e.printStackTrace();
-		//	return "Task not added successfully" ;
+
 			//ProcessorLogger.log(Level.WARNING, "task not added successfully", e);
-		//}	
 		
 	}
 

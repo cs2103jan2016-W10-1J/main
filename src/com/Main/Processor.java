@@ -36,16 +36,31 @@ public class Processor {
 	private void setUp() {
 		ArrayList<Task> tasksArray = storage.getTaskData();
 		for (int i = 0; i < storage.getTaskData().size(); i++ ){
-			tasksArray.get(i).setCalendar();
-			tasksArray.get(i).determineTaskType();
-			tasksArray.get(i).setTaskID(i+1);//generation of TaskID, 1-based.
+			Task taskInst = tasksArray.get(i);
+			taskInst.setTaskID(i+1);//generation of TaskID, 1-based.
+			taskInst.updateNonStringField(); //setCalendar and determine type
 			
-			String TaskID = Integer.toString(tasksArray.get(i).getTaskID());
+			//debug
+			System.out.println("ignore the above 2 lines"+System.lineSeparator());
+			
+			String TaskID = Integer.toString(taskInst.getTaskID());
 			System.out.println(TaskID);
-			String taskType = tasksArray.get(i).getTaskType().toString();
+			
+			String titleDetail = taskInst.getTaskName();
+			System.out.println("The detail of titleDetailString is"+"<"+titleDetail+">");			
+			
+			String dateDetail = taskInst.getDate();
+			System.out.println("The detail of dateString is"+"<"+dateDetail+">"+" should at least have a single space < >");
+			
+			String startDetail = taskInst.getStart();
+			System.out.println("The detail of startDetailString is"+"<"+startDetail+">");
+			String endDetail = taskInst.getEnd();
+			System.out.println("The detail of endDetailString is"+"<"+endDetail+">");
+			
+			String taskType = taskInst.getTaskType().toString();
 			System.out.println(taskType);
-			String detail = tasksArray.get(i).getDate();
-			System.out.println("The detail is"+"<"+detail+">");
+			System.lineSeparator();
+			
 		}
 		Displayer defaultDisplay = new Displayer(tasksArray);
 		defaultDisplay.execute();
