@@ -343,14 +343,14 @@ public class TextFileSaver {
 		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID()).trim();
 		
 		
-		if(tempTaskForSaving.getStartCal().toString().trim().length() < 17){
+		if(tempTaskForSaving.getStartCal() != null){
 			taskToString[9] = convertCalendarToString(tempTaskForSaving.getStartCal());
 		}
 		else{
 			taskToString[9] = "";
 		}
 		
-		if(tempTaskForSaving.getEndCal().toString().trim().length() < 17){
+		if(tempTaskForSaving.getEndCal() != null){
 			taskToString[10] = convertCalendarToString(tempTaskForSaving.getEndCal());
 		}
 		else{
@@ -361,8 +361,8 @@ public class TextFileSaver {
 	
 	public String convertCalendarToString(GregorianCalendar toBeConverted){
 		String result = new String();
-		DateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
-		result = df.format(toBeConverted);
+		SimpleDateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
+		result = df.format(toBeConverted.getTime());
 		
 		//debugging
 		System.out.println(toBeConverted + " was converted to " + result);
@@ -371,7 +371,7 @@ public class TextFileSaver {
 	}
 	
 	public GregorianCalendar convertStringToCalendar(String toBeConverted) throws ParseException{
-		DateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
+		SimpleDateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
 		Date date = df.parse(toBeConverted);
 		GregorianCalendar result = new GregorianCalendar();
 		result.setTime(date);

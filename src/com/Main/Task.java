@@ -24,8 +24,8 @@ public class Task {
 	private String notification = "";
 	boolean isTaskDone = false;
 
-	private GregorianCalendar startCal= new GregorianCalendar();
-	private GregorianCalendar endCal = new GregorianCalendar();
+	private GregorianCalendar startCal;//= new GregorianCalendar();
+	private GregorianCalendar endCal; //= new GregorianCalendar();
 
 	private int taskID;
 	private TASK_TYPE taskType;
@@ -102,7 +102,7 @@ public class Task {
 			} catch (ParseException e) {
 				System. out.println( "Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
 			}
-			//startCal = new GregorianCalendar();
+			startCal = new GregorianCalendar();
 			startCal.setTime( date);
 		}
 
@@ -112,7 +112,7 @@ public class Task {
 			} catch (ParseException e) {
 				System. out.println( "End date object is not successfully parsed from its string counterpart" + e.getMessage());
 			}
-			//endCal = new GregorianCalendar();
+			endCal = new GregorianCalendar();
 			endCal.setTime( date);
 		}
 
