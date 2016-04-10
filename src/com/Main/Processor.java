@@ -104,26 +104,6 @@ public class Processor {
 		storage.readFile();
 	}
 	
-	// Done by Matthew
-	public String setStringInGreen(String outputStr){
-		outputStr = "<font color=\"green\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	public String setStringInRed(String outputStr){
-		outputStr = "<font color=\"red\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	public String setStringInBlue(String outputStr){
-		outputStr = "<font color=\"blue\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	public String setStringWithRGB(String outputStr, String r, String g, String b){
-		outputStr = "<font color=\"rgb("+r+", "+g+", "+b+")\">" + outputStr + "</font>";
-		return outputStr;
-	}
 	//@@author A0100111R
 	public static ArrayList<Task> getEventList() {
 		return eventList;

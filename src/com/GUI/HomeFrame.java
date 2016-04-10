@@ -143,13 +143,13 @@ public class HomeFrame extends JFrame{
 			//String commandType = processor.processCommand(userCommand); 
 			
 			logPanel.clearLog();
-			logPanel.recordToLog(HTML_HEAD+setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);		
+			logPanel.recordToLog(HTML_HEAD+LogColor.setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);		
 			userInputBox.setText("");
 		} else if (commandType.equals("sw") && userCommand.contains(" ")){
 			String panelName = userCommand.substring(userCommand.indexOf(" ")+1);
 
 			logPanel.clearLog();
-			logPanel.recordToLog(HTML_HEAD+setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);
+			logPanel.recordToLog(HTML_HEAD+LogColor.setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);
 			switch (panelName.toLowerCase()) {
 				case "ev":
 					taskPanel.setSelectedIndex(0);
@@ -188,25 +188,5 @@ public class HomeFrame extends JFrame{
 	}
 	
 	
-	public String setStringInGreen(String outputStr){
-		outputStr = "<font color=\"green\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	public String setStringInRed(String outputStr){
-		outputStr = "<font color=\"red\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	public String setStringInBlue(String outputStr){
-		outputStr = "<font color=\"blue\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	public String setStringWithRGB(String outputStr, String r, String g, String b){
-		outputStr = "<font color=\"rgb("+r+", "+g+", "+b+")\">" + outputStr + "</font>";
-		return outputStr;
-	}
-	
-	
+
 }
