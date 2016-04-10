@@ -19,8 +19,8 @@ public class LogColor {
 		return outputStr;
 	}
 	
-	public static String setStringWithRGB(String outputStr, String r, String g, String b){
-		outputStr = "<font color=\"rgb("+r+", "+g+", "+b+")\">" + outputStr + "</font>";
+	public static String setStringWithRGB(String outputStr, int r, int g, int b){
+		outputStr = "<font color=\"rgb("+String.valueOf(r)+", "+String.valueOf(g)+", "+String.valueOf(b)+")\">" + outputStr + "</font>";
 		return outputStr;
 	}
 	
