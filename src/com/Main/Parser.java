@@ -54,7 +54,7 @@ public class Parser {
 			}
 			
 			// check for valid date format
-			
+			if (addParameters[2] != " "){
 			String[] checkDate = addParameters[2].split(" ");
 			
 			boolean valid = true;
@@ -82,6 +82,7 @@ public class Parser {
 			}
 			if (!valid){
 				addParameters[2] = "invalid date";
+			}
 			}
 			return new Adder(addParameters, TaskList);
 
@@ -157,8 +158,6 @@ public class Parser {
 
 			default: // by keyword
 				String[] searchParameters = input.split(" ");
-				// String searchParameters[] = new String[1];
-				// searchParameters[0] = input;
 				return new SearcherByKeyword(searchParameters, TaskList);
 			}
 		
