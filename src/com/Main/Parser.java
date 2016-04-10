@@ -26,10 +26,8 @@ public class Parser {
 			}
 			tokenLoc[7] = input.length(); // end of the string
 
-			String[] addParameters = new String[7]; // 0 = task name, 1 = loc, 2
-													// = date, 3 = start, 4 =
-													// end, 5 = tag, 6 =
-													// notification
+			String[] addParameters = new String[7]; // 0 = task name, 1 = loc, 2 = date, 3 = start, 
+													//4 = end, 5 = tag, 6 = notification
 
 			for (int i = 0; i < addParameters.length; i++) {
 				int startIndex = tokenLoc[i];
@@ -87,14 +85,6 @@ public class Parser {
 			}
 			return new Adder(addParameters, TaskList);
 
-		/*
-		 * case "add": String[] addParameters = new String[7]; addParameters[0]
-		 * = getTaskName(input); addParameters[1] = getLocation(input);
-		 * addParameters[2] = getDate(input); addParameters[3] =
-		 * getStart(input); addParameters[4] = getEnd(input); addParameters[5] =
-		 * getTag(input); addParameters[6] = getNotification(input); return new
-		 * Adder(addParameters,TaskList);
-		 */
 
 		// delete <int taskNumber>
 		case "delete":
@@ -152,23 +142,12 @@ public class Parser {
 			undone[2] = "'Undone'";
 			return new Updater(undone, TaskList);
 
-			// display today/tomorrow/week/all/done/undone
+		// display today/tomorrow/week/all/done/undone
 			
 		case "display": String displayParameter;
 		displayParameter = input; 
 		return new Displayer(displayParameter, TaskList);
 			 
-			// switch deadline/event/float
-			/*
-			 * case "switch": String[] switchParameters = new String[1];
-			 * switchParameters[0] = input; return new
-			 * Switcher(switchParameters, TaskList);
-			 */
-			// do <taskNumber>
-			/*
-			 * case "do": String[] doParameters = new String[1]; doParameters[0]
-			 * = getDoRow(input); return Doer(doParameters, TaskList);
-			 */
 		}
 		return null;
 	}
