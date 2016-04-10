@@ -2,19 +2,15 @@ package com.Main;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 //@@author A0097119X
 public class TextFileSaver {
@@ -68,79 +64,51 @@ public class TextFileSaver {
 	}
 	
 
-	
+	/* Constructor for when program is launched
+	 * Checks for existence of Last_Accessed.txt and the relevant files.
+	 * Creates them if it does not exist.
+	 */
 	public TextFileSaver(){
 		taskData = new ArrayList<Task>();
-		
 		fileDirectory = new File(lastOpenedDirectory);
 		
+		//Check for existence of Last_Accessed.txt
+		//If it does not exist, create the relevant files
 		if(!fileDirectory.exists()){
-			
-		//Attempt to locate file. Create new file if file does not exist
 		fileName = "Record.txt";
 		completedFileName = "Record_Archive.txt";
 		try {
-			
-			//create file, read and write to record.txt
-			FileWriter createDirectory = new FileWriter(lastOpenedDirectory);
-			createDirectory.write(fileName);
-			createDirectory.flush();
-			createDirectory.close();
-			
-			file = new File(fileName);	
-			
-			if(!file.exists()) { 
-			    // if file not exist, create a new .txt file with same file name
-				FileWriter fileWriter = new FileWriter(file);
-				fileWriter.flush();
-				fileWriter.close();
-				System.out.println(fileName + " does not exists. New Record.txt file has been created");
-			}
-			
-			completedFile = new File(completedFileName);	
-			if(!completedFile.exists()){
-				// if archive file does not exit, create a new .txt file with FILENAME_Archive.txt
-				FileWriter completedFileWriter = new FileWriter(completedFile);
-				completedFileWriter.flush();
-				completedFileWriter.close();
-				System.out.println(completedFileName + " does not exists. New Record.txt file has been created");
-			}
-				
-						
-				//if file exists, read it into the arraylist fileData
-				readFile();
-		
+			createLastAccessed(); 		//Creates Last_Accessed.txt
+			checkSaveFile(fileName); 	//Checks for existence of Record.txt. Creates it if it doesn't exist.
+			checkArchiveFile();			//Checks for existence of Record_Archive.txt. Creates it if it doesn't exist.	
+			readFile();					//Read from the files
 		} catch (IOException e) {
 			e.printStackTrace();
 			}
 		}
 		
+		//If Last_Accessed.txt exists. Read it and read from the last accessed directory.
 		else{
-			//open lastOpenDirectory and read it
-				try {
-					String temp;
-					BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
-					while((temp = br.readLine()) != null){
-						fileName = temp;
-					}
-					br.close();
+			try {
+				readLastAccessed();		//Read from Last_Accessed.txt
 				} catch (IOException e) {
 					e.printStackTrace();
 				}	
-			
-				
-			//change filename and archive filename to that
-			completedFileName = fileName.substring(0, fileName.indexOf(".")) + "_Archive.txt";
-			System.out.println(completedFileName);
-			completedFile = new File(completedFileName);
-			//read from that
-			readFile();
+			updateArchiveFileName();	//Update archive filename
+			readFile();					//Read from the files
 		}
 	}
+
 	
+	
+	/* Constructor for changing directory
+	 * Check for whether file exists. Creates it if it doesn't.
+	 * Record the most recently accessed file into Last_Accessed.txt
+	 */
 	public TextFileSaver(String fileName){
 		taskData = new ArrayList<Task>();
-		//Attempt to locate file. Create new file if file does not exist
+		
+		//Check that the filename is a valid input and update relevant variables if it is.
 		if(fileName.length()>0){
 		try {
 			this.fileName = fileName;
@@ -150,47 +118,65 @@ public class TextFileSaver {
 		}
 		
 		try {
-			file = new File(fileName);	
-		
-			if(!file.exists()) { 
-			    // if file not exist, create a new .txt file with same file name
-				FileWriter fileWriter = new FileWriter(file);
-				fileWriter.flush();
-				fileWriter.close();
-				System.out.println(fileName + " does not exists. New Record.txt file has been created");
-			}
-			
-			completedFile = new File(completedFileName);	
-			if(!completedFile.exists()){
-				// if archive file does not exit, create a new .txt file with FILENAME_Archive.txt
-				FileWriter completedFileWriter = new FileWriter(completedFile);
-				completedFileWriter.flush();
-				completedFileWriter.close();
-				System.out.println(completedFileName + " does not exists. New Record.txt file has been created");
-			}
-				
-						
-				//if file exists, read it into the arraylist fileData
-				readFile();
-		
-				//Write fileName to fileDirectory. Refer to saveFile()
-				FileWriter updateLastAccessed = new FileWriter(lastOpenedDirectory);
-				updateLastAccessed.write(fileName);                            //Write the processed string into the file
-				updateLastAccessed.close();
-				
+			checkSaveFile(fileName);	//Attempt to locate fileName.txt. Create new file if file does not exist
+			checkArchiveFile();			//Attempt to locate fileName_Archive.txt. Create new file if file does not exist.
+			readFile();					//Read the files
+			updateLastAccessedFile(fileName);//Update Last_Access.txt
 		} catch (IOException e) {
 			System.out.println("Ensure that your filename ends with .txt");
-			}
-			
+			}	
 		}
 	}
-
+	
+	/* Function call for saving files
+	 */
+	public void saveFile(){
+		FileWriter savefile;
+		FileWriter completedSaveFile;
+		try {
+			String tempSave = "";
+			String completedTempSave = "";
+			Task tempTaskForSaving = new Task();
+			String[] taskToString = new String[11];
+			savefile = new FileWriter(fileName);
+			completedSaveFile = new FileWriter(completedFileName);
+			
+			
+			sortList();	//Sort list before saving
+			
+			//Prepare ArrayList for saving
+			for(int i=0; i<taskData.size(); i++){            
+				tempTaskForSaving = taskData.get(i);
+				convertTaskToString(tempTaskForSaving, taskToString);
+				
+				if(tempTaskForSaving.isTaskDone){
+					completedTempSave = processIntoSingleStringForSaving(completedTempSave,
+							taskToString);
+				}
+				else{
+					tempSave = processIntoSingleStringForSaving(tempSave, taskToString);
+				}
+			}
+			
+			//Write to the file
+			savefile.write(tempSave);                           
+			savefile.close();
+			completedSaveFile.write(completedTempSave);
+			completedSaveFile.close();
+		} catch (IOException e) {
+			System.out.println("Save failed");
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void readFile(){
 		String temp;
 		String readSuccess = "";
 		file = new File(fileName);
 		taskData = new ArrayList<Task>();
 		try {
+			//Read from file and copy into ArrayList
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			int lineReading = 1;
 			while((temp = br.readLine()) != null){
@@ -200,7 +186,7 @@ public class TextFileSaver {
 			}	
 			br.close();
 			
-			
+			//Read from archive and copy into ArrayList
 			BufferedReader completedBR = new BufferedReader(new FileReader(completedFile));
 			lineReading = 1;
 			while((temp = completedBR.readLine()) != null){
@@ -209,15 +195,67 @@ public class TextFileSaver {
 				lineReading++;
 			}	
 			completedBR.close();
-			
-			
+				
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		System.out.println(fileName + " and " + completedFileName + " successfully read");
 	}
+	
+	private void sortList() {
+		Sort sort = new Sort(taskData);
+		taskData = sort.sortThis();
+	}
+	
+	private void updateArchiveFileName() {
+		completedFileName = fileName.substring(0, fileName.indexOf(".")) + "_Archive.txt";
+		System.out.println(completedFileName);
+		completedFile = new File(completedFileName);
+	}
 
-	/*Split the each line to 6 different segments. Each segment is separated in the .txt file by ~~. Adder each
+	private void readLastAccessed() throws FileNotFoundException, IOException {
+		String temp;
+		BufferedReader br = new BufferedReader(new FileReader(fileDirectory));
+			while((temp = br.readLine()) != null){
+				fileName = temp;
+			}
+		br.close();
+	}
+
+	private void createLastAccessed() throws IOException {
+		FileWriter createDirectory = new FileWriter(lastOpenedDirectory);
+		createDirectory.write(fileName);
+		createDirectory.flush();
+		createDirectory.close();
+	}
+	
+	private void checkSaveFile(String fileName) throws IOException {
+		file = new File(fileName);	
+		if(!file.exists()) { 
+			FileWriter fileWriter = new FileWriter(file);
+			fileWriter.flush();
+			fileWriter.close();
+			System.out.println(fileName + " does not exists. New Record.txt file has been created");
+		}
+	}
+
+	private void checkArchiveFile() throws IOException {
+		completedFile = new File(completedFileName);	
+		if(!completedFile.exists()){
+			FileWriter completedFileWriter = new FileWriter(completedFile);
+			completedFileWriter.flush();
+			completedFileWriter.close();
+			System.out.println(completedFileName + " does not exists. New Record.txt file has been created");
+		}
+	}
+
+	private void updateLastAccessedFile(String fileName) throws IOException {
+		FileWriter updateLastAccessed = new FileWriter(lastOpenedDirectory);
+		updateLastAccessed.write(fileName);                       
+		updateLastAccessed.close();
+	}
+
+	/*Split the each line to 11 different segments. Each segment is separated in the .txt file by ~~. Adder each
 	 * segment to tempTask for create a proper Task and add it to the Task ArrayList (taskData)*/
 	public String addToTaskList(String temp, Task tempTask, int lineReading) {
 		try {
@@ -237,8 +275,8 @@ public class TextFileSaver {
 			else{
 				tempTask.setTaskAsDone();
 			}
-			tempTask.setTaskID(Integer.parseInt(_temp[8]));
 			
+			tempTask.setTaskID(Integer.parseInt(_temp[8]));
 			
 			if(_temp[9].length()>0){
 				tempCal = convertStringToCalendar(_temp[9]);
@@ -249,7 +287,6 @@ public class TextFileSaver {
 				tempCal = convertStringToCalendar(_temp[10]);
 				tempTask.setEndCal(tempCal);
 			}
-			
 			
 			taskData.add(tempTask);
 			_temp = null;
@@ -263,45 +300,7 @@ public class TextFileSaver {
 		}
 	}
 	
-	public void saveFile(){
-		FileWriter savefile;
-		FileWriter completedSaveFile;
-		try {
-			String tempSave = "";
-			String completedTempSave = "";
-			Task tempTaskForSaving = new Task();
-			String[] taskToString = new String[11];
-			savefile = new FileWriter(fileName);
-			completedSaveFile = new FileWriter(completedFileName);
-			
-			//To save it from nearest time to time furthest away
-			
-			Sort sort = new Sort(taskData);
-			taskData = sort.sortThis();
-			
-			for(int i=0; i<taskData.size(); i++){             //Process the task list into a single string
-				tempTaskForSaving = taskData.get(i);
-				convertTaskToString(tempTaskForSaving, taskToString);
-				
-				if(tempTaskForSaving.isTaskDone){
-					completedTempSave = processIntoSingleStringForSaving(completedTempSave,
-							taskToString);
-				}
-				else{
-				tempSave = processIntoSingleStringForSaving(tempSave,
-						taskToString);
-				}
-			}
-			savefile.write(tempSave);                            //Write the processed string into the file
-			savefile.close();
-			completedSaveFile.write(completedTempSave);
-			completedSaveFile.close();
-		} catch (IOException e) {
-			System.out.println("Save failed");
-			e.printStackTrace();
-		}
-		
-	}
+	
 
 	/*Convert the string arrays into a single string with proper formatting before saving*/
 	public String processIntoSingleStringForSaving(String tempSave,
@@ -342,7 +341,6 @@ public class TextFileSaver {
 		taskToString[7] = String.valueOf(tempTaskForSaving.isTaskDone).trim();
 		taskToString[8] = String.valueOf(tempTaskForSaving.getTaskID()).trim();
 		
-		
 		if(tempTaskForSaving.getStartCal() != null){
 			taskToString[9] = convertCalendarToString(tempTaskForSaving.getStartCal());
 		}
@@ -356,7 +354,6 @@ public class TextFileSaver {
 		else{
 			taskToString[10] = "";
 		}
-		
 	}
 	
 	public String convertCalendarToString(GregorianCalendar toBeConverted){
