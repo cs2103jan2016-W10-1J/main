@@ -97,9 +97,45 @@ public class Parser {
 			String updateParameters[] = new String[3];
 			updateParameters[0] = getUpdateRow(input);
 			input = removeFirstWord(input);
-			updateParameters[1] = getNextWord(input);
+			updateParameters[1] = getNextWord(input).trim();
 			input = removeFirstWord(input);
-			updateParameters[2] = input;
+			updateParameters[2] = input.trim();
+			
+			switch(updateParameters[1]){ 
+				
+			case "date":
+			
+				// check for valid date format
+				String[] checkUpdateDate = updateParameters[2].split(" ");
+				boolean validDate = true;
+				int numberOfParametersForDate = 0;
+				for (String dateParameter : checkUpdateDate){
+					try{
+						Integer.parseInt(dateParameter);
+					}catch(Exception e){
+						validDate = false;
+					}
+					numberOfParametersForDate ++;
+				}
+				if (validDate && numberOfParametersForDate == 3){
+					int month = Integer.parseInt(checkUpdateDate[0]);
+					int day = Integer.parseInt(checkUpdateDate[1]);
+					if (month < 1 || month > 12){
+						validDate = false;
+					}
+					else if (day < 1 || day > 31){
+						validDate = false;
+					}
+				}
+				else{
+					updateParameters[2] = "invalid date";
+				}
+				if (!validDate){
+					updateParameters[2] = "invalid date";
+				}
+			default:
+				break;
+			}
 			return new Updater(updateParameters, TaskList);
 
 		// search <String keyword>
@@ -147,7 +183,6 @@ public class Parser {
 		case "display": String displayParameter;
 		displayParameter = input; 
 		return new Displayer(displayParameter, TaskList);
-			 
 		}
 		return null;
 	}

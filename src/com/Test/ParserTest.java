@@ -74,6 +74,15 @@ public class ParserTest {
 		string2 = parser.removeFirstWord(string2);
 		String updateDetail2 = string2;
 		assertEquals(updateDetail2, "there");
+		
+		String input = "4 date 2 2 2015";
+		String updateParameters[] = new String[3];
+		updateParameters[0] = parser.getUpdateRow(input);
+		input = parser.removeFirstWord(input);
+		updateParameters[1] = parser.getNextWord(input).trim();
+		input = parser.removeFirstWord(input);
+		updateParameters[2] = input.trim();
+		assertEquals(updateParameters[1], "date");
 	}
 	
 	@Test
