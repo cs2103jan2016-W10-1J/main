@@ -101,6 +101,9 @@ public class Parser {
 			updateParameters[1] = getNextWord(input).trim();
 			input = removeFirstWord(input);
 			updateParameters[2] = input.trim();
+			if (updateParameters[2] == null){
+				updateParameters[2] = " ";
+			}
 			
 			switch(updateParameters[1]){ 
 				
