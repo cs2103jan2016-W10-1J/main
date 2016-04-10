@@ -28,7 +28,11 @@ public class Updater implements Commander{
 		if (indexToUpdate < 0){
 			return "The taskID entered is invalid, please re-enter.";
 		}else{
-
+			
+			if (detailToUpdate.equals("invalid date")){
+				return "Task NOT updated successfully due to invalid date!";
+			}
+			
 			switch(sectionToUpdate.toLowerCase()){
 			case "task":
 				oldDetail = TaskList.get(indexToUpdate).getTaskName();

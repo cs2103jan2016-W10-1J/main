@@ -175,6 +175,11 @@ public class Displayer implements Commander{
 			}
 		} 
 	}
+	public static String getDisplayParameter() {
+		return displayParameter;
+	}
+
+
 
 
 	@Override

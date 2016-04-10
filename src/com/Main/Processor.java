@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;  
+import com.GUI.LogColor;
 
 public class Processor {
 	
@@ -68,6 +69,7 @@ public class Processor {
 		Displayer defaultDisplay = new Displayer(tasksArray);
 		defaultDisplay.execute();
 	}
+	
 	
 	public List<String> executeCommand(String userInput){
 		List<String> output = null;

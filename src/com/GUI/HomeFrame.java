@@ -33,6 +33,7 @@ import javax.swing.border.LineBorder;
 
 import org.junit.Test;
 
+import com.Main.Displayer;
 import com.Main.Processor;
 import com.Main.Task;
 
@@ -51,9 +52,11 @@ public class HomeFrame extends JFrame{
 	private JSplitPane mainPanel;
 	private Processor processor;
 	private JButton enterButton;
+	private JLabel settingLabel;
 	
 	private static final String MESSAGE_INVALID_COMMAND = "Invalid command.";
 	private static final String MESSAGE_COMMAND = "Command: ";
+	private static final String MESSAGE_Currently_Display = "Current display setting: ";
 	private static final String HTML_HEAD = "<HTML>";
 	private static final String HTML_TAIL = "</HTML>";
 
@@ -87,11 +90,11 @@ public class HomeFrame extends JFrame{
 		doneTaskList = new TaskPanel();
 		taskPanel.add("Done Task", doneTaskList);
 		
+        JPanel panel = userInputBar();
 		updateTaskLists();
 		
 		mainPanel.setRightComponent(taskPanel);	
 		
-        JPanel panel = userInputBar();
         add(panel, BorderLayout.SOUTH);
                 
 			
@@ -115,6 +118,8 @@ public class HomeFrame extends JFrame{
         panel.add(userInputBox);
         enterButton = new JButton("Enter");
         panel.add(enterButton);
+        settingLabel = new JLabel(MESSAGE_Currently_Display + Displayer.getDisplayParameter());
+        panel.add(settingLabel);
         
         getRootPane().setDefaultButton(enterButton);
         
@@ -185,6 +190,7 @@ public class HomeFrame extends JFrame{
 		floatingTaskList.upDateTaskList(Processor.getFloatList());
 		deadlineTaskList.upDateTaskList(Processor.getDeadlineList());
 		doneTaskList.upDateTaskList(Processor.getDoneTaskList());
+		settingLabel.setText(MESSAGE_Currently_Display + Displayer.getDisplayParameter());
 	}
 	
 	

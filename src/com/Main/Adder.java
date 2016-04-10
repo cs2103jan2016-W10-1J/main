@@ -36,6 +36,10 @@ public class Adder implements Commander{
 		if (newTask.getTaskName().equals(" ") || newTask.getTaskName().equals(""))
 			return "Task NOT added successfully due to empty Task title!";
 		
+		if (newTask.getDate().equals("invalid date")){
+			return "Task NOT added successfully due to invalid date!";
+		}
+		
 			TaskList.add(newTask);
 			Displayer updateGUI = new Displayer(TaskList);
 			updateGUI.execute();
