@@ -24,25 +24,34 @@ public class SearcherByKeyword implements Commander {
 	
 	@Override
 	public String execute() {
-		String keyword = keywords[0].trim();
+		String keyword = keywords[0].trim().toLowerCase();
 		if (TaskList.size() == 0) {
 			return "TodoList is empty";
 		}
 		
 //@@author A0116764B		
 		for (Task currentTask : TaskList){
-			if (currentTask.getTaskName().contains(keyword) || currentTask.getLocation().contains(keyword)
-					|| currentTask.getNotification().contains(keyword) || currentTask.getTag().contains(keyword)){
+			keyword = toLowerCase(keyword);
+			String taskName = toLowerCase(currentTask.getTaskName());
+			String location = toLowerCase(currentTask.getLocation());
+			String notification = toLowerCase(currentTask.getNotification());
+			String tag = toLowerCase(currentTask.getTag());
+			if (taskName.contains(keyword) || location.contains(keyword)
+					|| notification.contains(keyword) || tag.contains(keyword)){
 				searchResultList.add(currentTask);
 			}			
 		}
 		
 		for (int i = 0; i < keywords.length; i++){ 
-			keyword = keywords[i];
+			keyword = toLowerCase(keywords[i]);
 			for (Task checkTask : searchResultList){
+				String taskName = toLowerCase(checkTask.getTaskName());
+				String location = toLowerCase(checkTask.getLocation());
+				String notification = toLowerCase(checkTask.getNotification());
+				String tag = toLowerCase(checkTask.getTag());
 				boolean containsKeyword = false;
-				if (checkTask.getTaskName().contains(keyword) || checkTask.getLocation().contains(keyword) 
-						|| checkTask.getNotification().contains(keyword) || checkTask.getTag().contains(keyword)){
+				if (taskName.contains(keyword) || location.contains(keyword)
+						|| notification.contains(keyword) || tag.contains(keyword)){
 					containsKeyword = true;
 				} 
 				if (!containsKeyword){
@@ -56,6 +65,10 @@ public class SearcherByKeyword implements Commander {
 		
 		return output.convert();
 
+	}
+	
+	public String toLowerCase(String string){
+		return string.toLowerCase();
 	}
 
 	@Override
