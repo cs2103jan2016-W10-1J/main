@@ -1,7 +1,7 @@
 # A0116764Bunused
 ###### \src\com\Main\Command.java
 ``` java
-// used in old architecture
+// unused due to change in architecture
 package com.Main;
 
 public class Command {
@@ -239,4 +239,30 @@ public class Command {
 	}
 }
 */
+```
+###### \src\com\Test\ParserTest.java
+``` java
+//Test belonging to old parser class
+//	@Test
+/*	public void addTest(){
+		Parser parser= new Parser();
+		String string = "task @ loc on date from start~end #tag -notification";
+		String task = parser.getTaskName(string);
+		assertEquals(task, "task");
+		String loc = parser.getLocation(string);
+		assertEquals(loc, "loc");
+		String date = parser.getDate(string);
+		assertEquals(date,"date");
+		String start = parser.getStart(string);
+		assertEquals(start, "start");
+		String end = parser.getEnd(string);
+		assertEquals(end, "end");
+		String tag = parser.getTag(string);
+		assertEquals(tag,"tag");
+		String notification = parser.getNotification(string);
+		assertEquals(notification, "notification");
+	}
+*/
+}
+
 ```

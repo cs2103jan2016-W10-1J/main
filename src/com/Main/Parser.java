@@ -2,14 +2,27 @@
 package com.Main;
 
 import java.util.ArrayList;
-
+ 
 public class Parser {
 
 	public Parser() {
 
 	}
-
+	private static String DATE_INVALID = "invalid date";
+	private static int START_OF_STRING = 0;
+	private static int INVALID = -1; // to check for invalid tokens
+	private static int NUMBER_OF_DATE_PARAMETERS = 3; // MM dd yyyy
+	private static int MAX_MONTH = 12;
+	private static int MAX_DATE = 31;
+	private static int MIN_MONTH = 1;
+	private static int MIN_DATE = 1;
+	private static String EMPTY_STRING = "";
+	private static String SINGLE_SPACE = " ";
+	private static boolean BOOL_DATE_VALID = true;
+	private static boolean BOOL_DATE_INVALID = false;
+	
 	public Commander parse(String input, ArrayList<Task> TaskList) {
+		
 		String command = getCommandFromInput(input);
 		input = input.substring(command.length() + 1);
 		switch (command) {
@@ -19,7 +32,7 @@ public class Parser {
 		case "add":
 			String[] tokens = { "@", "on", "from", "~", "#", "-" };
 			int[] tokenLoc = new int[8];
-			tokenLoc[0] = 0; // start of string
+			tokenLoc[0] = START_OF_STRING;
 
 			for (int i = 0; i < tokens.length; i++) {
 				tokenLoc[i + 1] = getTokenLoc(input, tokens[i]);
@@ -31,11 +44,11 @@ public class Parser {
 
 			for (int i = 0; i < addParameters.length; i++) {
 				int startIndex = tokenLoc[i];
-				if (startIndex == -1) { // token not used
+				if (startIndex == INVALID) { // token not used
 					continue;
 				}
 				int j = i + 1;
-				while (tokenLoc[j] == -1) {
+				while (tokenLoc[j] == INVALID) {
 					j++;
 				}
 				int endIndex = tokenLoc[j];
@@ -46,42 +59,42 @@ public class Parser {
 				if (addParameters[i] != null) {
 					addParameters[i] = addParameters[i].substring(tokens[i - 1].length() + 1);
 				} else {
-					addParameters[i] = " ";
+					addParameters[i] = SINGLE_SPACE;
 				}
 			}
-			if (addParameters[2] != null && addParameters[2] != " ") {
+			if (addParameters[2] != null && addParameters[2] != SINGLE_SPACE) {
 				addParameters[2] = addParameters[2].trim();
 			}
 			
 			// check for valid date format
-			if (addParameters[2] != " "){
-			String[] checkDate = addParameters[2].split(" ");
+			if (addParameters[2] != SINGLE_SPACE){
+			String[] checkDate = addParameters[2].split(SINGLE_SPACE);
 			
-			boolean valid = true;
+			boolean valid = BOOL_DATE_VALID;
 			int numberOfParameters = 0;
 			for (String dateParameter : checkDate){
 				try{
 					Integer.parseInt(dateParameter);
 				}catch(Exception e){
-					valid = false;
+					valid = BOOL_DATE_INVALID;
 				}
 				numberOfParameters ++;
 			}
-			if (valid && numberOfParameters == 3){
+			if (valid && numberOfParameters == NUMBER_OF_DATE_PARAMETERS){
 				int month = Integer.parseInt(checkDate[0]);
 				int day = Integer.parseInt(checkDate[1]);
-				if (month < 1 || month > 12){
-					valid = false;
+				if (month < MIN_MONTH || month > MAX_MONTH){
+					valid = BOOL_DATE_INVALID;
 				}
-				else if (day < 1 || day > 31){
-					valid = false;
+				else if (day < MIN_DATE || day > MAX_DATE){
+					valid = BOOL_DATE_INVALID;
 				}
 			}
 			else{
-				addParameters[2] = "invalid date";
+				addParameters[2] = DATE_INVALID;
 			}
 			if (!valid){
-				addParameters[2] = "invalid date";
+				addParameters[2] = DATE_INVALID;
 			}
 			}
 			return new Adder(addParameters, TaskList);
@@ -101,8 +114,8 @@ public class Parser {
 			updateParameters[1] = getNextWord(input).trim();
 			input = removeFirstWord(input);
 			updateParameters[2] = input.trim();
-			if (updateParameters[2].equals("")){ 
-				updateParameters[2] = " ";
+			if (updateParameters[2].equals(EMPTY_STRING)){ 
+				updateParameters[2] = SINGLE_SPACE;
 			}
 			
 			switch(updateParameters[1]){ 
@@ -110,7 +123,7 @@ public class Parser {
 			case "date":
 			
 				// check for valid date format
-				String[] checkUpdateDate = updateParameters[2].split(" ");
+				String[] checkUpdateDate = updateParameters[2].split(SINGLE_SPACE);
 				boolean validDate = true;
 				int numberOfParametersForDate = 0;
 				for (String dateParameter : checkUpdateDate){
@@ -121,21 +134,21 @@ public class Parser {
 					}
 					numberOfParametersForDate ++;
 				}
-				if (validDate && numberOfParametersForDate == 3){
+				if (validDate && numberOfParametersForDate == NUMBER_OF_DATE_PARAMETERS){
 					int month = Integer.parseInt(checkUpdateDate[0]);
 					int day = Integer.parseInt(checkUpdateDate[1]);
-					if (month < 1 || month > 12){
+					if (month < MIN_MONTH || month > MAX_MONTH){
 						validDate = false;
 					}
-					else if (day < 1 || day > 31){
+					else if (day < MIN_DATE || day > MAX_DATE){
 						validDate = false;
 					}
 				}
 				else{
-					updateParameters[2] = "invalid date";
+					updateParameters[2] = DATE_INVALID;
 				}
 				if (!validDate){
-					updateParameters[2] = "invalid date";
+					updateParameters[2] = DATE_INVALID;
 				}
 			default:
 				break;
@@ -145,7 +158,7 @@ public class Parser {
 		// search <String keyword>
 		// search d <Date date>
 		case "search":
-			String[] searchType = input.split(" ");
+			String[] searchType = input.split(SINGLE_SPACE);
 			switch (searchType[0]) {
 			case "d": // by date
 				String searchDateParameters[] = new String[1];
@@ -160,7 +173,7 @@ public class Parser {
 				  return new SearcherForFreeTimeSlot(searchFreeParameters, TaskList);
 
 			default: // by keyword
-				String[] searchParameters = input.split(" ");
+				String[] searchParameters = input.split(SINGLE_SPACE);
 				return new SearcherByKeyword(searchParameters, TaskList);
 			}
 		
@@ -190,7 +203,7 @@ public class Parser {
 	}
 
 	public int getTokenLoc(String input, String token) {
-		int loc = -1;
+		int loc = INVALID;
 		if (input.contains(token)) {
 			loc = input.indexOf(token);
 		}
@@ -198,23 +211,23 @@ public class Parser {
 	}
 
 	public String getNextWord(String string) {
-		String result = string.substring(0, string.indexOf(" "));
+		String result = string.substring(0, string.indexOf(SINGLE_SPACE));
 		return result;
 	}
 
 	public String removeFirstWord(String string) {
-		String newString = string.substring(string.indexOf(" ") + 1);
+		String newString = string.substring(string.indexOf(SINGLE_SPACE) + 1);
 		return newString;
 	}
 
 	public String getCommandFromInput(String string) {
-		String command = string.substring(0, string.indexOf(" "));
+		String command = string.substring(0, string.indexOf(SINGLE_SPACE));
 		return command;
 	}
 
 	public String getUpdateRow(String parameters) {
 		String updateRow;
-		updateRow = parameters.substring(0, parameters.indexOf(" "));
+		updateRow = parameters.substring(0, parameters.indexOf(SINGLE_SPACE));
 		return updateRow;
 	}
 
@@ -229,44 +242,46 @@ public class Parser {
 	}
 
 	// @@author A0116764B-unused
+	// for old parser and old parser testing
+	// unused after change in architecture
 	public String getTaskName(String parameters) {
-		String taskName = "";
+		String taskName = EMPTY_STRING;
 		taskName = parameters.substring(0, parameters.indexOf("@") - 1);
 		return taskName;
 	}
 
 	public String getLocation(String parameters) {
-		String location = "";
+		String location = EMPTY_STRING;
 		location = parameters.substring(parameters.indexOf("@") + 1, parameters.indexOf("on") - 1);
 		return location;
 	}
 
 	public String getDate(String parameters) {
-		String date = "";
+		String date = EMPTY_STRING;
 		date = parameters.substring(parameters.indexOf("on") + 3, parameters.indexOf("from") - 1);
 		return date;
 	}
 
 	public String getStart(String parameters) {
-		String start = "";
+		String start = EMPTY_STRING;
 		start = parameters.substring(parameters.indexOf("from") + 5, parameters.indexOf("~"));
 		return start;
 	}
 
 	public String getEnd(String parameters) {
-		String end = "";
+		String end = EMPTY_STRING;
 		end = parameters.substring(parameters.indexOf("~") + 1, parameters.indexOf("#") - 1);
 		return end;
 	}
 
 	public String getTag(String parameters) {
-		String tag = "";
+		String tag = EMPTY_STRING;
 		tag = parameters.substring(parameters.indexOf("#") + 1, parameters.indexOf("-") - 1);
 		return tag;
 	}
 
 	public String getNotification(String parameters) {
-		String notification = "";
+		String notification = EMPTY_STRING;
 		notification = parameters.substring(parameters.indexOf("-") + 1);
 		return notification;
 	}

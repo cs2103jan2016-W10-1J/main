@@ -18,6 +18,11 @@ public class SearcherByKeyword implements Commander {
 	public SearcherByKeyword(){
 		
 	}
+	
+	private static int EMPTY = 0;
+	private static boolean DOES_NOT_CONTAIN = false;
+	private static boolean CONTAIN = true;
+	
 	public SearcherByKeyword(String[] parsedUserInput, ArrayList<Task> TaskList){
 		//The 1st element in the string array is the keyword for search
 		keywords = parsedUserInput;
@@ -27,7 +32,7 @@ public class SearcherByKeyword implements Commander {
 	@Override
 	public String execute() {
 		String keyword = keywords[0].trim().toLowerCase();
-		if (TaskList.size() == 0) {
+		if (TaskList.size() == EMPTY) {
 			return "TodoList is empty";
 		}
 		
@@ -51,10 +56,10 @@ public class SearcherByKeyword implements Commander {
 				String location = toLowerCase(checkTask.getLocation());
 				String notification = toLowerCase(checkTask.getNotification());
 				String tag = toLowerCase(checkTask.getTag());
-				boolean containsKeyword = false;
+				boolean containsKeyword = DOES_NOT_CONTAIN;
 				if (taskName.contains(keyword) || location.contains(keyword)
 						|| notification.contains(keyword) || tag.contains(keyword)){
-					containsKeyword = true;
+					containsKeyword = CONTAIN;
 				} 
 				if (!containsKeyword){
 					toRemove.add(checkTask); 
