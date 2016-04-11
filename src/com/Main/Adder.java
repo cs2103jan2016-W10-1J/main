@@ -6,12 +6,21 @@ import java.util.logging.Level;
 public class Adder implements Commander{
 	private Task newTask = new Task();
 	ArrayList<Task> TaskList = new ArrayList<Task>();
+	private static int taskIDMax = 0;
 	
+
+	public static int getTaskIDMax() {
+		return taskIDMax;
+	}
+
+	public static void setTaskIDMax(int taskIDMax) {
+		Adder.taskIDMax = taskIDMax;
+	}
 
 	public Adder(String[] parsedUserInput, ArrayList<Task> TaskList) {
 		//The element of the string array will be in 
 		//0.taskName, 1.location 2.date 3.start 4.end 5.tag 6.notification
-		int taskListSize = TaskList.size();
+		//int taskListSize = TaskList.size();
 		this.TaskList = TaskList;
 		try {
 			newTask.setTask(parsedUserInput[0]);
@@ -22,7 +31,7 @@ public class Adder implements Commander{
 			newTask.setTag(parsedUserInput[5]);
 			newTask.setNotification(parsedUserInput[6]);
 			newTask.setCalendar();
-			newTask.setTaskID(taskListSize+1);
+			newTask.setTaskID(taskIDMax+1);
 			newTask.determineTaskType();
 		} catch (NullPointerException e) {
 			
@@ -41,6 +50,7 @@ public class Adder implements Commander{
 		}
 		
 			TaskList.add(newTask);
+			taskIDMax++;
 			Displayer updateGUI = new Displayer(TaskList);
 			updateGUI.execute();
 			

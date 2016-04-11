@@ -40,6 +40,7 @@ public class Processor {
 		for (int i = 0; i < storage.getTaskData().size(); i++ ){
 			Task taskInst = tasksArray.get(i);
 			taskInst.setTaskID(i+1);//generation of TaskID, 1-based.
+			Adder.setTaskIDMax(i+1);
 			taskInst.determineTaskType();
 			taskInst.setCalendar();
 			
