@@ -15,7 +15,9 @@ public class SearcherByKeyword implements Commander {
 	private ArrayList<Task> searchResultList = new ArrayList<Task>();
 	private ArrayList<Task> toRemove = new ArrayList<Task>();
 
-
+	public SearcherByKeyword(){
+		
+	}
 	public SearcherByKeyword(String[] parsedUserInput, ArrayList<Task> TaskList){
 		//The 1st element in the string array is the keyword for search
 		keywords = parsedUserInput;
