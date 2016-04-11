@@ -42,7 +42,7 @@ public class ConverterToString {
 	private String convertSingleTask(){
 		StringBuilder TaskToShow = new StringBuilder();
 		TaskToShow.append("Task ID: " + Integer.toString(taskIns.getTaskID()) + System.lineSeparator());
-		TaskToShow.append(String.format(DISPLAY_TASK_TITLE_MESSAGE, LogColor.setStringWithRGB(taskIns.getTaskName(), 27, 13, 152))+System.lineSeparator());
+		TaskToShow.append(String.format(DISPLAY_TASK_TITLE_MESSAGE, taskIns.getTaskName())+System.lineSeparator());
 		TaskToShow.append(String.format(DISPLAY_TASK_DATE_MESSAGE, taskIns.getDate())+System.lineSeparator());
 		TaskToShow.append(String.format(DISPLAY_TASK_LOCATION_MESSAGE, taskIns.getLocation())+System.lineSeparator());
 		TaskToShow.append(String.format(DISPLAY_TASK_START_MESSAGE, taskIns.getStart())+System.lineSeparator());
