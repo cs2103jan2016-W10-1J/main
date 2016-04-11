@@ -1,5 +1,5 @@
-package com.Main;
 //@@author A0100111R
+package com.Main;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,14 +10,14 @@ public class Displayer implements Commander{
 	
 	private boolean debug = false;
 	
-	private ArrayList<Task> TaskList;
+	private ArrayList<Task> taskList = null;
 	private static String displayParameter = "today";
 	
-	private static ArrayList<Task> eventList;
-	private static ArrayList<Task> floatList;
-	private static ArrayList<Task> deadlineList;
-	private static ArrayList<Task> doneTaskList;
-	private static ArrayList<Task> unDoneTaskList;
+	private static ArrayList<Task> eventList = null;
+	private static ArrayList<Task> floatList = null;
+	private static ArrayList<Task> deadlineList = null;
+	private static ArrayList<Task> doneTaskList = null;
+	private static ArrayList<Task> unDoneTaskList = null;
 	
 	/*
 	 * First constructor is for situations when displayRequirement requires changes
@@ -31,16 +31,12 @@ public class Displayer implements Commander{
 		unDoneTaskList  = new ArrayList<Task>();
 				
 		displayParameter = displayRequirement;	
-		this.TaskList = new ArrayList<Task>(originalTaskList);//Copy the original TaskList.
+		this.taskList = new ArrayList<Task>(originalTaskList);//Copy the original taskList.
 		
 		this.getDoneTasks(originalTaskList);
 		this.getEventList(unDoneTaskList);
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
-	
-		//debug
-		//int x = Processor.getFloatList().size();
-		//System.out.println(Integer.toString(x));
 	}
 	
 	/*
@@ -54,9 +50,9 @@ public class Displayer implements Commander{
 		doneTaskList  = new ArrayList<Task>();
 		unDoneTaskList  = new ArrayList<Task>();
 		
-		this.TaskList = new ArrayList<Task>(originalTaskList);
+		this.taskList = new ArrayList<Task>(originalTaskList);
 		
-		this.getDoneTasks(TaskList);
+		this.getDoneTasks(taskList);
 		this.getEventList(unDoneTaskList);
 		this.getFloatList(unDoneTaskList);
 		this.getDeadlineList(unDoneTaskList);
@@ -77,9 +73,6 @@ public class Displayer implements Commander{
 		case "tomorrow":
 			getTmrTasks();
 			break;
-		//case "week":
-		//	getThisWeekTasks();
-		//	break;
 		case "all":
 			//Constructor has done the job.
 			break;
@@ -87,8 +80,7 @@ public class Displayer implements Commander{
 		default:
 			return "Unrecognized display parameter";
 		}
-		updateThreeLists();	
-		
+		updateThreeLists();			
 		return "Please refer to the right-hand side panel for display";
 	}
 
@@ -102,6 +94,7 @@ public class Displayer implements Commander{
 		
 		SearcherByDate findTmrEvent = new SearcherByDate(date, eventList);
 		eventList = findTmrEvent.executeforDisplayOnStartTime();
+
 		
 		SearcherByDate findTmrDeadline = new SearcherByDate(date, deadlineList);
 		deadlineList = findTmrDeadline.executeforDisplayOnEndTime();
@@ -112,21 +105,38 @@ public class Displayer implements Commander{
 		Date date = new Date();
 		SearcherByDate findTodayEvent = new SearcherByDate(date, eventList);
 		eventList = findTodayEvent.executeforDisplayOnStartTime();
-		
+				
 		SearcherByDate findTodayDeadline = new SearcherByDate(date, deadlineList);
 		deadlineList = findTodayDeadline.executeforDisplayOnEndTime();
+		
+	}
+	
+	private void sortTaskLists(){
+		if(eventList.size() != 0){
+			Sorter sortEventTaskList = new Sorter (eventList);
+			eventList = sortEventTaskList.sortThis();
+		}
+		if(deadlineList.size() != 0){
+			Sorter sortDeadLineTaskList = new Sorter (deadlineList);
+			deadlineList = sortDeadLineTaskList.sortThis();;
+		}
+		if(floatList.size() != 0){
+			Sorter sortFloatList = new Sorter (floatList);
+			floatList = sortFloatList.sortThis();
+		}
+		if(doneTaskList.size() != 0){
+			Sorter sortDoneTaskList = new Sorter (doneTaskList);
+			doneTaskList = sortDoneTaskList.sortThis();
+		}
+		
 	}
 
-/*
- * Complete the sort before update the Lists in the processor
- */
 	private void updateThreeLists() {
-		//Sort sortInst = new Sort(eventList);
-		//eventList = sortInst.sortThis(); 
 		if(debug){
 		int x = Processor.getFloatList().size();
 		System.out.println(Integer.toString(x));
 		}
+		sortTaskLists();
 		Processor.setEventList(eventList);
 		Processor.setFloatList(floatList);
 		Processor.setDeadlineList(deadlineList);
@@ -145,6 +155,7 @@ public class Displayer implements Commander{
 				unDoneTaskList.add(taskInst);
 			}
 		}
+
 	}
 	
 
@@ -179,13 +190,8 @@ public class Displayer implements Commander{
 		return displayParameter;
 	}
 
-
-
-
 	@Override
 	public String undo() {
-		//String feedback = "Your last action is searching, which cannot be undone.";
-		//return feedback;
 		return "";
 	}
 	
