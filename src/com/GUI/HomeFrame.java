@@ -136,7 +136,7 @@ public class HomeFrame extends JFrame{
         
     }   	
 	
-	public void passingCommand(String userCommand){
+	public List<String> passingCommand(String userCommand){
 		String commandType = "";
 		if (userCommand.contains(" "))
 			commandType = userCommand.substring(0, userCommand.indexOf(" "));
@@ -182,6 +182,8 @@ public class HomeFrame extends JFrame{
 		for (int i=0; i<strToDisplay.size(); i++) {				
 			logPanel.recordToLog(HTML_HEAD+strToDisplay.get(i)+HTML_TAIL);
 		} 	
+		
+		return strToDisplay;
 	}
 
 	
