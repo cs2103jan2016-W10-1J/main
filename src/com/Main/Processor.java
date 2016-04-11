@@ -1,113 +1,95 @@
 package com.Main;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;  
-import com.GUI.LogColor;
+
 
 public class Processor {
-	
-	private boolean debug = false;
-	
-	private TextFileSaver storage;
-	//private TaskforUpdateFunction UpdatedTask;
-	//private static Logger ProcessorLogger = Logger.getLogger("Log of Processor");
-	private Parser parserInst;
+	// @@author A0100111R
+	private boolean isDebuging = false;
+
+	private TextFileSaver storage = null;
+	// private static Logger ProcessorLogger = Logger.getLogger("Log of
+	// Processor");
+	private Parser parserInst = null;
 	private String feedbackMessage = "";
 	public ArrayList<String> messageThread = new ArrayList<String>();
-	
+
 	private static Commander lastCommanderInst = null; // for Undo function.
-	
+
 	private static ArrayList<Task> eventList = new ArrayList<Task>();
 	private static ArrayList<Task> floatList = new ArrayList<Task>();
 	private static ArrayList<Task> deadlineList = new ArrayList<Task>();
 	private static ArrayList<Task> doneTaskList = new ArrayList<Task>();
-	
-	public Processor(){
+
+	public Processor() {
 		parserInst = new Parser();
 		storage = new TextFileSaver();
-		//Dispatcher.setTaskList(storage.getTaskData());
 		setUp();
 	}
 
 	/**
-	 * Set up the date attribute for every task in the list.
-	 * Set up the Task ID for every task in the list.
+	 * Set up the date attribute for every task in the list thru iteration.
+	 * Set up the Task ID  for every task in the list thru iteration.
+	 * 
 	 */
 	private void setUp() {
 		ArrayList<Task> tasksArray = storage.getTaskData();
-		for (int i = 0; i < storage.getTaskData().size(); i++ ){
+		for (int i = 0; i < storage.getTaskData().size(); i++) {
 			Task taskInst = tasksArray.get(i);
-			taskInst.setTaskID(i+1);//generation of TaskID, 1-based.
-			Adder.setTaskIDMax(i+1);
+			taskInst.setTaskID(i + 1);// generation of TaskID, 1-based.
+			Adder.setTaskIDMax(i + 1);
 			taskInst.determineTaskType();
 			taskInst.setCalendar();
-			
-			if(debug){
-
-				String TaskID = Integer.toString(taskInst.getTaskID());
-				System.out.println(TaskID);
-				
-				String titleDetail = taskInst.getTaskName();
-				System.out.println("The detail of titleDetailString is"+"<"+titleDetail+">");			
-				
-				String dateDetail = taskInst.getDate();
-				System.out.println("The detail of dateString is"+"<"+dateDetail+">"+" should at least have a single space < >");
-				
-				String startDetail = taskInst.getStart();
-				System.out.println("The detail of startDetailString is"+"<"+startDetail+">");
-				String endDetail = taskInst.getEnd();
-				System.out.println("The detail of endDetailString is"+"<"+endDetail+">");
-				
-				String taskType = taskInst.getTaskType().toString();
-				System.out.println(taskType);
-				System.lineSeparator();
+			if (isDebuging) {
+				showCurrentTasksInfo(taskInst);
 			}
-			
 		}
-		
+		//updating GUI display panel
 		Displayer defaultDisplay = new Displayer(tasksArray);
 		defaultDisplay.execute();
 	}
-	
-	
-	public List<String> executeCommand(String userInput){
-		List<String> output = null;
-		
-		if(userInput.startsWith("cd", 0)){
-			storage = new TextFileSaver(userInput.substring(3));
-			feedbackMessage = "Opened " + userInput.substring(3);
-		}
 
-		else if (userInput.equals("undo")){
-			if( lastCommanderInst == null || lastCommanderInst.equals(null) ){
-				feedbackMessage = "Sorry, the last action cannot be undo further.";				
-			}
-			else{
-				feedbackMessage = lastCommanderInst.undo();
-			}
-		}
-		else{
-			Commander commanderInst = parserInst.parse(userInput, storage.getTaskData());
-			feedbackMessage = commanderInst.execute();	
-		}
+	public List<String> executeCommand(String userInput) {
+		List<String> output = null;
+		executeByRequests(userInput);
 		storage.saveFile();
 		String[] array = feedbackMessage.split(System.lineSeparator());
 		output = Arrays.asList(array);
 		return output;
 	}
-	
-	
-	public TextFileSaver getStorage(){
+
+	/**
+	 * @param userInput
+	 * Handle switch, undo and the rest of the user requests
+	 * by calling respective objects.
+	 */
+	private void executeByRequests(String userInput) {
+		if (userInput.startsWith("cd", 0)) {
+			storage = new TextFileSaver(userInput.substring(3));
+			feedbackMessage = "Opened " + userInput.substring(3);
+		}
+		else if (userInput.equals("undo")) {
+			if (lastCommanderInst == null || lastCommanderInst.equals(null)) {
+				feedbackMessage = "Sorry, the last action cannot be undo further.";
+			} else {
+				feedbackMessage = lastCommanderInst.undo();
+			}
+		} else {
+			Commander commanderInst = parserInst.parse(userInput, storage.getTaskData());
+			feedbackMessage = commanderInst.execute();
+		}
+	}
+
+	public TextFileSaver getStorage() {
 		return storage;
 	}
-	
-	public void readFile(){
+
+	public void readFile() {
 		storage.readFile();
 	}
-	
-	//@@author A0100111R
+
+	// @@author A0100111R
 	public static ArrayList<Task> getEventList() {
 		return eventList;
 	}
@@ -131,6 +113,7 @@ public class Processor {
 	public static void setDeadlineList(ArrayList<Task> deadlineList) {
 		Processor.deadlineList = deadlineList;
 	}
+
 	public static ArrayList<Task> getDoneTaskList() {
 		return doneTaskList;
 	}
@@ -146,7 +129,34 @@ public class Processor {
 	public ArrayList<String> getMessageThread() {
 		return messageThread;
 	}
-	
+
+	/**
+	 * @param taskInst
+	 * If isDebugging = false, not being executed
+	 * Display the existing tasks to console for debugging purpose
+	 */
+	private void showCurrentTasksInfo(Task taskInst) {
+		String taskId = Integer.toString(taskInst.getTaskID());
+		System.out.println(taskId);
+
+		String titleDetail = taskInst.getTaskName();
+		System.out.println("The detail of titleDetailString is" + "<" + titleDetail + ">");
+
+		String dateDetail = taskInst.getDate();
+		System.out.println("The detail of dateString is" + "<" + dateDetail + ">"
+				+ " should at least have a single space < >");
+
+		String startDetail = taskInst.getStart();
+		System.out.println("The detail of startDetailString is" + "<" + startDetail + ">");
+		String endDetail = taskInst.getEnd();
+		System.out.println("The detail of endDetailString is" + "<" + endDetail + ">");
+
+		String taskType = taskInst.getTaskType().toString();
+		System.out.println(taskType);
+		System.lineSeparator();
+	}
+
+
 }
 /*
 	
