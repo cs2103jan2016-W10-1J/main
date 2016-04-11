@@ -1,9 +1,9 @@
+//@@author A0149484R
 package com.GUI;
 
 public class LogColor {
 
 
-	// Done by Matthew
 	public static String setStringInGreen(String outputStr){
 		outputStr = "<font color=\"green\">" + outputStr + "</font>";
 		return outputStr;
