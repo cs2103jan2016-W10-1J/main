@@ -44,9 +44,18 @@ public class SearcherByDate implements Commander {
 	@Override
 	public String execute() {
 		GregorianCalendar dayToCompare;
+		Task taskInst = null;
 		for (int i = 0; i < TaskList.size(); i++){
-			dayToCompare = TaskList.get(i).getStartCal();
-			
+			taskInst = TaskList.get(i);
+			if ( taskInst.getStartCal() != null ){
+				dayToCompare = taskInst.getStartCal();
+			}else
+				if( taskInst.getEndCal() != null){
+					dayToCompare = taskInst.getEndCal();
+				}else{
+					break;
+				}
+						
 			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
 			int TaskYear = dayToCompare.get(GregorianCalendar.YEAR);
 			int DesiredDay = desiredDay.get(GregorianCalendar.DAY_OF_YEAR);
@@ -57,6 +66,9 @@ public class SearcherByDate implements Commander {
 				TaskListWanted.add(TaskList.get(i));
 			}
 		}
+		if(TaskListWanted.size() == 0 ){
+			return "No relevant tasks found.";
+		}
 		ConverterToString output = new ConverterToString(TaskListWanted);
 		//Processor.setLastCommanderInst(this);
 		return output.convert();
@@ -64,8 +76,14 @@ public class SearcherByDate implements Commander {
 	public ArrayList<Task> executeforDisplayOnStartTime() {
 		GregorianCalendar dayToCompare;
 		for (int i = 0; i < TaskList.size(); i++){
-			Task TaskInst = TaskList.get(i);
-			dayToCompare = TaskInst.getStartCal();
+			Task taskIns = TaskList.get(i);
+			if ( taskIns.getStartCal() != null ){
+				dayToCompare = taskIns.getStartCal();
+			}else
+			{
+				break;
+			}
+			
 			
 			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
 			int TaskYear = dayToCompare.get(GregorianCalendar.YEAR);
@@ -74,7 +92,7 @@ public class SearcherByDate implements Commander {
 			
 			boolean sameDay = ((DesiredYear==TaskYear)&&(DesiredDay==TaskDay));
 			if (sameDay){
-				TaskListWanted.add(TaskInst);
+				TaskListWanted.add(taskIns);
 			}
 		}
 		return TaskListWanted;
@@ -82,8 +100,13 @@ public class SearcherByDate implements Commander {
 	public ArrayList<Task> executeforDisplayOnEndTime() {
 		GregorianCalendar dayToCompare;
 		for (int i = 0; i < TaskList.size(); i++){
-			Task TaskInst = TaskList.get(i);
-			dayToCompare = TaskInst.getEndCal();
+			Task taskIn = TaskList.get(i);
+			if ( taskIn.getStartCal() != null ){
+				dayToCompare = taskIn.getStartCal();
+			}else
+			{
+				break;
+			}
 			
 			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
 			int TaskYear = dayToCompare.get(GregorianCalendar.YEAR);
@@ -92,7 +115,7 @@ public class SearcherByDate implements Commander {
 			
 			boolean sameDay = ((DesiredYear==TaskYear)&&(DesiredDay==TaskDay));
 			if (sameDay){
-				TaskListWanted.add(TaskInst);
+				TaskListWanted.add(taskIn);
 			}
 		}
 		return TaskListWanted;

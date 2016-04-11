@@ -68,7 +68,7 @@ public class Task {
 				this.setTaskType(TASK_TYPE.EVENT);
 				return;
 			}else
-				if ( (start.equals(" ") || start.equals("") ) && (!end.equals(" ") && !end.equals(""))){ //only no start time
+				if ( (start.equals(" ") || start.equals("")|| start == null ) && (!end.equals(" ") && !end.equals(""))){ //only no start time
 					this.setTaskType(TASK_TYPE.DEADLINE);
 					return;
 				}else{

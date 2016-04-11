@@ -13,6 +13,8 @@ public class Updater implements Commander{
 	private Task oldTask;
 	private Task updatedTask;
 	
+	private boolean debug = true;
+	
 	public Updater(String[] parsedUserInput, ArrayList<Task> TaskList){
 		//The element of the string array will be in the following format
 		//0: (TaskID), 1: sectionToUpdate, 2: detailToUpdate
@@ -52,6 +54,9 @@ public class Updater implements Commander{
 				oldDetail = TaskList.get(indexToUpdate).getDate();
 				oldTask =TaskList.get(indexToUpdate);
 				updatedTask =TaskList.get(indexToUpdate);
+				
+				if(debug) System.out.println("Updater:execute, updated date is: "+ "<"+detailToUpdate.toString()+">");
+				
 				updatedTask.setDate(detailToUpdate);
 				updatedTask.setCalendar();
 				TaskList.set(indexToUpdate, updatedTask);
@@ -60,6 +65,9 @@ public class Updater implements Commander{
 				oldDetail = TaskList.get(indexToUpdate).getStart();
 				oldTask =TaskList.get(indexToUpdate);
 				updatedTask =TaskList.get(indexToUpdate);
+				
+				if(debug) System.out.println("Updater:execute, updated start is: "+ "<"+detailToUpdate.toString()+">");
+				
 				updatedTask.setStart(detailToUpdate);
 				updatedTask.setCalendar();
 				TaskList.set(indexToUpdate, updatedTask);
@@ -68,6 +76,9 @@ public class Updater implements Commander{
 				oldDetail = TaskList.get(indexToUpdate).getEnd();
 				oldTask =TaskList.get(indexToUpdate);
 				updatedTask =TaskList.get(indexToUpdate);
+				
+				if(debug) System.out.println("Updater:execute, updated end is: "+"<"+ detailToUpdate.toString()+">");
+				
 				updatedTask.setEnd(detailToUpdate);
 				updatedTask.setCalendar();
 				TaskList.set(indexToUpdate, updatedTask);
