@@ -30,7 +30,7 @@ public class Parser {
 		// start> ~ <String end> # <String tag> - <String notification>
 		// taskName is a compulsory parameter, all other parameters are optional
 		case "add":
-			String[] tokens = { "@", "on", "from", "~", "#", "-" };
+			String[] tokens = { "@", "on", "from", "-", "#", "~" };
 			int[] tokenLoc = new int[8];
 			tokenLoc[0] = START_OF_STRING;
 
