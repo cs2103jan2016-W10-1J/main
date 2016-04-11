@@ -1,10 +1,10 @@
+//@@author A0097119X
 package com.Main;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-//@@author A0097119X
-public class Sort {
+public class Sorter {
 /*
  * This class is for internal use only, not open for user.
  * It will get a copy from TaskList as an input.
@@ -21,7 +21,7 @@ public class Sort {
  */
 	ArrayList<Task> toBeSorted;
 	
-	public Sort(ArrayList<Task> toBeSorted) {
+	public Sorter(ArrayList<Task> toBeSorted) {
 		this.toBeSorted = toBeSorted;
 	}
 	

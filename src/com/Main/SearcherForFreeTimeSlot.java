@@ -1,3 +1,4 @@
+//@@author A0097119X
 package com.Main;
 
 import java.text.DateFormat;
@@ -21,7 +22,6 @@ import java.util.Locale;
  * for V0.3, this function will only return the earliest day, NOT considering later available day.
  */
 
-//@@author A0097119X
 public class SearcherForFreeTimeSlot implements Commander {
 		private String currentDate;
 		private int currentTime;
@@ -61,86 +61,89 @@ public class SearcherForFreeTimeSlot implements Commander {
 		System.out.println("Current Time is : " + currentTime);
 		System.out.println("Current Day is : ");
 		
-		//Processor.setLastCommanderInst(this);
-		
 		for(int j=0; j<8; j++){
 			foundConflict = false;
+			foundConflict = checkForConflict(foundConflict);
 			
-		for(int i=0; i<TaskList.size(); i++){
-			dateToCompare = TaskList.get(i).getDate();
-			
-			try {
-				if(!TaskList.get(i).getStart().trim().equals("")||!TaskList.get(i).getEnd().trim().equals("")){
-				
-				startTimeToCompare = Integer.parseInt(TaskList.get(i).getStart().trim());
-				endTimeToCompare = Integer.parseInt(TaskList.get(i).getEnd().trim());
-				
-				System.out.println("Current Time is : " + currentTime);
-				System.out.println("Start Time to compare with : " + startTimeToCompare);
-				
-				if(dateToCompare.equals(currentDate)){
-					if(startTime>=startTimeToCompare && startTime<endTimeToCompare || endTime>startTimeToCompare && endTime<=endTimeToCompare){
-						foundConflict = true;
-						break;
-					}
-				}
-}
-			} catch (NumberFormatException e) {
+			//To handle first case where there is no task for today but it may already be too late to schedule the task in
+			if(isDateToday){
+				foundConflict = checkIfDateToday(foundConflict);
+				isDateToday = false; //update it so that it will only run once 
+			}
+		
+			if(foundConflict){
+				updateDateToCheckForFreeSlot();
+			}
+		
+			else{
+				foundTimeSlot = true;
+				datesFound = getDateInformation(dow, datesFound, j);
+				updateDateToCheckForFreeSlot();
 			}
 		}
 		
-		if(isDateToday){
-			if(currentTime > startTime){ //To handle first case where there is no task for today but it may already be too late to schedule the task in
-				foundConflict = true;
-				System.out.println("Conflict found");
-			}
-			isDateToday = false;
-		}
-		
-		if(foundConflict){
-			//Increase date, set time as zero
-			SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy");
-			Calendar c = Calendar.getInstance();
-			try {
-				c.setTime(sdf.parse(currentDate));
-				c.add(Calendar.DATE, 1);
-				currentDate = sdf.format(c.getTime());
-				System.out.println("Current Date is : " + currentDate);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			currentTime = 0;
-		}
-		
-		else{
-			foundTimeSlot = true;
-			
-			
-			dayName = dow.plus(j).getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
-			datesFound = datesFound + currentDate + " (" + dayName + ")" + "\n";
-			
-			
-			//Increase date, set time as zero
-			SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy");
-			Calendar c = Calendar.getInstance();
-			try {
-				c.setTime(sdf.parse(currentDate));
-				c.add(Calendar.DATE, 1);
-				currentDate = sdf.format(c.getTime());
-				System.out.println("Current Date is : " + currentDate);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			currentTime = 0;
-		}
-		}
 		if(foundTimeSlot){
-		return startTime + " to " + endTime + " is available on : \n" + datesFound;
+			return startTime + " to " + endTime + " is available on : \n" + datesFound;
 		}
 		
 		else{
 			return "Timeslot not available in the upcoming week";
 		}
+	}
+
+	private String getDateInformation(DayOfWeek dow, String datesFound, int j) {
+		String dayName;
+		dayName = dow.plus(j).getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+		datesFound = datesFound + currentDate + " (" + dayName + ")" + "\n";
+		return datesFound;
+	}
+
+	private void updateDateToCheckForFreeSlot() {
+		//Increase date, set time as zero
+		SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(currentDate));
+			c.add(Calendar.DATE, 1);
+			currentDate = sdf.format(c.getTime());
+			System.out.println("Current Date is : " + currentDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		currentTime = 0;
+	}
+
+	private boolean checkIfDateToday(boolean foundConflict) {
+		if(currentTime > startTime){ 
+			foundConflict = true;
+			System.out.println("Conflict found");
+		}
+		return foundConflict;
+	}
+
+	private boolean checkForConflict(boolean foundConflict) {
+		String dateToCompare;
+		int startTimeToCompare;
+		int endTimeToCompare;
+		for(int i=0; i<TaskList.size(); i++){
+			dateToCompare = TaskList.get(i).getDate();
+			
+			try {
+				if(!TaskList.get(i).getStart().trim().equals("")||!TaskList.get(i).getEnd().trim().equals("")){
+					startTimeToCompare = Integer.parseInt(TaskList.get(i).getStart().trim());
+					endTimeToCompare = Integer.parseInt(TaskList.get(i).getEnd().trim());
+				
+					if(dateToCompare.equals(currentDate)){
+						if(startTime>=startTimeToCompare && startTime<endTimeToCompare || endTime>startTimeToCompare && endTime<=endTimeToCompare){
+							foundConflict = true;
+							break;
+						}
+					}
+				}
+			} catch (NumberFormatException e) {
+			}
+		}
+		return foundConflict;
 	}
 	
 	//@@author A0100111R

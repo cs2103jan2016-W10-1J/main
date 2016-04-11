@@ -1,3 +1,4 @@
+//@@author A0097119X
 package com.Main;
 
 import java.io.BufferedReader;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-//@@author A0097119X
 public class TextFileSaver {
 	
 	private File fileDirectory;
@@ -203,7 +203,7 @@ public class TextFileSaver {
 	}
 	
 	private void sortList() {
-		Sort sort = new Sort(taskData);
+		Sorter sort = new Sorter(taskData);
 		taskData = sort.sortThis();
 	}
 	
