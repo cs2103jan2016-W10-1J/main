@@ -1,5 +1,5 @@
+//@@author A0100111R
 package com.Main;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-//@@author A0100111R
 public class Task {
 
 	private boolean debug = false;
@@ -58,17 +57,27 @@ public class Task {
 	public int getTaskID() {
 		return taskID;
 	}
+	/*
+	 * Determine the task type
+	 * event task has date, start time and end time
+	 * deadline task has date and end time only
+	 * floating task are the rest of the cases.
+	 */
 	public void determineTaskType(){
 
 		if ( date.equals(" ") || date.equals("") || date == null){
 			this.setTaskType(TASK_TYPE.FLOAT);
 			return;
 		}else {
-			if ( !start.equals(" ") && !end.equals(" ") ){ // have date start-time end-time
+			if ( !start.equals(" ") && !end.equals(" ") ){ 
+				// have date start-time end-time
 				this.setTaskType(TASK_TYPE.EVENT);
 				return;
 			}else
-				if ( (start.equals(" ") || start.equals("")|| start == null ) && (!end.equals(" ") && !end.equals(""))){ //only no start time
+				if ( (start.equals(" ") || start.equals("")
+						|| start == null ) 
+						&& (!end.equals(" ") && !end.equals(""))){ 
+					//only no start time
 					this.setTaskType(TASK_TYPE.DEADLINE);
 					return;
 				}else{
@@ -79,12 +88,10 @@ public class Task {
 
 	}
 
-	/*
-	 * http://stackoverflow.com/questions/4216745/java-string-to-date-conversion
-	 */
 	public void setCalendar(){
 		if( debug)
-			System. out.println( "see what inside the dateString: "+"<"+this.getDate()+ ">");
+			System. out.println( "see what inside the dateString: "
+					+"<"+this.getDate()+ ">");
 
 		if ( date.equals(" ") || date.equals("") || date == null){
 			
@@ -100,7 +107,8 @@ public class Task {
 			try {
 				date = formatter.parse( this.getDate() + " " + this.getStart()); // String to Date object
 			} catch (ParseException e) {
-				System. out.println( "Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
+				System. out.println( 
+						"Start date object is not successfully parsed from its string counterpart:" + e.getMessage());
 			}
 			startCal = new GregorianCalendar();
 			startCal.setTime( date);
@@ -110,7 +118,8 @@ public class Task {
 			try {
 				date = formatter.parse( this.getDate() + " " + this.getEnd()); // String to Date object
 			} catch (ParseException e) {
-				System. out.println( "End date object is not successfully parsed from its string counterpart" + e.getMessage());
+				System. out.println( 
+						"End date object is not successfully parsed from its string counterpart" + e.getMessage());
 			}
 			endCal = new GregorianCalendar();
 			endCal.setTime( date);
