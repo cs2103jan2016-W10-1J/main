@@ -1,12 +1,12 @@
+//@@author A0100111R
 package com.Main;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-//@@author A0100111R
+
 /*
  * This class will take in a date string in the form of "MM dd yyyy" e.g. 12 31 2016
  * and it will search from the originalTaskList for Tasks that has start-time on that date.
