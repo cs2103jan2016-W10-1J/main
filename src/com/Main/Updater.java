@@ -13,7 +13,7 @@ public class Updater implements Commander{
 	private Task oldTask;
 	private Task updatedTask;
 	
-	private boolean debug = true;
+	private boolean debug = false;
 	
 	public Updater(String[] parsedUserInput, ArrayList<Task> TaskList){
 		//The element of the string array will be in the following format

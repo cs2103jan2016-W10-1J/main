@@ -21,6 +21,8 @@ public class SearcherByDate implements Commander {
 	private GregorianCalendar desiredDay = new GregorianCalendar();
 	private ArrayList<Task> TaskListWanted = new ArrayList<Task>();
 	
+	private boolean debug = false;
+	
 	public SearcherByDate(String[] parsedUserInput, ArrayList<Task> TaskList) {
 		DateFormat formatter = new SimpleDateFormat("MM dd yyyy");
 		Date date = new Date();
@@ -53,7 +55,12 @@ public class SearcherByDate implements Commander {
 				if( taskInst.getEndCal() != null){
 					dayToCompare = taskInst.getEndCal();
 				}else{
-					break;
+					if (debug){
+						String refer = Integer.toString(i);
+						System.out.println("SearcherByDate: both StartCal and EndCal are empty"+"reference num: "+refer);
+						
+					}
+					continue;
 				}
 						
 			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
@@ -81,7 +88,7 @@ public class SearcherByDate implements Commander {
 				dayToCompare = taskIns.getStartCal();
 			}else
 			{
-				break;
+				continue;
 			}
 			
 			
@@ -105,7 +112,7 @@ public class SearcherByDate implements Commander {
 				dayToCompare = taskIn.getStartCal();
 			}else
 			{
-				break;
+				continue;
 			}
 			
 			int DesiredYear = desiredDay.get(GregorianCalendar.YEAR);
