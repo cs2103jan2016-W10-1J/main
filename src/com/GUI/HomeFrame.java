@@ -148,7 +148,7 @@ public class HomeFrame extends JFrame{
 			//String commandType = processor.processCommand(userCommand); 
 			
 			logPanel.clearLog();
-			logPanel.recordToLog(HTML_HEAD+LogColor.setStringInRed(MESSAGE_COMMAND) + userCommand+HTML_TAIL);		
+			logPanel.recordToLog(HTML_HEAD+LogColor.setStringInRed(MESSAGE_COMMAND) + LogColor.setStringInBlue(userCommand)+HTML_TAIL);		
 			userInputBox.setText("");
 		} else if (commandType.equals("sw") && userCommand.contains(" ")){
 			String panelName = userCommand.substring(userCommand.indexOf(" ")+1);
