@@ -361,9 +361,6 @@ public class TextFileSaver {
 		SimpleDateFormat df = new SimpleDateFormat("MM dd yyyy HHmm");
 		result = df.format(toBeConverted.getTime());
 		
-		//debugging
-		System.out.println(toBeConverted + " was converted to " + result);
-		
 		return result;
 	}
 	
@@ -372,9 +369,6 @@ public class TextFileSaver {
 		Date date = df.parse(toBeConverted);
 		GregorianCalendar result = new GregorianCalendar();
 		result.setTime(date);
-		
-		//debugging
-		System.out.println(toBeConverted + " was converted to " + result);
 		
 		return result;
 	}
